@@ -88,6 +88,9 @@ function start_session(): void {
     $sp = CMS_DATA . '/sessions';
     if (!is_dir($sp)) @mkdir($sp, 0700, true);
     if (is_dir($sp) && is_writable($sp)) { session_save_path($sp); ini_set('session.gc_maxlifetime', '28800'); }
+    ini_set('session.save_handler', 'files');
+    ini_set('session.use_strict_mode', '0');
+    ini_set('session.use_only_cookies', '1');
     session_name('helileh_cms');
     session_set_cookie_params(['lifetime' => 0, 'path' => '/', 'secure' => $https, 'httponly' => true, 'samesite' => 'Strict']);
     session_start();
@@ -112,7 +115,11 @@ function csrf_check(): void {
     start_session();
     $t = $_POST['_csrf'] ?? ($_SERVER['HTTP_X_CSRF'] ?? '');
     if (!is_string($t) || !hash_equals($_SESSION['csrf'] ?? '', $t)) {
-        http_response_code(419); exit('نشست منقضی شده؛ صفحه را دوباره باز کنید.');
+        // C0: مرورگر کوکی نفرستاد | C1: کوکی آمد ولی نشست روی سرور خالی است | C2: نشست هست ولی توکن فرم قدیمی/کش‌شده است
+        $code = empty($_COOKIE[session_name()]) ? 'C0' : (empty($_SESSION['csrf']) ? 'C1' : 'C2');
+        http_response_code(419);
+        header('Content-Type: text/html; charset=utf-8');
+        exit('نشست منقضی شده؛ صفحه را دوباره باز کنید. <small dir="ltr">[' . $code . ' · ' . (session_save_path() && is_writable(session_save_path()) ? 'w1' : 'w0') . ' · ' . (isset($_SERVER['HTTPS']) ? 'h1' : 'h0') . ']</small>');
     }
 }
 function client_ip(): string { return $_SERVER['REMOTE_ADDR'] ?? '0'; }

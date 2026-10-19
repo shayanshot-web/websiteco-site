@@ -50,6 +50,7 @@ function migrate(PDO $p): void {
     CREATE TABLE IF NOT EXISTS media(id INTEGER PRIMARY KEY, file TEXT NOT NULL, thumb TEXT, mime TEXT, size INTEGER, w INTEGER, h INTEGER, alt_fa TEXT DEFAULT '', alt_en TEXT DEFAULT '', alt_ru TEXT DEFAULT '', uploaded_by INTEGER, created INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS messages(id INTEGER PRIMARY KEY, name TEXT, phone TEXT, email TEXT, subject TEXT, message TEXT, lang TEXT, ref TEXT, status TEXT NOT NULL DEFAULT 'new', created INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS settings(k TEXT PRIMARY KEY, v TEXT);
+    CREATE TABLE IF NOT EXISTS sessions(token TEXT PRIMARY KEY, data TEXT NOT NULL DEFAULT '{}', expires INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS attempts(ip TEXT NOT NULL, ts INTEGER NOT NULL);
     ");
 }
@@ -80,20 +81,55 @@ function format_date(?int $ts, string $lang = 'fa'): string {
     return date('Y-m-d', $ts);
 }
 
-/* ---------- نشست و ورود ---------- */
+/* ---------- نشست و ورود (نشست در دیتابیس؛ مستقل از تنظیمات session هاست) ---------- */
+const AUTH_COOKIE = 'hcms_auth';
+function is_https(): bool {
+    return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https') || (($_SERVER['HTTP_CF_VISITOR'] ?? '') !== '' && strpos($_SERVER['HTTP_CF_VISITOR'], 'https') !== false) || (($_SERVER['SERVER_PORT'] ?? '') === '443');
+}
+function app_secret(): string {
+    $s = setting('app_secret');
+    if (strlen($s) < 32) { $s = bin2hex(random_bytes(32)); set_setting('app_secret', $s); }
+    return $s;
+}
+function set_auth_cookie(string $token, int $expires): void {
+    setcookie(AUTH_COOKIE, $token, ['expires' => $expires, 'path' => '/', 'secure' => is_https(), 'httponly' => true, 'samesite' => 'Lax']);
+}
 function start_session(): void {
-    if (session_status() === PHP_SESSION_ACTIVE) return;
-    $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
-    // پوشه نشست اختصاصی (روی بعضی هاست‌ها پوشه پیش‌فرض قابل نوشتن نیست و نشست ذخیره نمی‌شود)
-    $sp = CMS_DATA . '/sessions';
-    if (!is_dir($sp)) @mkdir($sp, 0700, true);
-    if (is_dir($sp) && is_writable($sp)) { session_save_path($sp); ini_set('session.gc_maxlifetime', '28800'); }
-    ini_set('session.save_handler', 'files');
-    ini_set('session.use_strict_mode', '0');
-    ini_set('session.use_only_cookies', '1');
-    session_name('helileh_cms');
-    session_set_cookie_params(['lifetime' => 0, 'path' => '/', 'secure' => $https, 'httponly' => true, 'samesite' => 'Strict']);
-    session_start();
+    static $started = false;
+    if ($started) return;
+    $started = true;
+    $_SESSION = [];
+    $GLOBALS['__sess_token'] = '';
+    $GLOBALS['__sess_orig'] = '[]';
+    db()->prepare('DELETE FROM sessions WHERE expires<?')->execute([now()]);
+    $tok = $_COOKIE[AUTH_COOKIE] ?? '';
+    if (is_string($tok) && preg_match('/^[a-f0-9]{48}$/', $tok)) {
+        $r = db()->prepare('SELECT data FROM sessions WHERE token=? AND expires>=?');
+        $r->execute([hash('sha256', $tok), now()]);
+        $row = $r->fetch();
+        if ($row) {
+            $GLOBALS['__sess_token'] = $tok;
+            $GLOBALS['__sess_orig'] = (string)$row['data'];
+            $_SESSION = json_decode($row['data'], true) ?: [];
+        }
+    }
+    register_shutdown_function(function () {
+        $tok = $GLOBALS['__sess_token'] ?? '';
+        if ($tok === '') return;
+        $json = json_encode($_SESSION ?: [], JSON_UNESCAPED_UNICODE);
+        if ($json !== $GLOBALS['__sess_orig']) {
+            db()->prepare('UPDATE sessions SET data=? WHERE token=?')->execute([$json, hash('sha256', $tok)]);
+        }
+    });
+}
+function session_open(array $data): void {   // ساخت نشست جدید پس از ورود موفق
+    start_session();
+    $old = $GLOBALS['__sess_token'] ?? '';
+    if ($old !== '') db()->prepare('DELETE FROM sessions WHERE token=?')->execute([hash('sha256', $old)]);
+    $tok = bin2hex(random_bytes(24)); $exp = now() + 8 * 3600;
+    db()->prepare('INSERT INTO sessions(token,data,expires) VALUES(?,?,?)')->execute([hash('sha256', $tok), json_encode($data), $exp]);
+    $GLOBALS['__sess_token'] = $tok; $GLOBALS['__sess_orig'] = json_encode($data); $_SESSION = $data;
+    set_auth_cookie($tok, 0);
 }
 function current_user(): ?array {
     start_session();
@@ -106,20 +142,29 @@ function current_user(): ?array {
     }
     return $u;
 }
+/* CSRF بدون وابستگی به کوکی: بعد از ورود وابسته به نشست، قبل از ورود وابسته به بازه زمانی */
+function csrf_for(string $scope, int $window = 0): string {
+    return hash_hmac('sha256', $scope . '|' . $window, app_secret());
+}
 function csrf(): string {
     start_session();
-    if (empty($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(24));
-    return $_SESSION['csrf'];
+    $scope = ($GLOBALS['__sess_token'] ?? '') !== '' && !empty($_SESSION['uid']) ? 'u|' . $GLOBALS['__sess_token'] : 'anon';
+    return csrf_for($scope, $scope === 'anon' ? intdiv(now(), 7200) : 0);
 }
 function csrf_check(): void {
     start_session();
     $t = $_POST['_csrf'] ?? ($_SERVER['HTTP_X_CSRF'] ?? '');
-    if (!is_string($t) || !hash_equals($_SESSION['csrf'] ?? '', $t)) {
-        // C0: مرورگر کوکی نفرستاد | C1: کوکی آمد ولی نشست روی سرور خالی است | C2: نشست هست ولی توکن فرم قدیمی/کش‌شده است
-        $code = empty($_COOKIE[session_name()]) ? 'C0' : (empty($_SESSION['csrf']) ? 'C1' : 'C2');
+    $ok = false;
+    if (is_string($t) && $t !== '') {
+        if (!empty($_SESSION['uid']) && ($GLOBALS['__sess_token'] ?? '') !== '') $ok = hash_equals(csrf_for('u|' . $GLOBALS['__sess_token']), $t);
+        else { $w = intdiv(now(), 7200); $ok = hash_equals(csrf_for('anon', $w), $t) || hash_equals(csrf_for('anon', $w - 1), $t) || hash_equals(csrf_for('anon', $w - 2), $t); }
+    }
+    if (!$ok) {
+        // A0: توکن فرم نیامد/نامعتبر | A1: وارد نیستید یا نشست تمام شده (کوکی نیامده) | A2: وارد هستید ولی توکن فرم مال نشست دیگری است
+        $code = (!is_string($t) || $t === '') ? 'A0' : (empty($_COOKIE[AUTH_COOKIE]) ? 'A1' : 'A2');
         http_response_code(419);
         header('Content-Type: text/html; charset=utf-8');
-        exit('نشست منقضی شده؛ صفحه را دوباره باز کنید. <small dir="ltr">[' . $code . ' · ' . (session_save_path() && is_writable(session_save_path()) ? 'w1' : 'w0') . ' · ' . (isset($_SERVER['HTTPS']) ? 'h1' : 'h0') . ']</small>');
+        exit('نشست منقضی شده؛ صفحه را دوباره باز کنید. <small dir="ltr">[' . $code . ' · ' . (is_https() ? 'h1' : 'h0') . ']</small>');
     }
 }
 function client_ip(): string { return $_SERVER['REMOTE_ADDR'] ?? '0'; }
@@ -135,15 +180,20 @@ function login(string $user, string $pass): bool {
     $ok = $u && password_verify($pass, $u['pass']);
     if (!$u) password_verify($pass, '$2y$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ0123'); // زمان یکسان
     if (!$ok) { db()->prepare('INSERT INTO attempts(ip,ts) VALUES(?,?)')->execute([client_ip(), now()]); return false; }
-    start_session(); session_regenerate_id(true);
-    $_SESSION['uid'] = (int)$u['id']; $_SESSION['csrf'] = bin2hex(random_bytes(24));
+    session_open(['uid' => (int)$u['id']]);
     db()->prepare('DELETE FROM attempts WHERE ip=?')->execute([client_ip()]);
     if (password_needs_rehash($u['pass'], PASSWORD_DEFAULT)) {
         db()->prepare('UPDATE users SET pass=? WHERE id=?')->execute([password_hash($pass, PASSWORD_DEFAULT), $u['id']]);
     }
     return true;
 }
-function logout(): void { start_session(); $_SESSION = []; session_destroy(); }
+function logout(): void {
+    start_session();
+    $t = $GLOBALS['__sess_token'] ?? '';
+    if ($t !== '') db()->prepare('DELETE FROM sessions WHERE token=?')->execute([hash('sha256', $t)]);
+    $GLOBALS['__sess_token'] = ''; $_SESSION = [];
+    set_auth_cookie('', 1);
+}
 
 /* ---------- نقش‌ها ---------- */
 function can(string $cap, ?array $u = null): bool {

@@ -24,6 +24,7 @@ jobs:
           protocol: ftps
           security: loose
           timeout: 120000
+          log-level: verbose
           local-dir: ./out/
           server-dir: ./
           # عکس‌های آپلودشده از پنل و دیتابیس هرگز لمس نمی‌شوند

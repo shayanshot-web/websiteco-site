@@ -47,3 +47,8 @@ Header always set X-Content-Type-Options "nosniff"
 Header always set Referrer-Policy "strict-origin-when-cross-origin"
 Header always set X-Frame-Options "SAMEORIGIN"
 </IfModule>
+
+# فایل وضعیت دیپلوی خودکار از وب قابل دسترس نباشد
+<Files ".ftp-deploy-sync-state.json">
+Require all denied
+</Files>

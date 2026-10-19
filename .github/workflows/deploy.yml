@@ -25,7 +25,7 @@ jobs:
           security: loose
           timeout: 120000
           local-dir: ./out/
-          server-dir: public_html/
+          server-dir: ./
           # عکس‌های آپلودشده از پنل و دیتابیس هرگز لمس نمی‌شوند
           exclude: |
             **/.git*

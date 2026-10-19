@@ -24,7 +24,7 @@ jobs:
           protocol: ftps
           security: loose
           timeout: 120000
-          log-level: verbose
+          log-level: standard
           local-dir: ./out/
           server-dir: ./
           # عکس‌های آپلودشده از پنل و دیتابیس هرگز لمس نمی‌شوند
@@ -32,4 +32,3 @@ jobs:
             **/.git*
             **/.git*/**
             uploads/**
-            !uploads/.htaccess

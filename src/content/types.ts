@@ -1,0 +1,123 @@
+export type Lang = 'fa' | 'en' | 'ru';
+
+export type PageId =
+  | 'home'
+  | 'about'
+  | 'stay'
+  | 'experiences'
+  | 'gallery'
+  | 'blog'
+  | 'events'
+  | 'shop'
+  | 'contact';
+
+export type InnerPageId = Exclude<PageId, 'home'>;
+
+export interface Section {
+  /** عنوان بخش (اختیاری) */
+  h?: string;
+  /** سطح عنوان؛ پیش‌فرض ۲ */
+  level?: 2 | 3;
+  p: string[];
+}
+
+export interface PageContent {
+  title: string;
+  lead: string;
+  sections: Section[];
+}
+
+export type PostId = 'one-day' | 'souvenirs';
+
+export interface Post {
+  id: PostId;
+  slug: string;
+  title: string;
+  excerpt: string;
+  /** تاریخ انتشار به صورت ISO */
+  date: string;
+  lead: string;
+  sections: Section[];
+}
+
+export interface Tile {
+  h: string;
+  p: string;
+}
+
+export interface HomeContent {
+  eyebrow: string;
+  h1: string;
+  lead: string;
+  ctaStay: string;
+  ctaEvents: string;
+  introTitle: string;
+  introText: string;
+  introCta: string;
+  tiles: Tile[];
+  stayTitle: string;
+  stayText: string;
+  stayCta: string;
+  doTitle: string;
+  doItems: Tile[];
+  eventsTitle: string;
+  eventsText: string;
+  eventsCta: string;
+  shopTitle: string;
+  shopText: string;
+  shopCta: string;
+  contactTitle: string;
+}
+
+export interface UiStrings {
+  skip: string;
+  menu: string;
+  language: string;
+  readMore: string;
+  latestPosts: string;
+  publishedOn: string;
+  backToBlog: string;
+  noEvents: string;
+  shopCta: string;
+  rights: string;
+  phoneLabel: string;
+  addressLabel: string;
+  form: {
+    name: string;
+    phone: string;
+    email: string;
+    subject: string;
+    subjectOptions: string[];
+    message: string;
+    send: string;
+    sending: string;
+    success: string;
+    error: string;
+  };
+  notFoundTitle: string;
+  notFoundText: string;
+  notFoundHome: string;
+}
+
+export interface Dict {
+  lang: Lang;
+  dir: 'rtl' | 'ltr';
+  /** برای Intl و og:locale */
+  locale: string;
+  ogLocale: string;
+  langName: string;
+  siteName: string;
+  tagline: string;
+  nav: Record<PageId, string>;
+  slugs: Record<InnerPageId, string>;
+  /** اسلاگ‌های دیگری که صفحه اصلی هم روی آن‌ها نمایش داده می‌شود (آدرس‌های قدیمی وردپرس) */
+  homeAliases: string[];
+  pages: Record<InnerPageId, PageContent>;
+  posts: Post[];
+  home: HomeContent;
+  ui: UiStrings;
+  phone: string;
+  phoneDisplay: string;
+  address: string;
+  org: string;
+}

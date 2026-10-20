@@ -7,7 +7,7 @@ export const en: Dict = {
   ogLocale: 'en_US',
   langName: 'English',
   siteName: 'Ancient Helileh',
-  tagline: 'Helileh Tourist Village Rural Council, Bushehr',
+  tagline: 'Ancient Helileh, Bushehr',
   nav: {
     home: 'Home',
     about: 'About',
@@ -32,54 +32,54 @@ export const en: Dict = {
   homeAliases: ['home-en'],
   phone: '+989176553247',
   phoneDisplay: '09176553247',
-  address: 'Bushehr – Helileh – Helileh Tourist Village Rural Council (Dehyari)',
-  org: 'Helileh Tourist Village Rural Council',
+  address: 'Bushehr – Helileh – Ancient Helileh',
+  org: 'Ancient Helileh',
   home: {
     eyebrow: 'BUSHEHR · PERSIAN GULF',
-    h1: 'Helileh, a tourist village by the sea',
+    h1: 'Ancient Helileh, a tourist destination by the sea',
     lead: 'Southern hospitality, local food and handmade crafts, close to the city of Bushehr, Iran.',
     ctaStay: 'Where to stay',
     ctaEvents: 'Events calendar',
-    introTitle: 'A coastal village in Bushehr Province',
+    introTitle: 'A coastal destination in Bushehr Province',
     introText:
-      'Helileh is a coastal village near the city of Bushehr, run by the Helileh Tourist Village Rural Council (Dehyari). Visitors can meet local people, taste southern dishes and see the work of village artisans. This site is your trip planner: book a stay, find local experiences, register for events and buy handicrafts.',
+      'Ancient Helileh is a coastal destination near the city of Bushehr. Visitors can meet local people, taste southern dishes and see the work of local artisans. This site is your trip planner: book a stay, find local experiences, register for events and buy handicrafts.',
     introCta: 'Read more about Helileh',
     tiles: [
-      { h: 'About', p: 'Village history and culture' },
+      { h: 'About', p: 'History and culture of Helileh' },
       { h: 'Stay', p: 'Eco-lodges and local homes' },
       { h: 'Things to do', p: 'Shore, table and traditions' },
       { h: 'Restaurants', p: 'Taste local cooking' },
     ],
-    stayTitle: 'Stay in the heart of the village',
+    stayTitle: 'Stay in the heart of Helileh',
     stayText:
-      'Browse local accommodation in Helileh and send a booking request. The village council will contact you to confirm.',
+      'Browse local accommodation in Helileh and send a booking request. Our team will contact you to confirm.',
     stayCta: 'Request a booking',
     doTitle: 'What to do in Helileh',
     doItems: [
       { h: 'Sea and shoreline', p: 'Walk the beach and watch the sun set over the Persian Gulf.' },
       { h: 'Local food', p: 'Try southern home cooking and the flavours of Bushehr.' },
-      { h: 'Handicrafts', p: 'Meet village artisans and buy handmade work.' },
+      { h: 'Handicrafts', p: 'Meet local artisans and buy handmade work.' },
       { h: 'Traditions and culture', p: 'Clothing, music and customs of Helileh people.' },
     ],
     eventsTitle: 'Upcoming events',
     eventsText:
-      'See what is on, register or buy tickets. [Sample: the council will add event dates and names]',
+      'See what is on, register or buy tickets. [Sample: the management will add event dates and names]',
     eventsCta: 'See all events',
     shopTitle: 'Crafts and souvenirs from Helileh',
     shopText:
-      'Buy directly from village artisans, with delivery across Iran: pottery and vessels, woven goods and textiles, edible souvenirs, decor and gifts.',
+      'Buy directly from local artisans, with delivery across Iran: pottery and vessels, woven goods and textiles, edible souvenirs, decor and gifts.',
     shopCta: 'Handicraft shop',
-    contactTitle: 'Get in touch with the Helileh council',
+    contactTitle: 'Get in touch with us',
   },
   pages: {
     about: {
       title: 'About Helileh',
-      lead: 'Helileh is a coastal tourist village in Bushehr Province. The sea, southern food and the handwork of local people all meet here.',
+      lead: 'Ancient Helileh is a coastal tourist destination in Bushehr Province. The sea, southern food and the handwork of local people all meet here.',
       sections: [
         {
           h: 'Where is Helileh?',
           p: [
-            'Helileh lies near the city of Bushehr on the Persian Gulf coast. [Distance from Bushehr centre and directions: to be completed with the Rural Council]',
+            'Helileh lies near the city of Bushehr on the Persian Gulf coast. [Distance from Bushehr centre and directions: to be completed by the management]',
           ],
         },
         {
@@ -91,18 +91,18 @@ export const en: Dict = {
         {
           h: 'Before you go',
           p: [
-            'Autumn to spring is more comfortable for sightseeing than the hot, humid Bushehr summer. Contact the village council to arrange your visit and bookings.',
+            'Autumn to spring is more comfortable for sightseeing than the hot, humid Bushehr summer. Contact us to arrange your visit and bookings.',
           ],
         },
       ],
     },
     stay: {
       title: 'Stay',
-      lead: 'Staying in Helileh means starting the day in the village and ending it to the sound of the sea. Choose a place and send a booking request.',
+      lead: 'Staying in Helileh means starting the day in Helileh and ending it to the sound of the sea. Choose a place and send a booking request.',
       sections: [
         {
           h: 'Choose where to stay',
-          p: ['[Accommodation list with name, capacity and price to be provided by the Rural Council]'],
+          p: ['[Accommodation list with name, capacity and price to be provided by the management]'],
         },
         {
           h: 'Facilities',
@@ -111,14 +111,14 @@ export const en: Dict = {
         {
           h: 'How booking works',
           p: [
-            'Fill in the inquiry form. The village team will call you to confirm dates and price. Payment is made after confirmation, in person or by the method announced.',
+            'Fill in the inquiry form. Our team will call you to confirm dates and price. Payment is made after confirmation, in person or by the method announced.',
           ],
         },
       ],
     },
     experiences: {
       title: 'Experiences',
-      lead: 'There are three ways to know Helileh: walk by the sea, sit at a local table and talk with the village artisans.',
+      lead: 'There are three ways to know Helileh: walk by the sea, sit at a local table and talk with the local artisans.',
       sections: [
         {
           h: 'Sea and shoreline',
@@ -141,18 +141,18 @@ export const en: Dict = {
       lead: 'See Helileh before you travel. Photos and videos are grouped by subject.',
       sections: [
         { h: 'Photos', p: ['Filter by beach, people, food and handicrafts. Every photo has a caption.'] },
-        { h: 'Videos', p: ['Short videos of the village and its events. [Video links: to be added]'] },
-        { h: 'Using the images', p: ['Please contact the village council before using images in media.'] },
+        { h: 'Videos', p: ['Short videos of Helileh and its events. [Video links: to be added]'] },
+        { h: 'Using the images', p: ['Please contact us before using images in media.'] },
       ],
     },
     blog: {
       title: 'Blog',
-      lead: 'Travel advice, stories about local crafts and village news in one place.',
+      lead: 'Travel advice, stories about local crafts and local news in one place.',
       sections: [],
     },
     events: {
       title: 'Helileh Events',
-      lead: 'See every village event in month or list view and register for each one.',
+      lead: 'See every event in month or list view and register for each one.',
       sections: [
         {
           h: 'Monthly programme',
@@ -169,7 +169,7 @@ export const en: Dict = {
     },
     shop: {
       title: 'Handicraft Shop',
-      lead: 'Buy the handwork of Helileh artisans straight from the village and have it delivered.',
+      lead: 'Buy the handwork of Helileh artisans straight from Helileh and have it delivered.',
       sections: [
         {
           h: 'Products',
@@ -191,10 +191,10 @@ export const en: Dict = {
     },
     contact: {
       title: 'Contact',
-      lead: 'Get in touch with the Helileh council for bookings, visit arrangements or any question.',
+      lead: 'Get in touch with us for bookings, visit arrangements or any question.',
       sections: [
         { h: 'Ways to reach us', p: ['Management phone (Mr. Vahid Hasan Ahmadi): 09176553247'] },
-        { h: 'Address', p: ['Bushehr – Helileh – Helileh Tourist Village Rural Council (Dehyari)'] },
+        { h: 'Address', p: ['Bushehr – Helileh – Ancient Helileh'] },
         { h: 'Reply hours', p: ['[Reply hours: to be completed]'] },
       ],
     },
@@ -210,9 +210,9 @@ export const en: Dict = {
       lead: 'If you only have a day, this simple plan helps you get to know Helileh without rushing.',
       sections: [
         {
-          h: 'Morning: shore and village',
+          h: 'Morning: the shore and Helileh',
           p: [
-            'Early morning is cooler and the beach is quiet. Walk by the sea for half an hour, then stop at the council office to learn about the village.',
+            'Early morning is cooler and the beach is quiet. Walk by the sea for half an hour, then stop at the management office to learn about Helileh.',
           ],
         },
         {
@@ -275,7 +275,7 @@ export const en: Dict = {
     latestPosts: 'Latest posts',
     publishedOn: 'Published on',
     backToBlog: 'Back to the blog',
-    noEvents: 'No events have been announced yet. The village programme will appear here soon.',
+    noEvents: 'No events have been announced yet. The programme will appear here soon.',
     shopCta: 'Place an inquiry',
     rights: 'All rights reserved.',
     phoneLabel: 'Phone',

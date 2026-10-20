@@ -1,4 +1,4 @@
-name: Diagnose FTP root (read-only)
+name: Clean stray deploy files from FTP home (one-time)
 
 on:
   push:
@@ -7,21 +7,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  list:
+  clean:
     runs-on: ubuntu-latest
     steps:
-      - name: List FTP root
+      - name: Remove files wrongly deployed to the FTP home (exact names only, never public_html)
         env:
           S: ${{ secrets.FTP_SERVER }}
           U: ${{ secrets.FTP_USERNAME }}
           P: ${{ secrets.FTP_PASSWORD }}
         run: |
-          ls_dir() { curl -sS --max-time 40 --ssl-reqd -k --user "$U:$P" "ftp://$S$1" --list-only 2>&1 | head -${2:-40}; }
-          PWD_OUT=$(curl -sS --max-time 40 --ssl-reqd -k --user "$U:$P" "ftp://$S/" -Q "PWD" -o /dev/null -v 2>&1 | grep -i "257" | head -1 | tr -d '\r')
-          ROOT=$(ls_dir / 60)
-          OUT="PWD: ${PWD_OUT}"$'\n'"ROOT:"$'\n'"${ROOT}"
-          for d in public_html www html $(echo "$ROOT" | grep -v '\.' | head -6); do
-            OUT="$OUT"$'\n'"--- /$d/ ---"$'\n'"$(ls_dir /$d/ 25 | head -25)"
-          done
-          OUT="${OUT//'%'/'%25'}"; OUT="${OUT//$'\n'/'%0A'}"; OUT="${OUT//$'\r'/}"
-          echo "::notice title=FTP root listing::${OUT}"
+          sudo apt-get install -y lftp >/dev/null
+          DIRS="_next _not-found 404 about accommodations admin blog cms-core contact en events experiences gallery handicraft-shop helileh-handicraft-souvenirs-2 one-day-trip-helileh-2 ru"
+          FILES="__next.__PAGE__.txt __next._full.txt __next._tree.txt 404.html contact.php dynamic.php icon.svg index.html index.txt robots.txt sitemap.xml .ftp-deploy-sync-state.json build.txt"
+          CMDS="set ftp:ssl-force true; set ssl:verify-certificate false; set net:max-retries 2;"
+          for d in $DIRS; do CMDS="$CMDS rm -r -f /$d;"; done
+          for f in $FILES; do CMDS="$CMDS rm -f /$f;"; done
+          CMDS="$CMDS cls -1 /;"
+          OUT=$(lftp -u "$U","$P" "ftp://$S" -e "$CMDS quit" 2>&1 | tail -30)
+          OUT="${OUT//'%'/'%25'}"; OUT="${OUT//$'\r'/}"; OUT="${OUT//$'\n'/'%0A'}"
+          echo "::notice title=After cleanup::${OUT}"

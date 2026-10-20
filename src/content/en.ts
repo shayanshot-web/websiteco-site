@@ -6,7 +6,7 @@ export const en: Dict = {
   locale: 'en-US',
   ogLocale: 'en_US',
   langName: 'English',
-  siteName: 'Helileh Tourist Village',
+  siteName: 'Ancient Helileh',
   tagline: 'Helileh Tourist Village Rural Council, Bushehr',
   nav: {
     home: 'Home',
@@ -30,8 +30,8 @@ export const en: Dict = {
     contact: 'contact-us',
   },
   homeAliases: ['home-en'],
-  phone: '+989389367978',
-  phoneDisplay: '09389367978',
+  phone: '+989176553247',
+  phoneDisplay: '09176553247',
   address: 'Bushehr – Helileh – Helileh Tourist Village Rural Council (Dehyari)',
   org: 'Helileh Tourist Village Rural Council',
   home: {
@@ -193,7 +193,7 @@ export const en: Dict = {
       title: 'Contact',
       lead: 'Get in touch with the Helileh council for bookings, visit arrangements or any question.',
       sections: [
-        { h: 'Ways to reach us', p: ['Phone: 09389367978'] },
+        { h: 'Ways to reach us', p: ['Management phone (Mr. Vahid Hasan Ahmadi): 09176553247'] },
         { h: 'Address', p: ['Bushehr – Helileh – Helileh Tourist Village Rural Council (Dehyari)'] },
         { h: 'Reply hours', p: ['[Reply hours: to be completed]'] },
       ],

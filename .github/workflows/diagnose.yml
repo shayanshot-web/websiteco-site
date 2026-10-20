@@ -1,0 +1,27 @@
+name: Diagnose FTP root (read-only)
+
+on:
+  push:
+    paths:
+      - '.github/workflows/diagnose.yml'
+  workflow_dispatch:
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List FTP root
+        env:
+          S: ${{ secrets.FTP_SERVER }}
+          U: ${{ secrets.FTP_USERNAME }}
+          P: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          ls_dir() { curl -sS --max-time 40 --ssl-reqd -k --user "$U:$P" "ftp://$S$1" --list-only 2>&1 | head -${2:-40}; }
+          PWD_OUT=$(curl -sS --max-time 40 --ssl-reqd -k --user "$U:$P" "ftp://$S/" -Q "PWD" -o /dev/null -v 2>&1 | grep -i "257" | head -1 | tr -d '\r')
+          ROOT=$(ls_dir / 60)
+          OUT="PWD: ${PWD_OUT}"$'\n'"ROOT:"$'\n'"${ROOT}"
+          for d in public_html www html $(echo "$ROOT" | grep -v '\.' | head -6); do
+            OUT="$OUT"$'\n'"--- /$d/ ---"$'\n'"$(ls_dir /$d/ 25 | head -25)"
+          done
+          OUT="${OUT//'%'/'%25'}"; OUT="${OUT//$'\n'/'%0A'}"; OUT="${OUT//$'\r'/}"
+          echo "::notice title=FTP root listing::${OUT}"

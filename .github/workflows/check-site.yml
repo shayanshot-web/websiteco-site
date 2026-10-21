@@ -19,19 +19,14 @@ jobs:
           B=https://websiteco.ir
           OUT=""
           add() { OUT="$OUT$1"$'\n'; }
-          for p in / /build.txt /en/ /ru/ /about/ /blog/ /handicraft-shop/ /admin/ "/admin/?a=login" /contact/ /robots.txt /sitemap.xml /sitemap-cms.xml /nope-404/; do
-            R=$(curl -s -o /tmp/b -w "%{http_code} %{size_download}B %{content_type} redirect=%{redirect_url}" --max-time 25 "$B$p")
-            add "$p -> $R"
+          RND=$RANDOM$RANDOM
+          for p in "/build.txt" "/build.txt?x=$RND" "/?x=$RND" "/" "/index.html?x=$RND" "/admin/?a=login&x=$RND"; do
+            add "=== $p"
+            add "$(curl -s -D - -o /tmp/body --max-time 25 "$B$p" | tr -d '\r' | grep -i -E '^(HTTP|server|last-modified|etag|age|x-litespeed|x-cache|cf-cache|cache-control|content-length)')"
+            add "title: $(grep -o '<title>[^<]*</title>' /tmp/body | head -1)  body: $(head -c 90 /tmp/body | tr '\n' ' ')"
           done
-          add "--- home <title> / name / phone:"
-          H=$(curl -s --max-time 25 $B/)
-          add "$(echo "$H" | grep -o '<title>[^<]*</title>' | head -1)"
-          add "has 'هلیله باستانی': $(echo "$H" | grep -c 'هلیله باستانی')  | has 'دهیاری': $(echo "$H" | grep -c 'دهیاری')  | has '۰۹۱۷۶۵۵۳۲۴۷': $(echo "$H" | grep -c '۰۹۱۷۶۵۵۳۲۴۷')"
-          add "--- headers /admin/?a=login:"
-          add "$(curl -s -D - -o /dev/null --max-time 25 "$B/admin/?a=login" | tr -d '\r' | grep -i -E '^(HTTP|server|set-cookie|cache-control|x-litespeed|cf-|content-type)' | sed -E 's/(hcms_auth=)[^;]*/\1***/')"
-          add "--- login page has form: $(curl -s --max-time 25 "$B/admin/?a=login" | grep -c 'name=\"_csrf\"')"
           add "--- install.php: $(curl -s -o /dev/null -w '%{http_code}' --max-time 25 $B/install.php)"
-          add "--- TLS: $(echo | openssl s_client -connect websiteco.ir:443 -servername websiteco.ir 2>/dev/null | openssl x509 -noout -issuer -enddate 2>/dev/null | tr '\n' ' ')"
+          add "--- sitemap-cms: $(curl -s --max-time 25 $B/sitemap-cms.xml | head -c 120)"
           add "--- FTP public_html listing (-l) filtered:"
           sudo apt-get install -y lftp >/dev/null 2>&1
           add "$(lftp -u "$U","$P" "ftp://$S" -e "set ftp:ssl-force true; set ssl:verify-certificate false; cls -l /public_html/build.txt /public_html/index.html /public_html/dynamic.php /public_html/cms-core/lib.php /public_html/admin/index.php /public_html/.ftp-deploy-sync-state.json; quit" 2>&1 | tail -8)"

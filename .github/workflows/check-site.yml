@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Probe websiteco.ir
+        env:
+          S: ${{ secrets.FTP_SERVER }}
+          U: ${{ secrets.FTP_USERNAME }}
+          P: ${{ secrets.FTP_PASSWORD }}
         run: |
           B=https://websiteco.ir
           OUT=""
@@ -19,7 +23,6 @@ jobs:
             R=$(curl -s -o /tmp/b -w "%{http_code} %{size_download}B %{content_type} redirect=%{redirect_url}" --max-time 25 "$B$p")
             add "$p -> $R"
           done
-          add "--- build.txt:"; add "$(curl -s --max-time 20 $B/build.txt | head -2)"
           add "--- home <title> / name / phone:"
           H=$(curl -s --max-time 25 $B/)
           add "$(echo "$H" | grep -o '<title>[^<]*</title>' | head -1)"
@@ -29,5 +32,8 @@ jobs:
           add "--- login page has form: $(curl -s --max-time 25 "$B/admin/?a=login" | grep -c 'name=\"_csrf\"')"
           add "--- install.php: $(curl -s -o /dev/null -w '%{http_code}' --max-time 25 $B/install.php)"
           add "--- TLS: $(echo | openssl s_client -connect websiteco.ir:443 -servername websiteco.ir 2>/dev/null | openssl x509 -noout -issuer -enddate 2>/dev/null | tr '\n' ' ')"
+          add "--- FTP public_html listing (-l) filtered:"
+          sudo apt-get install -y lftp >/dev/null 2>&1
+          add "$(lftp -u "$U","$P" "ftp://$S" -e "set ftp:ssl-force true; set ssl:verify-certificate false; cls -l /public_html/build.txt /public_html/index.html /public_html/dynamic.php /public_html/cms-core/lib.php /public_html/admin/index.php /public_html/.ftp-deploy-sync-state.json; quit" 2>&1 | tail -8)"
           OUT="${OUT//'%'/'%25'}"; OUT="${OUT//$'\r'/}"; OUT="${OUT//$'\n'/'%0A'}"
           echo "::notice title=SITE CHECK::${OUT}"

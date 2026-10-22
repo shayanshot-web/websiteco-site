@@ -29,6 +29,6 @@ jobs:
           add "--- sitemap-cms: $(curl -s --max-time 25 $B/sitemap-cms.xml | head -c 120)"
           add "--- FTP public_html listing (-l) filtered:"
           sudo apt-get install -y lftp >/dev/null 2>&1
-          add "$(lftp -u "$U","$P" "ftp://$S" -e "set ftp:ssl-force true; set ssl:verify-certificate false; cls -l /public_html/build.txt /public_html/index.html /public_html/dynamic.php /public_html/cms-core/lib.php /public_html/admin/index.php /public_html/.ftp-deploy-sync-state.json; quit" 2>&1 | tail -8)"
+          add "$(lftp -u "$U","$P" "ftp://$S" -e "set ftp:ssl-force true; set ssl:verify-certificate false; cls -l /; cls -l /index.html /admin/index.php /cms-core/lib.php /uploads; quit" 2>&1 | tail -45)"
           OUT="${OUT//'%'/'%25'}"; OUT="${OUT//$'\r'/}"; OUT="${OUT//$'\n'/'%0A'}"
           echo "::notice title=SITE CHECK::${OUT}"

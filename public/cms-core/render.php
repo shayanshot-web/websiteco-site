@@ -66,6 +66,7 @@ function cms_hero(string $title, string $meta = '', string $lead = ''): string {
 
 function cms_render_request(): void {
     if (isset($_GET['sitemap'])) { cms_sitemap(); return; }
+    if (isset($_GET['searchindex'])) { cms_search_index(); return; }
     $p = trim((string)($_GET['p'] ?? ''), '/');
     $seg = $p === '' ? [] : explode('/', $p);
     $lang = 'fa';
@@ -103,7 +104,7 @@ function cms_render_request(): void {
         $main = cms_hero($tr['title'], cms_meta_line($row2, $type, $lang), $tr['excerpt'])
             . '<article class="container prose cms-article">' . ($it['image'] ? '<div class="cms-cover">' . cms_img((int)$it['image'], $lang) . '</div>' : '')
             . ($info ? '<ul class="cms-info">' . $info . '</ul>' : '') . '<div class="cms-body">' . $tr['body'] . '</div>'
-            . ($type !== 'post' ? cms_form($type, $lang, $tr['title']) : '')
+            . ($type === 'event' ? cms_form($type, $lang, $tr['title']) : '')   // اقامتگاه و صنایع دستی فقط معرفی می‌شوند؛ فرم رزرو/سفارش ندارند
             . '<p><a class="more" href="' . e(cms_url($lang, $section)) . '">← ' . e($u['back']) . '</a></p></article>';
     } else {
         // صفحه بخش: متن ویرایش‌شده + فهرست محتوا
@@ -160,6 +161,24 @@ function cms_render_request(): void {
     header('Content-Type: text/html; charset=utf-8');
     header('Cache-Control: no-cache');
     echo $out;
+}
+
+/* فهرست جستجوی محتوای پنل (نوشته‌ها، صنایع دستی، اقامتگاه‌ها، رویدادها) برای صفحه جستجوی سایت */
+function cms_search_index(): void {
+    $out = [];
+    foreach (SECTION_TYPES as $section => $type) {
+        if ($type === 'gallery') continue;
+        foreach (array_keys(LANGS) as $lang) {
+            foreach (cms_items($type, $lang, 1000) as $it) {
+                $raw = ($it['excerpt'] !== '' ? $it['excerpt'] . ' ' : '') . $it['body'];
+                $text = trim((string)preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags($raw), ENT_QUOTES | ENT_HTML5, 'UTF-8')));
+                $out[] = ['l' => $lang, 'k' => $type, 't' => $it['title'], 'u' => cms_url($lang, $section, $it['slug']), 'x' => mb_substr($text, 0, 1500)];
+            }
+        }
+    }
+    header('Content-Type: application/json; charset=utf-8');
+    header('Cache-Control: no-cache');
+    echo json_encode($out, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
 
 function cms_sitemap(): void {

@@ -22,6 +22,9 @@ interface Props {
   langs: LangItem[];
   menuLabel: string;
   langLabel: string;
+  searchAction: string;
+  searchLabel: string;
+  searchPlaceholder: string;
 }
 
 function Logo() {
@@ -73,6 +76,26 @@ export default function Header(p: Props) {
               </li>
             ))}
           </ul>
+          {/* فرم ساده GET (بدون نیاز به جاوااسکریپت)، تا در صفحه‌های پویای PHP هم کار کند */}
+          <form className="header-search" action={p.searchAction} method="get" role="search">
+            <label className="sr-only" htmlFor="header-q">
+              {p.searchLabel}
+            </label>
+            <input
+              id="header-q"
+              type="search"
+              name="q"
+              placeholder={p.searchPlaceholder}
+              maxLength={100}
+              autoComplete="off"
+            />
+            <button type="submit" aria-label={p.searchLabel}>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" strokeWidth="2" />
+                <path d="M16 16l4.5 4.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </button>
+          </form>
           <div className="lang-switch" role="group" aria-label={p.langLabel}>
             {p.langs.map((l) => (
               <Link

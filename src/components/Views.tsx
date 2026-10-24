@@ -2,7 +2,8 @@ import Link from '@/components/A';
 import type { InnerPageId, Lang, Post } from '@/content/types';
 import ContactForm from './ContactForm';
 import { Rich, Sections } from './Rich';
-import { dicts, formatDate, pagePath, postPath, type Route } from '@/lib/i18n';
+import SearchView from './SearchView';
+import { dicts, formatDate, pagePath, postPath, searchPath, type Route } from '@/lib/i18n';
 
 function PageHero({ title, lead, meta }: { title: string; lead?: string; meta?: string }) {
   return (
@@ -46,7 +47,8 @@ function BlogList({ lang }: { lang: Lang }) {
 export function HomeView({ lang }: { lang: Lang }) {
   const d = dicts[lang];
   const h = d.home;
-  const tileLinks: InnerPageId[] = ['about', 'stay', 'experiences', 'experiences'];
+  // هر کاشی به صفحه اختصاصی خودش می‌رود: معرفی، اقامتگاه‌ها، جاذبه‌ها، رستوران‌ها
+  const tileLinks: InnerPageId[] = ['about', 'stay', 'attractions', 'restaurants'];
   return (
     <>
       <section className="hero">
@@ -138,6 +140,8 @@ export function HomeView({ lang }: { lang: Lang }) {
         <div className="container narrow">
           <h2>{h.contactTitle}</h2>
           <p>
+            {d.ui.managerLabel}: {d.manager}
+            <br />
             {d.ui.phoneLabel}:{' '}
             <a href={`tel:${d.phone}`} dir="ltr">
               {d.phoneDisplay}
@@ -167,12 +171,15 @@ export function PageView({ lang, id }: { lang: Lang; id: InnerPageId }) {
             {id === 'stay' || id === 'shop' ? (
               <p>
                 <Link className="btn btn-blue" href={pagePath(lang, 'contact')}>
-                  {id === 'stay' ? d.home.stayCta : d.ui.shopCta}
+                  {d.nav.contact}
                 </Link>
               </p>
             ) : null}
             {id === 'contact' ? (
               <>
+                <p>
+                  {d.ui.managerLabel}: <strong>{d.manager}</strong>
+                </p>
                 <p>
                   <a className="btn btn-navy" href={`tel:${d.phone}`} dir="ltr">
                     {d.phoneDisplay}
@@ -206,8 +213,22 @@ export function PostView({ lang, post }: { lang: Lang; post: Post }) {
   );
 }
 
+export function SearchPageView({ lang }: { lang: Lang }) {
+  const d = dicts[lang];
+  return (
+    <>
+      <PageHero title={d.ui.search.title} lead={d.ui.search.lead} />
+      <div className="container prose">
+        <SearchView lang={lang} ui={d.ui.search} action={searchPath(lang)} />
+      </div>
+    </>
+  );
+}
+
 export function View({ route }: { route: Route }) {
   switch (route.kind) {
+    case 'search':
+      return <SearchPageView lang={route.lang} />;
     case 'home':
       return <HomeView lang={route.lang} />;
     case 'page':

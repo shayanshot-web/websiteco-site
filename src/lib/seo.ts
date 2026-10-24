@@ -9,6 +9,8 @@ export function metaFor(route: Route): Metadata {
   return {
     title,
     description,
+    // صفحه نتایج جستجو نباید در گوگل ایندکس شود
+    ...(route.kind === 'search' ? { robots: { index: false, follow: true } } : {}),
     alternates: {
       canonical: path,
       languages: {

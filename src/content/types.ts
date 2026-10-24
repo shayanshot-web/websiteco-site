@@ -9,6 +9,8 @@ export type PageId =
   | 'blog'
   | 'events'
   | 'shop'
+  | 'attractions'
+  | 'restaurants'
   | 'contact';
 
 export type InnerPageId = Exclude<PageId, 'home'>;
@@ -78,10 +80,23 @@ export interface UiStrings {
   publishedOn: string;
   backToBlog: string;
   noEvents: string;
-  shopCta: string;
   rights: string;
   phoneLabel: string;
   addressLabel: string;
+  managerLabel: string;
+  search: {
+    label: string;
+    placeholder: string;
+    button: string;
+    title: string;
+    lead: string;
+    loading: string;
+    tooShort: string;
+    noResults: string;
+    resultsFor: string;
+    error: string;
+    kinds: { page: string; post: string; product: string; stay: string; event: string };
+  };
   form: {
     name: string;
     phone: string;
@@ -110,6 +125,8 @@ export interface Dict {
   tagline: string;
   nav: Record<PageId, string>;
   slugs: Record<InnerPageId, string>;
+  /** اسلاگ صفحه جستجو */
+  searchSlug: string;
   /** اسلاگ‌های دیگری که صفحه اصلی هم روی آن‌ها نمایش داده می‌شود (آدرس‌های قدیمی وردپرس) */
   homeAliases: string[];
   pages: Record<InnerPageId, PageContent>;
@@ -118,6 +135,8 @@ export interface Dict {
   ui: UiStrings;
   phone: string;
   phoneDisplay: string;
+  /** نام مدیر مجموعه */
+  manager: string;
   address: string;
   org: string;
 }

@@ -6,8 +6,8 @@ export const en: Dict = {
   locale: 'en-US',
   ogLocale: 'en_US',
   langName: 'English',
-  siteName: 'Ancient Helileh',
-  tagline: 'Ancient Helileh, Bushehr',
+  siteName: 'Ancient Helileh, Bushehr',
+  tagline: 'A tourist destination by the sea',
   nav: {
     home: 'Home',
     about: 'About',
@@ -16,8 +16,10 @@ export const en: Dict = {
     gallery: 'Gallery',
     blog: 'Blog',
     events: 'Events',
-    shop: 'Shop',
-    contact: 'Contact',
+    shop: 'Handicrafts',
+    attractions: 'Attractions',
+    restaurants: 'Restaurants',
+    contact: 'Contact us',
   },
   slugs: {
     about: 'about-us',
@@ -27,13 +29,17 @@ export const en: Dict = {
     blog: 'travel-blog',
     events: 'events-calendar',
     shop: 'craft-shop',
+    attractions: 'attractions',
+    restaurants: 'restaurants',
     contact: 'contact-us',
   },
+  searchSlug: 'search',
   homeAliases: ['home-en'],
-  phone: '+989176553247',
-  phoneDisplay: '09176553247',
+  phone: '+989176443247',
+  phoneDisplay: '09176443247',
+  manager: 'Vahid Hasan Ahmadi',
   address: 'Bushehr – Helileh – Ancient Helileh',
-  org: 'Ancient Helileh',
+  org: 'Ancient Helileh, Bushehr',
   home: {
     eyebrow: 'BUSHEHR · PERSIAN GULF',
     h1: 'Ancient Helileh, a tourist destination by the sea',
@@ -42,18 +48,18 @@ export const en: Dict = {
     ctaEvents: 'Events calendar',
     introTitle: 'A coastal destination in Bushehr Province',
     introText:
-      'Ancient Helileh is a coastal destination near the city of Bushehr. Visitors can meet local people, taste southern dishes and see the work of local artisans. This site is your trip planner: book a stay, find local experiences, register for events and buy handicrafts.',
+      'Ancient Helileh is a coastal destination near the city of Bushehr. Visitors can meet local people, taste southern dishes and see the work of local artisans. This site is your trip planner: discover places to stay, local experiences, events and the handicrafts of Helileh.',
     introCta: 'Read more about Helileh',
     tiles: [
       { h: 'About', p: 'History and culture of Helileh' },
       { h: 'Stay', p: 'Eco-lodges and local homes' },
-      { h: 'Things to do', p: 'Shore, table and traditions' },
+      { h: 'Attractions', p: 'Shore, table and traditions' },
       { h: 'Restaurants', p: 'Taste local cooking' },
     ],
     stayTitle: 'Stay in the heart of Helileh',
     stayText:
-      'Browse local accommodation in Helileh and send a booking request. Our team will contact you to confirm.',
-    stayCta: 'Request a booking',
+      'Browse local accommodation in Helileh. Call the management to ask about capacity and to arrange a visit.',
+    stayCta: 'Contact us',
     doTitle: 'What to do in Helileh',
     doItems: [
       { h: 'Sea and shoreline', p: 'Walk the beach and watch the sun set over the Persian Gulf.' },
@@ -67,8 +73,8 @@ export const en: Dict = {
     eventsCta: 'See all events',
     shopTitle: 'Crafts and souvenirs from Helileh',
     shopText:
-      'Buy directly from local artisans, with delivery across Iran: pottery and vessels, woven goods and textiles, edible souvenirs, decor and gifts.',
-    shopCta: 'Handicraft shop',
+      'Get to know the handwork of Helileh artisans: pottery and vessels, woven goods and textiles, edible souvenirs, decor and gifts.',
+    shopCta: 'Helileh handicrafts',
     contactTitle: 'Get in touch with us',
   },
   pages: {
@@ -91,28 +97,26 @@ export const en: Dict = {
         {
           h: 'Before you go',
           p: [
-            'Autumn to spring is more comfortable for sightseeing than the hot, humid Bushehr summer. Contact us to arrange your visit and bookings.',
+            'Autumn to spring is more comfortable for sightseeing than the hot, humid Bushehr summer. Contact us to arrange your visit.',
           ],
         },
       ],
     },
     stay: {
       title: 'Stay',
-      lead: 'Staying in Helileh means starting the day in Helileh and ending it to the sound of the sea. Choose a place and send a booking request.',
+      lead: 'Staying in Helileh means starting the day in Helileh and ending it to the sound of the sea. Meet the places to stay in Helileh here.',
       sections: [
         {
-          h: 'Choose where to stay',
-          p: ['[Accommodation list with name, capacity and price to be provided by the management]'],
+          h: 'Our accommodation',
+          p: ['[Accommodation list with name, capacity and photos to be provided by the management]'],
         },
         {
           h: 'Facilities',
           p: ['Each place lists its own facilities: [bathroom, breakfast, parking, air conditioning, etc.].'],
         },
         {
-          h: 'How booking works',
-          p: [
-            'Fill in the inquiry form. Our team will call you to confirm dates and price. Payment is made after confirmation, in person or by the method announced.',
-          ],
+          h: 'More information',
+          p: ['To ask about capacity or arrange a visit, call the management through the Contact us page.'],
         },
       ],
     },
@@ -168,32 +172,58 @@ export const en: Dict = {
       ],
     },
     shop: {
-      title: 'Handicraft Shop',
-      lead: 'Buy the handwork of Helileh artisans straight from Helileh and have it delivered.',
+      title: 'Handicrafts',
+      lead: 'Get to know the handwork of Helileh artisans, crafts that have been passed down in this village for generations.',
       sections: [
         {
-          h: 'Products',
+          h: 'Our handicrafts',
           p: [
-            'Categories: pottery and vessels, woven goods and textiles, edible souvenirs, decor and gifts. [Real products: to be completed]',
+            'Categories: pottery and vessels, woven goods and textiles, edible souvenirs, decor and gifts. [Introduce the real crafts and artisans of Helileh: to be completed]',
           ],
         },
         {
-          h: 'Shipping and returns',
-          p: ['Preparation and shipping time appear on each product page. [Return terms: to be completed]'],
+          h: 'Meet the artisans',
+          p: ['To see the workshops and arrange a visit, call the management.'],
+        },
+      ],
+    },
+    attractions: {
+      title: 'Attractions',
+      lead: 'The shore, the Persian Gulf sunset and the customs of Helileh people: sights worth seeing.',
+      sections: [
+        {
+          h: 'Sea and shoreline',
+          p: ['Walk the beach and watch the Persian Gulf sunset. [Beach names and safety notes: to be completed]'],
         },
         {
-          h: 'Buying from outside Iran',
-          p: [
-            'Iranian payment gateways do not accept foreign cards. For international orders, please fill in the inquiry form.',
-          ],
+          h: 'Historic and cultural sights',
+          p: ['[List of Helileh’s historic and cultural sights with a short description: to be provided by the management]'],
+        },
+        {
+          h: 'Traditions and culture',
+          p: ['Clothing, music and customs of Helileh people. [Dates and descriptions: to be completed]'],
+        },
+      ],
+    },
+    restaurants: {
+      title: 'Restaurants',
+      lead: 'Get to know the local food of Helileh and Bushehr and find a good place to eat.',
+      sections: [
+        {
+          h: 'Local dishes',
+          p: ['Meet southern home cooking and the flavours of Bushehr. [Dish names: to be completed]'],
+        },
+        {
+          h: 'Restaurants and eateries',
+          p: ['[List of restaurants and eateries with address and phone: to be provided by the management]'],
         },
       ],
     },
     contact: {
-      title: 'Contact',
-      lead: 'Get in touch with us for bookings, visit arrangements or any question.',
+      title: 'Contact us',
+      lead: 'Get in touch with the Helileh management to arrange a visit, ask about accommodation and handicrafts, or with any question.',
       sections: [
-        { h: 'Ways to reach us', p: ['Management phone (Mr. Vahid Hasan Ahmadi): 09176553247'] },
+        { h: 'Management', p: ['Mr. Vahid Hasan Ahmadi'] },
         { h: 'Address', p: ['Bushehr – Helileh – Ancient Helileh'] },
         { h: 'Reply hours', p: ['[Reply hours: to be completed]'] },
       ],
@@ -237,7 +267,7 @@ export const en: Dict = {
       slug: 'helileh-handicraft-souvenirs-3',
       title: 'What to buy in Helileh: a handicraft guide',
       excerpt:
-        'A guide to buying souvenirs from Helileh: which handicrafts to choose, how to spot handmade quality and where to order.',
+        'A guide to Helileh souvenirs: which handicrafts to look for and how to spot handmade quality.',
       date: '2026-10-14',
       lead: 'Handicrafts make the best travel keepsake. This guide helps you recognise handwork and choose well.',
       sections: [
@@ -255,14 +285,8 @@ export const en: Dict = {
           ],
         },
         {
-          h: 'Buy in person or online',
-          p: ['Buy at the workshop or from the Helileh online shop. Every product lists specifications and shipping time.'],
-        },
-        {
-          h: 'For international visitors',
-          p: [
-            'For delivery outside Iran, fill in the inquiry form and we will quote the cost and shipping method.',
-          ],
+          h: 'Meet the artisans',
+          p: ['To see the workshops and arrange a visit, call the Helileh management.'],
         },
       ],
     },
@@ -276,16 +300,29 @@ export const en: Dict = {
     publishedOn: 'Published on',
     backToBlog: 'Back to the blog',
     noEvents: 'No events have been announced yet. The programme will appear here soon.',
-    shopCta: 'Place an inquiry',
     rights: 'All rights reserved.',
     phoneLabel: 'Phone',
     addressLabel: 'Address',
+    managerLabel: 'Management',
+    search: {
+      label: 'Search the site',
+      placeholder: 'Search…',
+      button: 'Search',
+      title: 'Search',
+      lead: 'Type a word or phrase to find it in the pages and posts of the site.',
+      loading: 'Searching…',
+      tooShort: 'Please type at least two characters.',
+      noResults: 'No results found. Try a different word.',
+      resultsFor: 'Results for',
+      error: 'The search could not be completed. Please try again.',
+      kinds: { page: 'Page', post: 'Post', product: 'Handicraft', stay: 'Stay', event: 'Event' },
+    },
     form: {
       name: 'Name',
       phone: 'Phone',
       email: 'Email',
       subject: 'Subject',
-      subjectOptions: ['Accommodation booking', 'Event', 'Shop', 'Other'],
+      subjectOptions: ['Accommodation', 'Handicrafts', 'Event', 'Other'],
       message: 'Message',
       send: 'Send message',
       sending: 'Sending…',

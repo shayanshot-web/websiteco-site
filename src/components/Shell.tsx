@@ -10,6 +10,7 @@ import {
   langs,
   pagePath,
   routePath,
+  searchPath,
   type Route,
 } from '@/lib/i18n';
 
@@ -39,6 +40,9 @@ export default function Shell({ route, children }: { route: Route; children: Rea
         langs={switcher}
         menuLabel={d.ui.menu}
         langLabel={d.ui.language}
+        searchAction={searchPath(lang)}
+        searchLabel={d.ui.search.label}
+        searchPlaceholder={d.ui.search.placeholder}
       />
       <main id="main">{children}</main>
       <footer className="site-footer">
@@ -57,6 +61,9 @@ export default function Shell({ route, children }: { route: Route; children: Rea
             </ul>
           </nav>
           <div>
+            <p>
+              {d.ui.managerLabel}: {d.manager}
+            </p>
             <p>
               {d.ui.phoneLabel}:{' '}
               <a href={`tel:${d.phone}`} dir="ltr">

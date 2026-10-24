@@ -14,19 +14,26 @@ export const innerIds: InnerPageId[] = [
   'blog',
   'events',
   'shop',
+  'attractions',
+  'restaurants',
   'contact',
 ];
 
 export type Route =
   | { kind: 'home'; lang: Lang }
   | { kind: 'page'; lang: Lang; id: InnerPageId }
-  | { kind: 'post'; lang: Lang; post: Post };
+  | { kind: 'post'; lang: Lang; post: Post }
+  | { kind: 'search'; lang: Lang };
 
 const prefix = (l: Lang) => (l === 'fa' ? '' : `/${l}`);
 
 export function pagePath(l: Lang, id: PageId): string {
   if (id === 'home') return l === 'fa' ? '/' : `/${l}/`;
   return `${prefix(l)}/${dicts[l].slugs[id]}/`;
+}
+
+export function searchPath(l: Lang): string {
+  return `${prefix(l)}/${dicts[l].searchSlug}/`;
 }
 
 export function postPath(l: Lang, post: Post): string {
@@ -41,6 +48,8 @@ export function routePath(r: Route): string {
       return pagePath(r.lang, r.id);
     case 'post':
       return postPath(r.lang, r.post);
+    case 'search':
+      return searchPath(r.lang);
   }
 }
 
@@ -51,6 +60,8 @@ export function altRoute(r: Route, l: Lang): Route {
       return { kind: 'home', lang: l };
     case 'page':
       return { kind: 'page', lang: l, id: r.id };
+    case 'search':
+      return { kind: 'search', lang: l };
     case 'post': {
       const post = dicts[l].posts.find((p) => p.id === r.post.id) ?? dicts[l].posts[0];
       return { kind: 'post', lang: l, post };
@@ -81,6 +92,7 @@ export function resolve(slug: string[]): Route | null {
   if (rest.length > 1) return null;
   const s = rest[0];
   if (d.homeAliases.includes(s)) return { kind: 'home', lang };
+  if (s === d.searchSlug) return { kind: 'search', lang };
   const id = innerIds.find((i) => d.slugs[i] === s);
   if (id) return { kind: 'page', lang, id };
   const post = d.posts.find((p) => p.slug === s);
@@ -96,6 +108,7 @@ export function staticSlugs(): string[][] {
     const base = l === 'fa' ? [] : [l];
     if (l !== 'fa') out.push(base);
     for (const a of d.homeAliases) out.push([...base, a]);
+    out.push([...base, d.searchSlug]);
     for (const id of innerIds) out.push([...base, d.slugs[id]]);
     for (const p of d.posts) out.push([...base, p.slug]);
   }
@@ -116,6 +129,8 @@ export function routeTitle(r: Route): string {
       return `${d.pages[r.id].title} | ${d.siteName}`;
     case 'post':
       return `${r.post.title} | ${d.siteName}`;
+    case 'search':
+      return `${d.ui.search.title} | ${d.siteName}`;
   }
 }
 
@@ -128,6 +143,8 @@ export function routeDescription(r: Route): string {
       return stripTodo(d.pages[r.id].lead);
     case 'post':
       return stripTodo(r.post.excerpt);
+    case 'search':
+      return d.ui.search.lead;
   }
 }
 

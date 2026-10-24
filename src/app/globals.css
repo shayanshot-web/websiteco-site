@@ -110,11 +110,14 @@ a {
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
 }
+.site-header .container {
+  max-width: 1320px;
+}
 .header-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   min-height: 68px;
 }
 .brand {
@@ -125,6 +128,8 @@ a {
   color: var(--navy);
   font-weight: 800;
   font-size: 1.05rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .site-nav ul {
   list-style: none;
@@ -132,15 +137,16 @@ a {
   padding: 0;
   display: flex;
   gap: 2px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .site-nav a {
   display: block;
-  padding: 6px 12px;
+  padding: 6px 7px;
   border-radius: 999px;
   text-decoration: none;
   color: var(--ink);
-  font-size: 0.95rem;
+  font-size: 0.93rem;
+  white-space: nowrap;
 }
 .site-nav a:hover {
   background: var(--cream);
@@ -152,8 +158,8 @@ a {
 .lang-switch {
   display: flex;
   gap: 4px;
-  margin-inline-start: 12px;
-  padding-inline-start: 12px;
+  margin-inline-start: 8px;
+  padding-inline-start: 8px;
   border-inline-start: 1px solid var(--line);
 }
 .lang-switch a {
@@ -169,6 +175,45 @@ a {
 .site-nav {
   display: flex;
   align-items: center;
+}
+.header-search {
+  display: flex;
+  align-items: center;
+  margin-inline-start: 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  overflow: hidden;
+}
+.header-search input {
+  font: inherit;
+  font-size: 0.9rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 12px;
+  width: 5.5rem;
+  min-width: 0;
+}
+.header-search input:focus-visible {
+  outline: none;
+}
+.header-search:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px rgba(10, 111, 181, 0.2);
+}
+.header-search button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--navy);
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.header-search button:hover {
+  background: var(--cream);
 }
 .nav-toggle {
   display: none;
@@ -207,9 +252,17 @@ a {
   top: 7px;
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1340px) {
   .nav-toggle {
     display: inline-flex;
+  }
+  .header-search {
+    margin: 12px 0 0;
+  }
+  .header-search input {
+    flex: 1;
+    width: auto;
+    font-size: 1rem;
   }
   .site-nav {
     display: none;
@@ -541,5 +594,87 @@ a {
   * {
     transition: none !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- جستجو ---------- */
+.search-page-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.search-page-form input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  padding: 10px 14px;
+  border: 1px solid #c9bda4;
+  border-radius: 999px;
+  background: #fffefb;
+  color: var(--ink);
+}
+.search-status {
+  min-height: 1.5em;
+  margin: 12px 0;
+  font-weight: 600;
+  color: var(--muted);
+}
+.search-summary {
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+.search-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.search-results li {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+}
+.search-results h2 {
+  margin: 4px 0 6px;
+  font-size: 1.15rem;
+}
+.search-results h2 a {
+  color: var(--navy);
+  text-decoration: none;
+}
+.search-results h2 a:hover {
+  text-decoration: underline;
+}
+.search-results p {
+  margin: 0;
+  color: var(--muted);
+}
+.search-kind {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--navy);
+}
+
+/* برچسب‌های روسی بلندترند؛ فشرده‌تر تا منو در یک خط جا شود */
+.lang-ru .site-nav a {
+  padding: 6px 5px;
+  font-size: 0.9rem;
+}
+.lang-ru .header-search input {
+  width: 4.5rem;
+}
+@media (max-width: 1340px) {
+  .lang-ru .site-nav a {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+  .lang-ru .header-search input {
+    width: auto;
   }
 }

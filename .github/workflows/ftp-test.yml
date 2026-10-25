@@ -1,0 +1,23 @@
+name: FTP login test (read-only)
+on:
+  push:
+    branches: [probe]
+    paths: ['.github/workflows/ftp-test.yml']
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - run: |
+          # run-id: 2
+          OUT=""
+          for p in / /search/ "/search/?q=%D9%88%D8%AD%DB%8C%D8%AF" /search-index.json /search-cms.json /attractions/ /restaurants/ /accommodations/ /handicraft-shop/ /contact/ /en/ /ru/poisk/ /admin/ /install.php; do
+            code=$(curl -s -o /tmp/b -w '%{http_code}' --max-time 20 "https://websiteco.ir$p")
+            t=$(grep -o '<title>[^<]*' /tmp/b | head -1 | cut -c1-70)
+            OUT+="$code $p  $t"$'\n'
+          done
+          OUT+="phone-new: $(curl -s https://websiteco.ir/contact/ | grep -c '۰۹۱۷۶۴۴۳۲۴۷')  phone-old: $(curl -s https://websiteco.ir/contact/ | grep -c '۰۹۱۷۶۵۵۳۲۴۷')  manager: $(curl -s https://websiteco.ir/contact/ | grep -c 'وحید')"$'\n'
+          OUT+="tiles: $(curl -s https://websiteco.ir/ | grep -o 'href="[^"]*" class="tile"' | tr '\n' ' ')"$'\n'
+          OUT+="nav-shop-cart: $(curl -s https://websiteco.ir/ | grep -c 'سبد خرید')  nav-فروشگاه: $(curl -s https://websiteco.ir/ | grep -o '<nav id="site-nav".*</nav>' | grep -c 'فروشگاه')"$'\n'
+          OUT="${OUT//'%'/'%25'}"; OUT="${OUT//$'\n'/'%0A'}"
+          echo "::notice title=LIVE::${OUT}"

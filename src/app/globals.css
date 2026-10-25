@@ -338,23 +338,55 @@ a {
 
 /* ---------- صفحه اصلی ---------- */
 .hero {
+  --art-h: clamp(210px, 29.17vw, 800px);
+  --pb: 0.62;
   position: relative;
-  background: linear-gradient(165deg, var(--navy) 55%, #0b5a92 100%);
   color: #fff;
-  padding: 96px 0 140px;
+  padding: 72px 0 calc(var(--art-h) * var(--pb));
   overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    #08304f 0%,
+    #0a5c97 calc(100% - var(--art-h) * 0.95),
+    #2a82bf calc(100% - var(--art-h) * 0.66),
+    #f0b777 calc(100% - var(--art-h) * 0.533)
+  );
 }
-.hero::after {
-  content: '';
+.hero-copy {
+  position: relative;
+  z-index: 1;
+}
+.hero-art {
   position: absolute;
   inset-inline: 0;
-  bottom: -1px;
-  height: 70px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 70' preserveAspectRatio='none'%3E%3Cpath d='M0 40c150-40 300-40 450 0s300 40 450 0 225-25 300-10v40H0z' fill='%23fffdf8'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  bottom: 0;
+  height: var(--art-h);
+  pointer-events: none;
+}
+.hero-scene {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* در زبان‌های چپ‌به‌راست متن سمت چپ است؛ صحنه آینه می‌شود تا خورشید و لنج زیر متن نیفتند */
+.lang-en .hero-scene,
+.lang-ru .hero-scene {
+  transform: scaleX(-1);
+}
+@media (max-width: 700px) {
+  .hero {
+    --pb: 0.9;
+    padding-top: 56px;
+  }
+  .scene-right {
+    display: none;
+  }
 }
 .hero h1 {
   color: #fff;
   max-width: 18ch;
+  font-weight: 800;
+  text-shadow: 0 2px 20px rgba(4, 30, 52, 0.35);
 }
 .lang-fa .hero h1 {
   max-width: 22ch;
@@ -380,14 +412,22 @@ a {
   border-inline-start: 5px solid var(--sand);
 }
 .band {
+  position: relative;
   background: var(--cream);
   color: var(--ink);
-  padding: 56px 0;
+  padding: 72px 0;
+}
+.band .wave-edge.top {
+  color: var(--cream);
 }
 .contact-band {
+  position: relative;
   background: var(--navy);
   color: #fff;
-  padding: 48px 0;
+  padding: 64px 0 56px;
+}
+.contact-band .wave-edge.top {
+  color: var(--navy);
 }
 .contact-band h2 {
   color: #fff;
@@ -401,23 +441,49 @@ a {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 999px) {
+  .tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 .tile {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   height: 100%;
-  padding: 22px;
-  background: #fff;
+  padding: 34px 18px 26px;
+  background: linear-gradient(180deg, #fff 0%, #fbf6ea 100%);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 140px 140px 18px 18px;
   text-decoration: none;
   color: var(--ink);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
-.tile:hover {
-  transform: translateY(-3px);
+.tile:hover,
+.tile:focus-visible {
+  transform: translateY(-4px);
   box-shadow: var(--shadow);
+  border-color: var(--sand);
+}
+.tile-icon {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--sand);
+  box-shadow: 0 0 0 6px var(--cream);
+  transition: background 0.2s ease;
+}
+.tile:hover .tile-icon,
+.tile:focus-visible .tile-icon {
+  background: var(--blue);
 }
 .tile h3 {
   margin-bottom: 4px;
@@ -425,6 +491,171 @@ a {
 .tile p {
   margin: 0;
   color: var(--muted);
+}
+
+.tiles-wrap {
+  padding-bottom: 64px;
+}
+@media (max-width: 600px) {
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .tile h3,
+  .tile p {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+  .lang-ru .tile h3 {
+    font-size: 0.86rem;
+  }
+  .tile {
+    padding: 26px 10px 20px;
+  }
+  .tile-icon {
+    width: 70px;
+    height: 70px;
+  }
+  .tile-icon .icon {
+    width: 40px;
+    height: 40px;
+  }
+  .tile h3 {
+    font-size: 1.02rem;
+  }
+  .tile p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+}
+
+/* ---------- آیکن‌ها ---------- */
+.icon .f {
+  fill: var(--sand);
+  fill-opacity: 0.55;
+}
+.tile-icon .icon .f,
+.hero-badge .icon .f,
+.contact-list.on-dark .icon .f {
+  fill: var(--sand);
+  fill-opacity: 0.25;
+}
+.do-card {
+  background: transparent;
+  border: 0;
+  border-top: 3px solid var(--sand);
+  border-radius: 0;
+  padding: 18px 2px 0;
+}
+.do-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 10px;
+  border-radius: 50% 50% 50% 14px;
+  background: var(--cream);
+  color: var(--blue);
+}
+[dir='rtl'] .do-icon,
+.lang-fa .do-icon {
+  border-radius: 50% 50% 14px 50%;
+}
+.contact-list {
+  list-style: none;
+  margin: 20px 0 28px;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  font-size: 1.1rem;
+}
+.contact-list .icon {
+  flex: none;
+  color: var(--navy);
+}
+.contact-list.on-dark {
+  max-width: 460px;
+}
+.contact-list.on-dark li {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.contact-list.on-dark .icon {
+  color: var(--sand);
+}
+
+/* ---------- لبه‌های موجی ---------- */
+.wave-edge {
+  position: absolute;
+  inset-inline: 0;
+  width: 100%;
+  height: 28px;
+  display: block;
+  fill: currentColor;
+  pointer-events: none;
+}
+.wave-edge.top {
+  top: -27px;
+}
+.wave-edge.bottom {
+  bottom: -1px;
+  color: var(--bg);
+}
+
+/* ---------- موج‌های صحنه اصلی ---------- */
+.wave {
+  animation: wave-drift 18s linear infinite;
+}
+.w2 {
+  animation-duration: 26s;
+  animation-direction: reverse;
+}
+.w3 {
+  animation-duration: 34s;
+}
+.w4 {
+  animation-duration: 44s;
+  animation-direction: reverse;
+}
+.w5 {
+  animation-duration: 58s;
+}
+@keyframes wave-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-360px);
+  }
+}
+.dhow {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: dhow-bob 8s ease-in-out infinite;
+}
+@keyframes dhow-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(1.2deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wave,
+  .dhow {
+    animation: none !important;
+  }
 }
 
 .cards {
@@ -454,9 +685,40 @@ a {
 
 /* ---------- صفحه‌های داخلی ---------- */
 .page-hero {
-  background: var(--cream);
-  padding: 48px 0 36px;
-  border-bottom: 1px solid var(--line);
+  position: relative;
+  background: linear-gradient(180deg, var(--cream), #efe5cf);
+  padding: 44px 0 68px;
+}
+.page-hero-row {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.hero-badge {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--sand);
+  box-shadow: 0 0 0 6px rgba(10, 62, 102, 0.1);
+}
+@media (max-width: 560px) {
+  .page-hero-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .hero-badge {
+    width: 68px;
+    height: 68px;
+  }
+  .hero-badge .icon {
+    width: 36px;
+    height: 36px;
+  }
 }
 .page-hero h1 {
   margin-bottom: 0.3em;
@@ -550,9 +812,13 @@ a {
 
 /* ---------- فوتر ---------- */
 .site-footer {
+  position: relative;
   background: #072f4d;
   color: #d6e4ef;
-  padding-top: 40px;
+  padding-top: 48px;
+}
+.site-footer .wave-edge.top {
+  color: #072f4d;
 }
 .site-footer a {
   color: var(--sand);

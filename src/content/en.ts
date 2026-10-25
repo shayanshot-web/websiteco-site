@@ -223,8 +223,6 @@ export const en: Dict = {
       title: 'Contact us',
       lead: 'Get in touch with the Helileh management to arrange a visit, ask about accommodation and handicrafts, or with any question.',
       sections: [
-        { h: 'Management', p: ['Mr. Vahid Hasan Ahmadi'] },
-        { h: 'Address', p: ['Bushehr – Helileh – Ancient Helileh'] },
         { h: 'Reply hours', p: ['[Reply hours: to be completed]'] },
       ],
     },

@@ -2,6 +2,7 @@ import Link from '@/components/A';
 import type { ReactNode } from 'react';
 import type { PageId } from '@/content/types';
 import Header from './Header';
+import { WaveEdge } from './Art';
 import LangSync from './LangSync';
 import {
   altRoute,
@@ -46,6 +47,7 @@ export default function Shell({ route, children }: { route: Route; children: Rea
       />
       <main id="main">{children}</main>
       <footer className="site-footer">
+        <WaveEdge position="top" />
         <div className="container footer-grid">
           <div>
             <p className="footer-title">{d.siteName}</p>

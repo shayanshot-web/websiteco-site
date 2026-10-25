@@ -3,6 +3,7 @@
 import Link from '@/components/A';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { Logo } from '@/components/Art';
 
 export interface NavItem {
   label: string;
@@ -25,17 +26,6 @@ interface Props {
   searchAction: string;
   searchLabel: string;
   searchPlaceholder: string;
-}
-
-function Logo() {
-  return (
-    <svg className="logo" viewBox="0 0 40 40" width="38" height="38" aria-hidden="true">
-      <circle cx="20" cy="20" r="20" fill="#0A3E66" />
-      <circle cx="20" cy="15" r="5" fill="#D9C7A6" />
-      <path d="M6 24c3.4-2.6 6.8-2.6 10.2 0s6.8 2.6 10.2 0 5.4-2 7.6-.6" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-      <path d="M6 30c3.4-2.6 6.8-2.6 10.2 0s6.8 2.6 10.2 0 5.4-2 7.6-.6" fill="none" stroke="#0A6FB5" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
 }
 
 export default function Header(p: Props) {

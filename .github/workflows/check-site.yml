@@ -31,6 +31,6 @@ jobs:
           add "--- DNS ftp host: $(getent hosts "$S" | head -1 | awk '{print $1}')"
           add "--- FTP public_html listing (-l) filtered:"
           sudo apt-get install -y lftp >/dev/null 2>&1
-          add "$(lftp -u "$U","$P" "ftp://$S" -e "set ftp:ssl-force true; set ssl:verify-certificate false; cls -l /; cls -l /public_html/; cls -l /public_html/build.txt /public_html/search /public_html/attractions; quit" 2>&1 | tail -45)"
+          add "$(lftp -u "$U","$P" "ftp://$S" -e "set ftp:ssl-force true; set ssl:verify-certificate false; cls -l /; cls -l /build.txt /search /attractions /admin; quit" 2>&1 | tail -45)"
           OUT="${OUT//'%'/'%25'}"; OUT="${OUT//$'\r'/}"; OUT="${OUT//$'\n'/'%0A'}"
           echo "::notice title=SITE CHECK::${OUT}"

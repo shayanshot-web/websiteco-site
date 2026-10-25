@@ -28,7 +28,7 @@ jobs:
           timeout: 120000
           log-level: standard
           local-dir: ./out/
-          server-dir: public_html/
+          server-dir: ./
           # عکس‌های آپلودشده از پنل و دیتابیس هرگز لمس نمی‌شوند
           exclude: |
             **/.git*

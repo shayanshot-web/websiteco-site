@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 3
     steps:
       - run: |
-          # run-id: 2
+          set +e
           OUT=""
           for p in / /search/ "/search/?q=%D9%88%D8%AD%DB%8C%D8%AF" /search-index.json /search-cms.json /attractions/ /restaurants/ /accommodations/ /handicraft-shop/ /contact/ /en/ /ru/poisk/ /admin/ /install.php; do
             code=$(curl -s -o /tmp/b -w '%{http_code}' --max-time 20 "https://websiteco.ir$p")

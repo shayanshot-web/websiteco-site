@@ -53,6 +53,7 @@ export interface HomeContent {
   lead: string;
   ctaStay: string;
   ctaEvents: string;
+  ctaAbout: string;
   introTitle: string;
   introText: string;
   introCta: string;

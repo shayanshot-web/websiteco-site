@@ -666,15 +666,15 @@ a {
   }
 }
 .ta-bob {
-  animation: ta-bob 4.2s ease-in-out infinite;
+  animation: ta-bob 3.6s ease-in-out infinite;
 }
 @keyframes ta-bob {
   0%,
   100% {
-    transform: translate(206px, 278px) rotate(-2deg);
+    transform: translate(190px, 280px) rotate(-4deg);
   }
   50% {
-    transform: translate(206px, 284px) rotate(2.5deg);
+    transform: translate(224px, 270px) rotate(4deg);
   }
 }
 .ta-swim {
@@ -874,15 +874,15 @@ a {
 .dhow {
   transform-box: fill-box;
   transform-origin: 50% 100%;
-  animation: dhow-bob 8s ease-in-out infinite;
+  animation: dhow-bob 4.2s ease-in-out infinite;
 }
 @keyframes dhow-bob {
   0%,
   100% {
-    transform: translateY(0) rotate(-1deg);
+    transform: translateY(1px) rotate(-2.4deg);
   }
   50% {
-    transform: translateY(-4px) rotate(1.2deg);
+    transform: translateY(-7px) rotate(2.6deg);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1447,14 +1447,66 @@ a {
   }
 }
 .dhow-drift {
-  animation: dhow-drift 46s ease-in-out infinite alternate;
+  animation: dhow-sail 34s linear infinite;
 }
-@keyframes dhow-drift {
-  from {
-    transform: translateX(-50px);
+@keyframes dhow-sail {
+  0% {
+    transform: translateX(-460px);
+    opacity: 0;
   }
-  to {
-    transform: translateX(70px);
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(760px);
+    opacity: 0;
+  }
+}
+.dhow .sail,
+.dhow .flag {
+  transform-box: fill-box;
+}
+.dhow .sail {
+  transform-origin: 50% 100%;
+  animation: sail-billow 3.4s ease-in-out infinite;
+}
+.dhow .flag {
+  transform-origin: 0 50%;
+  animation: flag-wave 0.7s ease-in-out infinite;
+}
+.dhow .wake {
+  animation: wake 2.2s ease-in-out infinite;
+}
+@keyframes sail-billow {
+  0%,
+  100% {
+    transform: scaleX(1) skewX(0deg);
+  }
+  50% {
+    transform: scaleX(1.05) skewX(-3deg);
+  }
+}
+@keyframes flag-wave {
+  0%,
+  100% {
+    transform: scaleX(1) skewY(0deg);
+  }
+  50% {
+    transform: scaleX(1.35) skewY(10deg);
+  }
+}
+@keyframes wake {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-10px);
   }
 }
 
@@ -1703,6 +1755,42 @@ a {
   .icon *,
   .sound-toggle::after,
   .snd {
+    animation: none !important;
+  }
+}
+
+/* نماد جستجوی کوچک در بالای صفحه (موبایل/تبلت) */
+.header-search-link {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-inline-start: auto;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--navy);
+  background: #fff;
+}
+.header-search-link:hover {
+  background: var(--cream);
+}
+@media (max-width: 1340px) {
+  .header-search-link {
+    display: inline-flex;
+  }
+  .nav-toggle {
+    margin-inline-start: 8px;
+  }
+  .site-nav .header-search {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dhow-drift,
+  .dhow .sail,
+  .dhow .flag,
+  .dhow .wake {
     animation: none !important;
   }
 }

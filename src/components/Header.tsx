@@ -41,6 +41,13 @@ export default function Header(p: Props) {
           <span>{p.siteName}</span>
         </Link>
 
+        <a className="header-search-link" href={p.searchAction} aria-label={p.searchLabel} data-sound="pop">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" strokeWidth="2" />
+            <path d="M16 16l4.5 4.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </a>
+
         <button
           type="button"
           className="nav-toggle"

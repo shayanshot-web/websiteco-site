@@ -46,6 +46,7 @@ export const en: Dict = {
     lead: 'Southern hospitality, local food and handmade crafts, close to the city of Bushehr, Iran.',
     ctaStay: 'Where to stay',
     ctaEvents: 'Events calendar',
+    ctaAbout: 'About Ancient Helileh',
     introTitle: 'A coastal destination in Bushehr Province',
     introText:
       'Ancient Helileh is a coastal destination near the city of Bushehr. Visitors can meet local people, taste southern dishes and see the work of local artisans. This site is your trip planner: discover places to stay, local experiences, events and the handicrafts of Helileh.',

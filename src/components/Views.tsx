@@ -20,37 +20,18 @@ const pageIcons: Record<InnerPageId, IconName> = {
   contact: 'contact',
 };
 
-function SearchBar({ lang, className = '' }: { lang: Lang; className?: string }) {
-  const u = dicts[lang].ui.search;
-  const id = `q-${className || 'page'}`;
-  return (
-    <form className={`hero-search ${className}`.trim()} action={searchPath(lang)} method="get" role="search">
-      <label className="sr-only" htmlFor={id}>
-        {u.label}
-      </label>
-      <input id={id} type="search" name="q" placeholder={u.placeholder} maxLength={100} autoComplete="off" />
-      <button type="submit" data-sound="pop">
-        <Icon name="search" size={22} />
-        <span>{u.button}</span>
-      </button>
-    </form>
-  );
-}
-
 function PageHero({
   title,
   lead,
   meta,
   icon,
   lang,
-  search = true,
 }: {
   title: string;
   lead?: string;
   meta?: string;
   icon?: IconName;
   lang: Lang;
-  search?: boolean;
 }) {
   return (
     <section className="page-hero">
@@ -68,7 +49,6 @@ function PageHero({
               <Rich text={lead} />
             </p>
           ) : null}
-          {search ? <SearchBar lang={lang} /> : null}
         </div>
       </div>
       <WaveEdge position="bottom" />
@@ -113,10 +93,9 @@ export function HomeView({ lang }: { lang: Lang }) {
           <p className="eyebrow">{h.eyebrow}</p>
           <h1>{h.h1}</h1>
           <p className="hero-lead">{h.lead}</p>
-          <SearchBar lang={lang} className="on-hero" />
           <div className="btn-row">
-            <Link data-sound="pop" className="btn btn-sand" href={pagePath(lang, 'stay')}>
-              {h.ctaStay}
+            <Link data-sound="pop" className="btn btn-sand" href={pagePath(lang, 'about')}>
+              {h.ctaAbout}
             </Link>
             <Link data-sound="pop" className="btn btn-outline" href={pagePath(lang, 'events')}>
               {h.ctaEvents}
@@ -318,7 +297,7 @@ export function SearchPageView({ lang }: { lang: Lang }) {
   const d = dicts[lang];
   return (
     <>
-      <PageHero title={d.ui.search.title} lead={d.ui.search.lead} icon="experiences" lang={lang} search={false} />
+      <PageHero title={d.ui.search.title} lead={d.ui.search.lead} icon="experiences" lang={lang} />
       <div className="container prose">
         <SearchView lang={lang} ui={d.ui.search} action={searchPath(lang)} />
       </div>

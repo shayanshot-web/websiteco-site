@@ -224,6 +224,12 @@ function Palm({ x, y, s = 1, flip = false }: { x: number; y: number; s?: number;
 function Dhow() {
   return (
     <g className="dhow">
+      {/* ردّ کف پشت لنج */}
+      <g className="wake" fill="none" stroke="#fff" strokeLinecap="round">
+        <path d="M-100 14q-40 4-84 0" strokeWidth="4" opacity=".7" />
+        <path d="M-96 22q-56 5-120 0" strokeWidth="3" opacity=".5" />
+        <path d="M-92 30q-70 5-150 0" strokeWidth="2.5" opacity=".35" />
+      </g>
       {/* بازتاب روی آب */}
       <ellipse cx="0" cy="10" rx="110" ry="5" fill="#06304f" opacity=".28" />
       <path d="M-60 16h120M-40 22h80" stroke="#ffe3b0" strokeWidth="2" strokeLinecap="round" opacity=".5" />
@@ -232,11 +238,11 @@ function Dhow() {
       <path d="M-90 -6Q0 4 88 -14" fill="none" stroke="#d9c7a6" strokeWidth="2.2" />
       {/* دکل و بادبان‌ها */}
       <path d="M-4 -12V-150" stroke="#2b1a10" strokeWidth="3" strokeLinecap="round" />
-      <path d="M-78 -20 -2 -146 62 -20z" fill="#f6f0e4" />
+      <g className="sail"><path d="M-78 -20 -2 -146 62 -20z" fill="#f6f0e4" /></g>
       <path d="M-58 -42H46M-44 -66H34" stroke="#d9c7a6" strokeWidth="3" strokeLinecap="round" />
       <path d="M68 -24 86 -84 98 -30z" fill="#d9c7a6" />
       <path d="M-2 -150 98 -34M-2 -150-96 -16" stroke="#2b1a10" strokeWidth="1.2" fill="none" opacity=".7" />
-      <path d="M-4 -150l16 4-16 6z" fill="#e0734a" />
+      <path className="flag" d="M-4 -150l16 4-16 6z" fill="#e0734a" />
     </g>
   );
 }

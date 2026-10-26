@@ -62,34 +62,95 @@ function hiss(
   src.stop(t + o.dur + 0.05);
 }
 
+
+/* شاخ/کَرنای باستانی: دو نت اکتاو و پنجم با موج دندانه‌ای و فیلتر پایین‌گذر */
+function horn(c: Ctx, out: AudioNode, o: { f: number; at?: number; dur: number; vol: number; attack: number; cutoff: number }) {
+  const t = c.currentTime + (o.at ?? 0);
+  const lp = c.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.Q.value = 2;
+  lp.frequency.setValueAtTime(o.cutoff * 0.5, t);
+  lp.frequency.exponentialRampToValueAtTime(o.cutoff, t + o.attack);
+  lp.connect(env(c, out, t, o.vol, o.attack, o.dur));
+  [1, 1.005].forEach((det) => {
+    const osc = c.createOscillator();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(o.f * det, t);
+    osc.connect(lp);
+    osc.start(t);
+    osc.stop(t + o.dur + 0.05);
+  });
+}
+
+/* ضربهٔ طبل حماسی: بدنهٔ کم‌فرکانس و ضربهٔ پوست */
+function drum(c: Ctx, out: AudioNode, at: number, f: number, vol: number) {
+  tone(c, out, { f, to: f * 0.38, at, dur: 0.55, vol, attack: 0.004 });
+  hiss(c, out, { type: 'lowpass', f: 260, at, dur: 0.22, vol: vol * 0.6, attack: 0.003 });
+  hiss(c, out, { type: 'bandpass', f: 1400, q: 1.5, at, dur: 0.04, vol: vol * 0.25, attack: 0.002 });
+}
+
+/* نالهٔ مرغ دریایی */
+function gull(c: Ctx, out: AudioNode, at: number, base: number, vol: number) {
+  tone(c, out, { f: base * 0.8, to: base * 1.55, at, dur: 0.13, vol, type: 'sawtooth', attack: 0.02 });
+  tone(c, out, { f: base * 1.55, to: base * 0.8, at: at + 0.12, dur: 0.3, vol, type: 'sawtooth', attack: 0.02 });
+  tone(c, out, { f: base * 1.6, to: base * 3.1, at, dur: 0.13, vol: vol * 0.35, type: 'triangle', attack: 0.02 });
+  tone(c, out, { f: base * 3.1, to: base * 1.6, at: at + 0.12, dur: 0.3, vol: vol * 0.3, type: 'triangle', attack: 0.02 });
+}
+
+/* جلزولز روغن داغ و ماهی در تابه */
+function sizzle(c: Ctx, out: AudioNode) {
+  hiss(c, out, { type: 'highpass', f: 5200, q: 0.4, dur: 1.6, vol: 0.2, attack: 0.04 });
+  hiss(c, out, { type: 'bandpass', f: 3200, q: 0.8, dur: 1.5, vol: 0.12, attack: 0.05 });
+  for (let i = 0; i < 34; i++) {
+    const at = Math.pow(Math.random(), 1.3) * 1.45;
+    const big = Math.random() < 0.18;
+    hiss(c, out, {
+      type: 'bandpass',
+      f: big ? 900 + Math.random() * 700 : 2200 + Math.random() * 3800,
+      q: big ? 2 : 4,
+      at,
+      dur: big ? 0.035 : 0.018,
+      vol: big ? 0.32 : 0.2,
+      attack: 0.002,
+    });
+  }
+}
+
 const sounds: Record<string, Maker> = {
   /* موج دریا */
   sea: (c, o) => {
     hiss(c, o, { type: 'lowpass', f: 380, to: 1500, q: 0.4, dur: 1.7, vol: 0.5, attack: 0.8 });
     hiss(c, o, { type: 'highpass', f: 3200, q: 0.3, at: 0.7, dur: 1, vol: 0.07, attack: 0.3 });
   },
-  /* باد در بادگیر */
+  /* معرفی و تاریخچه: طبل رزم و کَرنای باستانی و حماسی */
   about: (c, o) => {
-    hiss(c, o, { type: 'bandpass', f: 350, to: 950, q: 3, dur: 1.4, vol: 0.35, attack: 0.6 });
+    drum(c, o, 0, 120, 0.6);
+    drum(c, o, 0.42, 100, 0.5);
+    drum(c, o, 0.9, 80, 0.75);
+    horn(c, o, { f: 98, at: 0.05, dur: 2.3, vol: 0.2, attack: 0.55, cutoff: 900 });
+    horn(c, o, { f: 147, at: 0.3, dur: 2.0, vol: 0.14, attack: 0.6, cutoff: 1100 });
+    horn(c, o, { f: 196, at: 0.9, dur: 1.5, vol: 0.09, attack: 0.5, cutoff: 1300 });
   },
-  /* زنگ در خانه */
+  /* اقامتگاه: طبیعت کنار ساحل و آرامش؛ موج نرم، نسیم و چهچههٔ دور پرنده */
   stay: (c, o) => {
-    tone(c, o, { f: 659, dur: 0.9, vol: 0.2 });
-    tone(c, o, { f: 988, at: 0.18, dur: 1.1, vol: 0.18 });
-  },
-  /* مرغ دریایی */
-  attractions: (c, o) => {
-    tone(c, o, { f: 900, to: 1700, dur: 0.22, vol: 0.12, type: 'triangle', attack: 0.04 });
-    tone(c, o, { f: 1700, to: 800, at: 0.2, dur: 0.3, vol: 0.12, type: 'triangle', attack: 0.04 });
-    tone(c, o, { f: 1000, to: 1600, at: 0.62, dur: 0.2, vol: 0.09, type: 'triangle', attack: 0.04 });
-  },
-  /* حباب */
-  restaurants: (c, o) => {
-    [0, 0.12, 0.23, 0.38].forEach((at, i) => {
-      const f = 380 + Math.random() * 300 + i * 40;
-      tone(c, o, { f, to: f * 1.9, at, dur: 0.11, vol: 0.2, attack: 0.01 });
+    hiss(c, o, { type: 'lowpass', f: 220, to: 650, q: 0.4, dur: 2.6, vol: 0.28, attack: 1.3 });
+    hiss(c, o, { type: 'bandpass', f: 700, to: 500, q: 0.8, dur: 2.4, vol: 0.04, attack: 1 });
+    tone(c, o, { f: 220, dur: 2.6, vol: 0.05, attack: 1.1 });
+    tone(c, o, { f: 330, at: 0.15, dur: 2.4, vol: 0.035, attack: 1.1 });
+    [0.7, 0.86, 1.02, 1.6, 1.74].forEach((at, i) => {
+      const f = 3000 + (i % 3) * 450;
+      tone(c, o, { f, to: f * 1.25, at, dur: 0.07, vol: 0.045, attack: 0.01 });
     });
   },
+  /* جاذبه‌ها: موج دریا و مرغ دریایی */
+  attractions: (c, o) => {
+    hiss(c, o, { type: 'lowpass', f: 380, to: 1600, q: 0.4, dur: 1.9, vol: 0.42, attack: 0.9 });
+    hiss(c, o, { type: 'highpass', f: 3200, q: 0.3, at: 0.8, dur: 1.1, vol: 0.06, attack: 0.3 });
+    gull(c, o, 0.35, 1150, 0.07);
+    gull(c, o, 0.95, 1000, 0.06);
+  },
+  /* رستوران‌ها: روغن داغ و ماهی سرخ‌شونده */
+  restaurants: (c, o) => sizzle(c, o),
   /* تیک قطب‌نما */
   experiences: (c, o) => {
     tone(c, o, { f: 1500, type: 'triangle', dur: 0.05, vol: 0.2, attack: 0.002 });
@@ -129,11 +190,8 @@ const sounds: Record<string, Maker> = {
       tone(c, o, { f: 480, at, dur: 0.2, vol: 0.14, type: 'triangle', attack: 0.01 });
     });
   },
-  /* جلزولز غذا */
-  food: (c, o) => {
-    hiss(c, o, { type: 'highpass', f: 4500, q: 0.4, dur: 0.9, vol: 0.2, attack: 0.05 });
-    [0.1, 0.27, 0.41, 0.6].forEach((at) => hiss(c, o, { type: 'bandpass', f: 2500, q: 4, at, dur: 0.03, vol: 0.2, attack: 0.002 }));
-  },
+  /* غذا: همان جلزولز روغن داغ */
+  food: (c, o) => sizzle(c, o),
   /* تیک ملایم پیوندها */
   tick: (c, o) => {
     tone(c, o, { f: 1250, to: 1000, dur: 0.05, vol: 0.09, attack: 0.003 });

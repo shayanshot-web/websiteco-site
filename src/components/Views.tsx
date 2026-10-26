@@ -3,6 +3,7 @@ import type { InnerPageId, Lang, Post } from '@/content/types';
 import ContactForm from './ContactForm';
 import { Rich, Sections } from './Rich';
 import SearchView from './SearchView';
+import { TileArt, type TileArtName } from './TileArt';
 import { HeroScene, Icon, WaveEdge, type IconName } from './Art';
 import { dicts, formatDate, pagePath, postPath, searchPath, type Route } from '@/lib/i18n';
 
@@ -103,7 +104,7 @@ export function HomeView({ lang }: { lang: Lang }) {
   const h = d.home;
   // هر کاشی به صفحه اختصاصی خودش می‌رود: معرفی، اقامتگاه‌ها، جاذبه‌ها، رستوران‌ها
   const tileLinks: InnerPageId[] = ['about', 'stay', 'attractions', 'restaurants'];
-  const tileIcons: IconName[] = ['about', 'stay', 'attractions', 'restaurants'];
+  const tileIcons = ['about', 'stay', 'attractions', 'restaurants'] as const;
   const doIcons: IconName[] = ['sea', 'food', 'craft', 'culture'];
   return (
     <>
@@ -142,11 +143,13 @@ export function HomeView({ lang }: { lang: Lang }) {
           {h.tiles.map((t, i) => (
             <li key={t.h}>
               <Link href={pagePath(lang, tileLinks[i])} className="tile" data-sound={tileIcons[i]}>
-                <span className="tile-icon">
-                  <Icon name={tileIcons[i]} size={52} />
+                <span className="tile-art">
+                  <TileArt name={tileIcons[i] as TileArtName} />
                 </span>
-                <h3>{t.h}</h3>
-                <p>{t.p}</p>
+                <span className="tile-body">
+                  <h3>{t.h}</h3>
+                  <p>{t.p}</p>
+                </span>
               </Link>
             </li>
           ))}

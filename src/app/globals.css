@@ -452,41 +452,47 @@ a {
 .tile {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
   height: 100%;
-  padding: 34px 18px 26px;
-  background: linear-gradient(180deg, #fff 0%, #fbf6ea 100%);
-  border: 1px solid var(--line);
-  border-radius: 140px 140px 18px 18px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 28px;
   text-decoration: none;
   color: var(--ink);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 6px 22px rgba(10, 62, 102, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .tile:hover,
 .tile:focus-visible {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
-  border-color: var(--sand);
+  transform: translateY(-8px) rotate(-0.6deg);
+  box-shadow: 0 18px 38px rgba(10, 62, 102, 0.25);
 }
-.tile-icon {
-  display: grid;
-  place-items: center;
-  width: 88px;
-  height: 88px;
-  margin-bottom: 14px;
-  border-radius: 50%;
-  background: var(--navy);
-  color: var(--sand);
-  box-shadow: 0 0 0 6px var(--cream);
-  transition: background 0.2s ease;
+.tile-art {
+  display: block;
+  aspect-ratio: 7 / 9;
+  overflow: hidden;
+  background: var(--cream);
 }
-.tile:hover .tile-icon,
-.tile:focus-visible .tile-icon {
-  background: var(--blue);
+.tile-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+.tile:hover .tile-svg,
+.tile:focus-visible .tile-svg {
+  transform: scale(1.07);
+}
+.tile-body {
+  display: block;
+  padding: 18px 16px 24px;
+  text-align: center;
 }
 .tile h3 {
-  margin-bottom: 4px;
+  margin: 0 0 6px;
+  color: var(--navy);
+  font-size: 1.25rem;
+  word-break: keep-all;
+  overflow-wrap: normal;
 }
 .tile p {
   margin: 0;
@@ -501,31 +507,259 @@ a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
   }
-  .tile h3,
-  .tile p {
-    overflow-wrap: anywhere;
-    hyphens: auto;
-  }
-  .lang-ru .tile h3 {
-    font-size: 0.86rem;
-  }
   .tile {
-    padding: 26px 10px 20px;
+    border-radius: 22px;
   }
-  .tile-icon {
-    width: 70px;
-    height: 70px;
-  }
-  .tile-icon .icon {
-    width: 40px;
-    height: 40px;
+  .tile-body {
+    padding: 12px 8px 16px;
   }
   .tile h3 {
-    font-size: 1.02rem;
+    font-size: 1rem;
+  }
+  .lang-ru .tile h3 {
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
   }
   .tile p {
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+}
+
+/* حرکت تصویرسازی کارت‌ها */
+.tile-svg * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.ta-dash {
+  animation: ta-dash 2.6s linear infinite;
+}
+.ta-dash.rev {
+  animation-direction: reverse;
+  animation-duration: 3.4s;
+}
+@keyframes ta-dash {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+.ta-cloud {
+  animation: ta-cloud 9s ease-in-out infinite alternate;
+}
+.ta-cloud.slow {
+  animation-duration: 13s;
+  animation-direction: alternate-reverse;
+}
+@keyframes ta-cloud {
+  from {
+    transform: translateX(-22px);
+  }
+  to {
+    transform: translateX(26px);
+  }
+}
+.ta-spin {
+  animation: ta-spin 24s linear infinite;
+}
+.ta-spin-slow {
+  animation: ta-spin 40s linear infinite;
+}
+@keyframes ta-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.ta-pulse {
+  animation: ta-pulse 3.6s ease-in-out infinite;
+}
+@keyframes ta-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.09);
+  }
+}
+.ta-glow {
+  animation: ta-glow 3.2s ease-in-out infinite;
+}
+.ta-glow.d2 {
+  animation-delay: -1.4s;
+}
+@keyframes ta-glow {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.ta-twinkle {
+  animation: ta-twinkle 2.4s ease-in-out infinite;
+}
+.ta-twinkle.t1 {
+  animation-delay: -0.8s;
+}
+.ta-twinkle.t2 {
+  animation-delay: -1.6s;
+}
+@keyframes ta-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+.ta-sway {
+  transform-origin: 0 100%;
+  animation: ta-sway 5s ease-in-out infinite alternate;
+}
+@keyframes ta-sway {
+  from {
+    transform: translate(232px, 346px) rotate(-2deg);
+  }
+  to {
+    transform: translate(232px, 346px) rotate(2.5deg);
+  }
+}
+.ta-rise {
+  animation: ta-rise 6s ease-in-out infinite alternate;
+}
+@keyframes ta-rise {
+  from {
+    transform: translateY(8px);
+  }
+  to {
+    transform: translateY(-14px);
+  }
+}
+.ta-fly {
+  animation: ta-fly 8s ease-in-out infinite alternate;
+}
+@keyframes ta-fly {
+  from {
+    transform: translate(-6px, 4px);
+  }
+  to {
+    transform: translate(16px, -6px);
+  }
+}
+.ta-wing {
+  animation: ta-flap 0.8s ease-in-out infinite;
+}
+.ta-wing.d2 {
+  animation-duration: 1s;
+}
+@keyframes ta-flap {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(-0.5);
+  }
+}
+.ta-bob {
+  animation: ta-bob 4.2s ease-in-out infinite;
+}
+@keyframes ta-bob {
+  0%,
+  100% {
+    transform: translate(206px, 278px) rotate(-2deg);
+  }
+  50% {
+    transform: translate(206px, 284px) rotate(2.5deg);
+  }
+}
+.ta-swim {
+  animation: ta-swim 3.4s ease-in-out infinite;
+}
+@keyframes ta-swim {
+  0%,
+  100% {
+    transform: translateX(-6px) rotate(-3deg);
+  }
+  50% {
+    transform: translateX(8px) rotate(3deg);
+  }
+}
+.ta-steam {
+  animation: ta-steam 3s ease-in infinite;
+}
+.ta-steam.d2 {
+  animation-delay: -1s;
+}
+.ta-steam.d3 {
+  animation-delay: -2s;
+}
+@keyframes ta-steam {
+  0% {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-16px);
+    opacity: 0;
+  }
+}
+.ta-bounce {
+  animation: ta-bounce 2.6s ease-in-out infinite;
+}
+.ta-bounce.d2 {
+  animation-delay: -1.2s;
+}
+@keyframes ta-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+.ta-shine {
+  animation: ta-shine 6s ease-in-out infinite;
+}
+@keyframes ta-shine {
+  0%,
+  100% {
+    opacity: 0.18;
+  }
+  50% {
+    opacity: 0.34;
+  }
+}
+/* روی کارت، حرکت‌ها زنده‌تر می‌شوند */
+.tile:hover .ta-swim {
+  animation-duration: 1.2s;
+}
+.tile:hover .ta-wing {
+  animation-duration: 0.4s;
+}
+.tile:hover .ta-dash {
+  animation-duration: 1.2s;
+}
+.tile:hover .ta-steam {
+  animation-duration: 1.6s;
+}
+.tile:hover .ta-spin {
+  animation-duration: 6s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tile-svg *,
+  .tile,
+  .tile-svg {
+    animation: none !important;
+    transition: none !important;
   }
 }
 

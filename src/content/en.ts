@@ -156,21 +156,9 @@ export const en: Dict = {
       sections: [],
     },
     events: {
-      title: 'Helileh Events',
-      lead: 'See every event in month or list view and register for each one.',
-      sections: [
-        {
-          h: 'Monthly programme',
-          p: ['Month view and event list with category filter: festival, workshop, walk.'],
-        },
-        {
-          h: 'Registration and tickets',
-          p: [
-            'Free events use a registration form; paid events use tickets. A confirmation email follows your registration.',
-          ],
-        },
-        { h: 'Stay informed', p: ['Leave your email to hear about new events.'] },
-      ],
+      title: 'Helileh calendar',
+      lead: 'Sea winds and ancient Iranian festivals, month by month: handy for planning a trip, a fishing day or a visit to Helileh.',
+      sections: [],
     },
     shop: {
       title: 'Handicrafts',

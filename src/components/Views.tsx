@@ -3,6 +3,7 @@ import type { InnerPageId, Lang, Post } from '@/content/types';
 import ContactForm from './ContactForm';
 import { Rich, Sections } from './Rich';
 import SearchView from './SearchView';
+import CalendarView from './Calendar';
 import { TileArt, type TileArtName } from './TileArt';
 import { HeroScene, Icon, WaveEdge, type IconName } from './Art';
 import { dicts, formatDate, pagePath, postPath, searchPath, type Route } from '@/lib/i18n';
@@ -254,6 +255,7 @@ export function PageView({ lang, id }: { lang: Lang; id: InnerPageId }) {
                 </ul>
               </>
             ) : null}
+            {id === 'events' ? <CalendarView lang={lang} /> : null}
             <Sections sections={p.sections} />
             {id === 'events' ? <p className="notice">{d.ui.noEvents}</p> : null}
             {id === 'stay' || id === 'shop' ? (

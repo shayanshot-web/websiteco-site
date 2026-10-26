@@ -1794,3 +1794,325 @@ a {
     animation: none !important;
   }
 }
+
+/* =====================================================================
+   تقویم هلیله
+   ===================================================================== */
+.cal {
+  margin: 8px 0 24px;
+}
+.cal h2.accent {
+  margin-top: 36px;
+}
+.cal-lead {
+  max-width: 62ch;
+  color: var(--muted);
+}
+.cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 5px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.tag.wind {
+  background: #dcecf8;
+  color: #0a4d82;
+}
+.tag.ancient {
+  background: #f7ecd2;
+  color: #85571a;
+}
+
+/* کارت‌های باد */
+.wind-cards {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  margin: 18px 0 8px;
+}
+.wind-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 6px 22px rgba(10, 62, 102, 0.12);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.wind-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 34px rgba(10, 62, 102, 0.22);
+}
+.wind-art {
+  display: block;
+  width: 100%;
+  aspect-ratio: 8 / 3;
+}
+.wind-body {
+  position: relative;
+  padding: 18px 20px 22px;
+}
+.wind-body h3 {
+  margin: 0 0 4px;
+  color: var(--navy);
+}
+.wind-date {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin: 0 0 8px;
+  padding: 6px 14px;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 999px;
+}
+.wind-date b {
+  font-size: 1.2rem;
+  color: var(--sand);
+}
+.wind-date small {
+  opacity: 0.75;
+}
+.aka {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.wind-tip {
+  margin: 10px 0 0;
+  padding: 10px 14px;
+  background: var(--cream);
+  border-radius: 12px;
+  border-inline-start: 4px solid var(--sand);
+  font-size: 0.95rem;
+}
+.wind-strength {
+  position: absolute;
+  top: 18px;
+  inset-inline-end: 18px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #dcecf8;
+  color: #0a4d82;
+}
+.is-strong .wind-strength {
+  background: #fbe0d6;
+  color: #a2391c;
+}
+/* حرکت باد */
+.wind-art * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.wa-gust path {
+  animation: wa-gust 2.4s linear infinite;
+}
+.is-strong .wa-gust path {
+  animation-duration: 1.3s;
+}
+.wa-gust path:nth-child(2) {
+  animation-delay: -0.8s;
+}
+.wa-gust path:nth-child(3) {
+  animation-delay: -0.4s;
+}
+@keyframes wa-gust {
+  to {
+    stroke-dashoffset: -260;
+  }
+}
+.wa-cloud {
+  animation: ta-cloud 9s ease-in-out infinite alternate;
+}
+.wa-sea {
+  animation: wa-sea 3s ease-in-out infinite alternate;
+}
+@keyframes wa-sea {
+  from {
+    transform: translateX(-10px);
+  }
+  to {
+    transform: translateX(10px);
+  }
+}
+.wa-boat {
+  animation: wa-boat 3.4s ease-in-out infinite;
+}
+.is-strong .wa-boat {
+  animation: wa-boat-strong 1.8s ease-in-out infinite;
+}
+@keyframes wa-boat {
+  0%,
+  100% {
+    transform: translate(236px, 80px) rotate(-3deg);
+  }
+  50% {
+    transform: translate(236px, 76px) rotate(3deg);
+  }
+}
+@keyframes wa-boat-strong {
+  0%,
+  100% {
+    transform: translate(232px, 82px) rotate(-9deg);
+  }
+  50% {
+    transform: translate(240px, 72px) rotate(9deg);
+  }
+}
+
+/* جدول */
+.cal-table-wrap {
+  margin-top: 16px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 22px rgba(10, 62, 102, 0.12);
+}
+.cal-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.cal-table thead th {
+  background: var(--navy);
+  color: #fff;
+  font-weight: 700;
+  padding: 14px 16px;
+  text-align: start;
+}
+.cal-table thead th:first-child {
+  width: 150px;
+}
+.cal-table tbody th,
+.cal-table tbody td {
+  padding: 14px 16px;
+  text-align: start;
+  vertical-align: top;
+  border-top: 1px solid var(--line);
+}
+.cal-table .m-head th {
+  border-top: 0;
+  padding: 10px 16px;
+  background: var(--cream);
+  color: var(--navy);
+  font-weight: 800;
+  border-inline-start: 6px solid var(--sand);
+}
+.m-name {
+  font-size: 1.1rem;
+}
+.m-season {
+  margin-inline-start: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.season-0 .m-head th {
+  border-inline-start-color: #5aab6b;
+}
+.season-1 .m-head th {
+  border-inline-start-color: #e9a23b;
+}
+.season-2 .m-head th {
+  border-inline-start-color: #dc6a47;
+}
+.season-3 .m-head th {
+  border-inline-start-color: #3a73b8;
+}
+.cal-table .d .day {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+.cal-table .d small {
+  color: var(--muted);
+  font-weight: 400;
+}
+.cal-table .t strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.cal-table .x {
+  color: #35465a;
+  line-height: 1.8;
+}
+.cal-table tr.ev {
+  transition: background 0.2s;
+}
+.cal-table tr.ev:hover {
+  background: #fbf7ee;
+}
+.cal-table tr.ev.wind {
+  background: linear-gradient(90deg, #e6f2fb, #f5fafe);
+}
+[dir='rtl'] .cal-table tr.ev.wind {
+  background: linear-gradient(270deg, #e6f2fb, #f5fafe);
+}
+.cal-table tr.ev.wind:hover {
+  background: #d7eaf8;
+}
+.cal-table tr.ev.wind .day {
+  color: #0a5c97;
+}
+.cal-note {
+  margin-top: 16px;
+}
+@media (max-width: 680px) {
+  .cal-table thead {
+    display: none;
+  }
+  .cal-table,
+  .cal-table tbody,
+  .cal-table tr,
+  .cal-table th,
+  .cal-table td {
+    display: block;
+  }
+  .cal-table tr.ev {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 0 12px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+  }
+  .cal-table tbody th,
+  .cal-table tbody td {
+    padding: 0;
+    border: 0;
+  }
+  .cal-table .d {
+    grid-row: 1 / span 2;
+  }
+  .cal-table .x {
+    grid-column: 2;
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+  .cal-table .t strong {
+    display: inline;
+    margin-inline-end: 8px;
+  }
+  .cal-table .t .tag {
+    margin-top: 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wind-art *,
+  .wind-card {
+    animation: none !important;
+    transition: none !important;
+  }
+}

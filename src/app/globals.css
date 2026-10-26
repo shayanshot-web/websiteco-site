@@ -1962,89 +1962,148 @@ a {
   box-shadow: var(--shadow);
   padding: 12px;
 }
-.hm-svg {
-  display: block;
-  width: 100%;
-  height: auto;
+.hm-map-wrap {
+  position: relative;
+}
+.hm-map {
+  height: 460px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #dfe9ef;
   direction: ltr;
+  z-index: 0;
 }
-.hm-svg text {
-  unicode-bidi: plaintext;
+.hm-toggle {
+  display: inline-flex;
+  margin-bottom: 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.hm-toggle button {
+  font: inherit;
+  font-size: 0.92rem;
+  padding: 6px 16px;
+  border: 0;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+}
+.hm-toggle button + button {
+  border-inline-start: 1px solid var(--line);
+}
+.hm-toggle button.is-active {
+  background: var(--navy);
+  color: #fff;
+}
+.hm-popup {
   font-family: inherit;
-  fill: var(--ink);
+  line-height: 1.7;
+  font-size: 0.95rem;
 }
-.hm-svg-narrow {
-  display: none;
+.hm-pin-wrap {
+  background: none;
+  border: 0;
 }
-.hm-ring {
-  fill: none;
-  stroke: #b9c6d1;
-  stroke-width: 0.8;
-  stroke-dasharray: 4 4;
-}
-.hm-lead-line {
-  stroke: #b9c6d1;
-  stroke-width: 0.8;
-  stroke-dasharray: 3 3;
-}
-.hm-north {
-  fill: none;
-  stroke: var(--muted);
-  stroke-width: 1.5;
-}
-.hm-ttl {
-  font-size: 14px;
-  font-weight: 700;
-}
-.hm-sub {
-  font-size: 12px;
-  fill: var(--muted) !important;
-}
-.hm-center {
-  fill: #993c1d !important;
-}
-.hm-num {
+.hm-pin {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  color: #fff;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.45);
   font-size: 13px;
+  line-height: 1;
+  background: #6b7a86;
+}
+.hm-pin b {
   font-weight: 700;
-  fill: #fff !important;
 }
-.hm-village .hm-dot {
-  fill: #f0997b;
-  stroke: #993c1d;
-  stroke-width: 1.5;
+.hm-pin.hm-village {
+  background: #d9603a;
+  font-size: 19px;
+  border-width: 3px;
+  animation: hm-pulse 2.4s ease-out infinite;
 }
-.hm-village .hm-core {
-  fill: #993c1d;
+.hm-pin.hm-ancient {
+  background: #7f77dd;
 }
-.hm-ancient .hm-dot {
-  fill: #7f77dd;
-  stroke: #3c3489;
-  stroke-width: 1;
+.hm-pin.hm-fun {
+  background: #1d9e75;
 }
-.hm-fun .hm-dot {
-  fill: #1d9e75;
-  stroke: #085041;
-  stroke-width: 1;
+.hm-pin.hm-culture {
+  background: #c0392b;
 }
-.hm-hub .hm-dot {
-  fill: #6b7a86;
-  stroke: #2c3a45;
-  stroke-width: 1;
+.hm-pin.hm-hub {
+  background: #6b7a86;
 }
-.hm-list {
-  display: none;
+@keyframes hm-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 96, 58, 0.55), 0 1px 5px rgba(0, 0, 0, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(217, 96, 58, 0), 0 1px 5px rgba(0, 0, 0, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 96, 58, 0), 0 1px 5px rgba(0, 0, 0, 0.45);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hm-pin.hm-village {
+    animation: none;
+  }
+}
+.hm-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
   list-style: none;
   margin: 12px 0 0;
   padding: 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.hm-legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hm-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #6b7a86;
+}
+.hm-legend .hm-village .hm-swatch {
+  background: #d9603a;
+}
+.hm-legend .hm-ancient .hm-swatch {
+  background: #7f77dd;
+}
+.hm-legend .hm-fun .hm-swatch {
+  background: #1d9e75;
+}
+.hm-legend .hm-culture .hm-swatch {
+  background: #c0392b;
+}
+.hm-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  columns: 2;
+  column-gap: 28px;
 }
 .hm-list li {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 4px;
+  padding: 7px 4px;
   border-top: 1px solid var(--line);
   font-size: 0.95rem;
   line-height: 1.5;
+  break-inside: avoid;
 }
 .hm-list-name {
   flex: 1;
@@ -2076,6 +2135,9 @@ a {
 .hm-list li.hm-fun .hm-badge-html {
   background: #1d9e75;
 }
+.hm-list li.hm-culture .hm-badge-html {
+  background: #c0392b;
+}
 .hm-note {
   margin: 14px 0 6px;
   font-size: 0.9rem;
@@ -2098,19 +2160,13 @@ a {
   .helileh-map {
     padding: 36px 0 32px;
   }
-  .hm-svg-wide {
-    display: none;
-  }
-  .hm-svg-narrow {
-    display: block;
-  }
-  .hm-list {
-    display: block;
-  }
   .hm-card {
     padding: 8px;
   }
-  .hm-svg-narrow .hm-sub {
-    font-size: 14px;
+  .hm-map {
+    height: 360px;
+  }
+  .hm-list {
+    columns: 1;
   }
 }

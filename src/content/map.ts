@@ -1,34 +1,42 @@
 import type { Lang } from './types';
 
 /** نوع نقطه روی نقشه */
-export type MapKind = 'village' | 'ancient' | 'fun' | 'hub';
+export type MapKind = 'village' | 'ancient' | 'fun' | 'culture' | 'hub';
 
 export interface MapPoint {
   id: string;
   kind: MapKind;
   lat: number;
   lon: number;
-  /** ستون برچسب در نقشه دسکتاپ: چپ یا راست */
-  side?: 'L' | 'R';
-  /** ارتفاع برچسب (y در viewBox) */
-  ly?: number;
+  /** نقطهٔ محلی (داخل و کنار روستا) یا نقطهٔ منطقه‌ای (بوشهر، بندر، نیروگاه، دلوار، ...) */
+  scope: 'local' | 'region';
   name: Record<Lang, string>;
 }
 
-/** مرکز نقشه: روستای هلیله */
-export const HELILEH = { lat: 28.8539, lon: 50.8716 };
+/**
+ * مرکز روستای هلیله (نقطهٔ ثبت‌شده در OpenStreetMap/ویکی‌پدیا).
+ * اگر مرکز روستا جای دیگری است، فقط همین مختصات را عوض کنید؛ فاصله‌ها خودکار حساب می‌شوند.
+ */
+export const HELILEH = { lat: 28.83472, lon: 50.87944 };
 
 export const mapPoints: MapPoint[] = [
-  { id: 'bushehr', kind: 'hub', lat: 28.9862, lon: 50.8318, side: 'L', ly: 120, name: { fa: 'شهر بوشهر (بازار)', en: 'Bushehr city (bazaar)', ru: 'Бушер (базар)' } },
-  { id: 'port', kind: 'hub', lat: 28.9704, lon: 50.8573, side: 'R', ly: 141, name: { fa: 'بندر بوشهر', en: 'Bushehr port', ru: 'Порт Бушера' } },
-  { id: 'shoghab', kind: 'ancient', lat: 28.9164, lon: 50.8138, side: 'L', ly: 215, name: { fa: 'گورستان باستانی شغاب', en: 'Shoghab ancient cemetery', ru: 'Некрополь Шогаб' } },
-  { id: 'rishehr', kind: 'fun', lat: 28.8975, lon: 50.8304, side: 'L', ly: 258, name: { fa: 'ساحل ریشهر', en: 'Rishehr beach', ru: 'Пляж Ришехр' } },
-  { id: 'masileh', kind: 'fun', lat: 28.8741, lon: 50.8933, side: 'R', ly: 245, name: { fa: 'مسیله (شوره‌زار) هلیله', en: 'Helileh salt marsh', ru: 'Солончак Хелиле' } },
-  { id: 'lian', kind: 'fun', lat: 28.8608, lon: 50.8535, side: 'L', ly: 305, name: { fa: 'پارک ساحلی لیان', en: 'Lian beach park', ru: 'Парк Лиан' } },
-  { id: 'beach', kind: 'fun', lat: 28.8367, lon: 50.8745, side: 'L', ly: 352, name: { fa: 'ساحل هلیله', en: 'Helileh beach', ru: 'Пляж Хелиле' } },
-  { id: 'npp', kind: 'hub', lat: 28.8298, lon: 50.886, side: 'R', ly: 345, name: { fa: 'نیروگاه اتمی بوشهر', en: 'Bushehr nuclear plant', ru: 'АЭС «Бушер»' } },
-  { id: 'nppbeach', kind: 'fun', lat: 28.8229, lon: 50.9182, side: 'R', ly: 390, name: { fa: 'ساحل شنای نیروگاه', en: 'Power plant beach', ru: 'Пляж у АЭС' } },
-  { id: 'delvar', kind: 'hub', lat: 28.7614, lon: 51.07, side: 'R', ly: 452, name: { fa: 'دلوار', en: 'Delvar', ru: 'Дельвар' } },
+  /* نقاط جذاب و گردشگری در خود هلیله */
+  { id: 'theater', kind: 'culture', scope: 'local', lat: 28.8404247, lon: 50.8724992, name: { fa: 'تئاتر ساحلی استاد صغیری', en: 'Ostad Soghayri beach theater', ru: 'Пляжный театр Остад Согейри' } },
+  { id: 'park', kind: 'fun', scope: 'local', lat: 28.838083, lon: 50.8746528, name: { fa: 'پارک هلیله', en: 'Helileh park', ru: 'Парк Хелиле' } },
+  { id: 'beach', kind: 'fun', scope: 'local', lat: 28.8367361, lon: 50.8745014, name: { fa: 'ساحل هلیله', en: 'Helileh beach', ru: 'Пляж Хелиле' } },
+  { id: 'garden', kind: 'fun', scope: 'local', lat: 28.8412819, lon: 50.8752786, name: { fa: 'باغ شمالی هلیله', en: 'Helileh north garden', ru: 'Северный сад Хелиле' } },
+  { id: 'aftab', kind: 'fun', scope: 'local', lat: 28.830852, lon: 50.8791282, name: { fa: 'مجموعه ساحلی آفتاب', en: 'Aftab beach complex', ru: 'Пляжный комплекс Афтаб' } },
+  /* اطراف هلیله */
+  { id: 'kalut', kind: 'culture', scope: 'local', lat: 28.8652375, lon: 50.8638906, name: { fa: 'کلوت بوستان لیان', en: 'Lian kalut formations', ru: 'Калуты Лиан' } },
+  { id: 'masileh', kind: 'fun', scope: 'local', lat: 28.8757505, lon: 50.8915325, name: { fa: 'مسیله (شوره‌زار) هلیله', en: 'Helileh salt marsh', ru: 'Солончак Хелиле' } },
+  { id: 'lian', kind: 'fun', scope: 'local', lat: 28.8607513, lon: 50.8534535, name: { fa: 'پارک ساحلی لیان', en: 'Lian beach park', ru: 'Парк Лиан' } },
+  /* منطقه: شهر، بندر، نیروگاه، دلوار، گورستان باستانی */
+  { id: 'npp', kind: 'hub', scope: 'region', lat: 28.8297793, lon: 50.8859682, name: { fa: 'نیروگاه اتمی بوشهر', en: 'Bushehr nuclear plant', ru: 'АЭС «Бушер»' } },
+  { id: 'rishehr', kind: 'fun', scope: 'region', lat: 28.8975036, lon: 50.8303717, name: { fa: 'ساحل ریشهر', en: 'Rishehr beach', ru: 'Пляж Ришехр' } },
+  { id: 'shoghab', kind: 'ancient', scope: 'region', lat: 28.9164457, lon: 50.8138356, name: { fa: 'گورستان باستانی شغاب', en: 'Shoghab ancient cemetery', ru: 'Древний некрополь Шогаб' } },
+  { id: 'port', kind: 'hub', scope: 'region', lat: 28.9704447, lon: 50.8573387, name: { fa: 'بندر بوشهر', en: 'Bushehr port', ru: 'Порт Бушера' } },
+  { id: 'bushehr', kind: 'hub', scope: 'region', lat: 28.9861673, lon: 50.8318456, name: { fa: 'شهر بوشهر (بازار)', en: 'Bushehr city (bazaar)', ru: 'Бушер (базар)' } },
+  { id: 'delvar', kind: 'hub', scope: 'region', lat: 28.76139, lon: 51.07, name: { fa: 'دلوار', en: 'Delvar', ru: 'Дельвар' } },
 ];
 
 export interface MapStrings {
@@ -41,44 +49,56 @@ export interface MapStrings {
   openGoogle: string;
   aria: string;
   listTitle: string;
-  listCenter: string;
+  viewVillage: string;
+  viewRegion: string;
+  distanceFrom: string;
+  tilesNote: string;
 }
 
 export const mapStrings: Record<Lang, MapStrings> = {
   fa: {
-    title: 'نقشه هلیله و اطراف',
-    lead: 'جانمایی روستای هلیله، گورستان باستانی شغاب، نقاط تفریحی و فاصله تا بوشهر، بندر، نیروگاه و دلوار.',
+    title: 'نقشه هلیله و جاذبه‌های آن',
+    lead: 'مرکز روستای هلیله و نقاط جذاب و گردشگری آن، همراه با فاصله تا بوشهر، بندر، نیروگاه و دلوار.',
     note: 'فاصله‌ها به‌صورت خط مستقیم و تقریبی‌اند؛ مسیر جاده‌ای کمی بیشتر است.',
-    center: 'روستای هلیله',
+    center: 'روستای هلیله (مرکز)',
     km: 'کیلومتر',
-    kinds: { village: 'هلیله', ancient: 'گورستان باستانی', fun: 'تفریحی و ساحلی', hub: 'شهر، بندر، نیروگاه، دلوار' },
+    kinds: { village: 'مرکز روستا', ancient: 'گورستان باستانی', fun: 'ساحل و تفریحی', culture: 'فرهنگی و دیدنی', hub: 'شهر، بندر، نیروگاه، دلوار' },
     openGoogle: 'باز کردن در گوگل‌مپ',
-    aria: 'نقشه شماتیک هلیله با فاصله تا بوشهر، بندر، نیروگاه و دلوار',
-    listTitle: 'فاصله از هلیله',
-    listCenter: 'مرکز نقشه',
+    aria: 'نقشه هلیله با علامت مرکز روستا و نقاط گردشگری',
+    listTitle: 'فاصله از مرکز هلیله',
+    viewVillage: 'نمای روستا',
+    viewRegion: 'نمای منطقه',
+    distanceFrom: 'از مرکز هلیله',
+    tilesNote: 'نقشه: © مشارکت‌کنندگان OpenStreetMap',
   },
   en: {
-    title: 'Map of Helileh and surroundings',
-    lead: 'Helileh village, the Shoghab ancient cemetery, leisure spots, and distances to Bushehr, the port, the power plant and Delvar.',
+    title: 'Map of Helileh and its attractions',
+    lead: 'The center of Helileh village and its sights and leisure spots, with distances to Bushehr, the port, the power plant and Delvar.',
     note: 'Distances are approximate straight-line values; by road they are somewhat longer.',
-    center: 'Helileh village',
+    center: 'Helileh village (center)',
     km: 'km',
-    kinds: { village: 'Helileh', ancient: 'Ancient cemetery', fun: 'Leisure and beaches', hub: 'City, port, plant, Delvar' },
+    kinds: { village: 'Village center', ancient: 'Ancient cemetery', fun: 'Beaches and leisure', culture: 'Culture and sights', hub: 'City, port, plant, Delvar' },
     openGoogle: 'Open in Google Maps',
-    aria: 'Schematic map of Helileh with distances to Bushehr, the port, the power plant and Delvar',
-    listTitle: 'Distance from Helileh',
-    listCenter: 'map center',
+    aria: 'Map of Helileh marking the village center and tourist spots',
+    listTitle: 'Distance from Helileh center',
+    viewVillage: 'Village view',
+    viewRegion: 'Region view',
+    distanceFrom: 'from Helileh center',
+    tilesNote: 'Map: © OpenStreetMap contributors',
   },
   ru: {
-    title: 'Карта Хелиле и окрестностей',
-    lead: 'Деревня Хелиле, древний некрополь Шогаб, места отдыха и расстояния до Бушера, порта, АЭС и Дельвара.',
+    title: 'Карта Хелиле и его достопримечательностей',
+    lead: 'Центр деревни Хелиле, её достопримечательности и места отдыха, а также расстояния до Бушера, порта, АЭС и Дельвара.',
     note: 'Расстояния приблизительные, по прямой; по дороге путь немного длиннее.',
-    center: 'Деревня Хелиле',
+    center: 'Деревня Хелиле (центр)',
     km: 'км',
-    kinds: { village: 'Хелиле', ancient: 'Древний некрополь', fun: 'Отдых и пляжи', hub: 'Город, порт, АЭС, Дельвар' },
+    kinds: { village: 'Центр деревни', ancient: 'Древний некрополь', fun: 'Пляжи и отдых', culture: 'Культура и места', hub: 'Город, порт, АЭС, Дельвар' },
     openGoogle: 'Открыть в Google Maps',
-    aria: 'Схематичная карта Хелиле с расстояниями до Бушера, порта, АЭС и Дельвара',
-    listTitle: 'Расстояние от Хелиле',
-    listCenter: 'центр карты',
+    aria: 'Карта Хелиле с центром деревни и туристическими местами',
+    listTitle: 'Расстояние от центра Хелиле',
+    viewVillage: 'Вид деревни',
+    viewRegion: 'Вид района',
+    distanceFrom: 'от центра Хелиле',
+    tilesNote: 'Карта: © участники OpenStreetMap',
   },
 };

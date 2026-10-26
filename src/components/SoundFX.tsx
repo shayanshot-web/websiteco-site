@@ -97,57 +97,156 @@ function gull(c: Ctx, out: AudioNode, at: number, base: number, vol: number) {
   tone(c, out, { f: base * 3.1, to: base * 1.6, at: at + 0.12, dur: 0.3, vol: vol * 0.3, type: 'triangle', attack: 0.02 });
 }
 
-/* جلزولز روغن داغ و ماهی در تابه */
+/* ظرف پر از روغن داغ: هیسِ پیوسته، هزاران ترکِ ریز، حباب‌های قل‌قل و پاشیدن روغن (~۴ ثانیه) */
 function sizzle(c: Ctx, out: AudioNode) {
-  hiss(c, out, { type: 'highpass', f: 5200, q: 0.4, dur: 1.6, vol: 0.2, attack: 0.04 });
-  hiss(c, out, { type: 'bandpass', f: 3200, q: 0.8, dur: 1.5, vol: 0.12, attack: 0.05 });
-  for (let i = 0; i < 34; i++) {
-    const at = Math.pow(Math.random(), 1.3) * 1.45;
-    const big = Math.random() < 0.18;
+  const D = 4;
+  // ریختن ماهی در روغن: انفجار اولیه
+  hiss(c, out, { type: 'highpass', f: 2500, q: 0.5, dur: 0.9, vol: 0.4, attack: 0.012 });
+  hiss(c, out, { type: 'bandpass', f: 1100, q: 0.7, dur: 0.6, vol: 0.28, attack: 0.01 });
+  // بستر هیس پیوسته که کم‌کم آرام می‌شود، با نوسان تصادفی شدت
+  for (let t = 0; t < D; t += 0.18) {
+    const fade = Math.pow(1 - t / D, 0.55);
+    hiss(c, out, { type: 'highpass', f: 4200, q: 0.4, at: t, dur: 0.3, vol: (0.13 + Math.random() * 0.1) * fade, attack: 0.05 });
+    hiss(c, out, { type: 'bandpass', f: 6500, q: 0.6, at: t, dur: 0.3, vol: (0.09 + Math.random() * 0.08) * fade, attack: 0.05 });
+  }
+  // ترک‌های ریز متراکم (حدود ۷۰ در ثانیه در ابتدا)
+  for (let i = 0; i < 340; i++) {
+    const u = Math.random();
+    const at = D * (1 - Math.pow(1 - u, 1.6)) * 0.97;
+    const fade = Math.pow(1 - at / D, 0.5);
     hiss(c, out, {
       type: 'bandpass',
-      f: big ? 900 + Math.random() * 700 : 2200 + Math.random() * 3800,
-      q: big ? 2 : 4,
+      f: 1500 + Math.random() * 6000,
+      q: 3 + Math.random() * 3,
       at,
-      dur: big ? 0.035 : 0.018,
-      vol: big ? 0.32 : 0.2,
+      dur: 0.008 + Math.random() * 0.02,
+      vol: (0.1 + Math.random() * 0.25) * fade,
+      attack: 0.001,
+    });
+  }
+  // پاشیدن روغن: ترک‌های درشت‌تر و کم‌فرکانس‌تر
+  for (let i = 0; i < 34; i++) {
+    const at = Math.pow(Math.random(), 1.4) * D * 0.9;
+    hiss(c, out, {
+      type: 'bandpass',
+      f: 500 + Math.random() * 1000,
+      q: 1.5,
+      at,
+      dur: 0.04 + Math.random() * 0.05,
+      vol: (0.2 + Math.random() * 0.25) * Math.pow(1 - at / D, 0.4),
       attack: 0.002,
     });
+  }
+  // حباب‌های قل‌قل روغن
+  for (let i = 0; i < 40; i++) {
+    const at = Math.random() * D * 0.92;
+    const f = 220 + Math.random() * 420;
+    tone(c, out, { f, to: f * (1.6 + Math.random() * 0.8), at, dur: 0.04 + Math.random() * 0.05, vol: (0.1 + Math.random() * 0.1) * Math.pow(1 - at / D, 0.4), attack: 0.004 });
+  }
+}
+
+/* بستر کف‌زدن موج روی ساحل: نویز با نوسان آهسته شدت (بی‌وقفه و بدون «عبور» یک‌باره) */
+function surfBed(c: Ctx, out: AudioNode, at: number, dur: number, vol: number) {
+  const t = c.currentTime + at;
+  const src = c.createBufferSource();
+  src.buffer = noise(c);
+  src.loop = true;
+  const lp = c.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.frequency.value = 1100;
+  lp.Q.value = 0.3;
+  const amp = c.createGain();
+  amp.gain.value = 0.75;
+  const lfo = c.createOscillator();
+  lfo.frequency.value = 0.22 + Math.random() * 0.08;
+  const lfoDepth = c.createGain();
+  lfoDepth.gain.value = 0.2;
+  lfo.connect(lfoDepth);
+  lfoDepth.connect(amp.gain);
+  src.connect(lp);
+  lp.connect(amp);
+  amp.connect(env(c, out, t, vol, dur * 0.25, dur));
+  src.start(t, Math.random());
+  lfo.start(t);
+  src.stop(t + dur + 0.05);
+  lfo.stop(t + dur + 0.05);
+}
+
+/* یک موج کامل: بالا آمدن، شکستن با کف سفید، و پس‌کشیدن آب روی شن */
+function wave(c: Ctx, out: AudioNode, at: number, dur: number, vol: number) {
+  const t = c.currentTime + at;
+  const peak = dur * 0.38;
+  const src = c.createBufferSource();
+  src.buffer = noise(c);
+  src.loop = true;
+  const lp = c.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.Q.value = 0.5;
+  lp.frequency.setValueAtTime(260, t);
+  lp.frequency.exponentialRampToValueAtTime(2200, t + peak);
+  lp.frequency.exponentialRampToValueAtTime(320, t + dur);
+  const g = c.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol, t + peak);
+  g.gain.linearRampToValueAtTime(vol * 0.38, t + peak + (dur - peak) * 0.45);
+  g.gain.linearRampToValueAtTime(0.0001, t + dur);
+  src.connect(lp);
+  lp.connect(g);
+  g.connect(out);
+  src.start(t, Math.random());
+  src.stop(t + dur + 0.05);
+  // کف: خش‌خش ریز و بلند هنگام شکستن که آرام‌آرام می‌خوابد
+  hiss(c, out, { type: 'highpass', f: 3600, q: 0.4, at: at + peak * 0.8, dur: dur * 0.7, vol: vol * 0.22, attack: peak * 0.25 });
+  for (let i = 0; i < 24; i++) {
+    hiss(c, out, { type: 'bandpass', f: 4000 + Math.random() * 4000, q: 4, at: at + peak + Math.random() * dur * 0.5, dur: 0.012, vol: vol * 0.15, attack: 0.002 });
   }
 }
 
 const sounds: Record<string, Maker> = {
-  /* موج دریا */
+  /* موج دریا: بستر کف‌زدن و سه موج پی‌درپی با طول‌های متفاوت (~۶ ثانیه) */
   sea: (c, o) => {
-    hiss(c, o, { type: 'lowpass', f: 380, to: 1500, q: 0.4, dur: 1.7, vol: 0.5, attack: 0.8 });
-    hiss(c, o, { type: 'highpass', f: 3200, q: 0.3, at: 0.7, dur: 1, vol: 0.07, attack: 0.3 });
+    surfBed(c, o, 0, 7.2, 0.34);
+    wave(c, o, 0, 3.8, 0.4);
+    wave(c, o, 2.0, 4.0, 0.36);
+    wave(c, o, 4.1, 3.2, 0.3);
   },
-  /* معرفی و تاریخچه: طبل رزم و کَرنای باستانی و حماسی */
+  /* معرفی و تاریخچه: طبل رزم و کَرنای باستانی و حماسی (~۵ ثانیه) */
   about: (c, o) => {
     drum(c, o, 0, 120, 0.6);
-    drum(c, o, 0.42, 100, 0.5);
-    drum(c, o, 0.9, 80, 0.75);
-    horn(c, o, { f: 98, at: 0.05, dur: 2.3, vol: 0.2, attack: 0.55, cutoff: 900 });
-    horn(c, o, { f: 147, at: 0.3, dur: 2.0, vol: 0.14, attack: 0.6, cutoff: 1100 });
-    horn(c, o, { f: 196, at: 0.9, dur: 1.5, vol: 0.09, attack: 0.5, cutoff: 1300 });
+    drum(c, o, 0.5, 100, 0.5);
+    drum(c, o, 1.0, 120, 0.6);
+    drum(c, o, 1.5, 80, 0.8);
+    drum(c, o, 2.7, 100, 0.45);
+    drum(c, o, 3.2, 70, 0.6);
+    drum(c, o, 4.1, 60, 0.7);
+    horn(c, o, { f: 98, at: 0.05, dur: 5.4, vol: 0.2, attack: 0.9, cutoff: 900 });
+    horn(c, o, { f: 147, at: 0.6, dur: 4.9, vol: 0.14, attack: 0.9, cutoff: 1100 });
+    horn(c, o, { f: 196, at: 1.5, dur: 2.9, vol: 0.09, attack: 0.8, cutoff: 1300 });
+    horn(c, o, { f: 130.8, at: 2.7, dur: 2.0, vol: 0.1, attack: 0.6, cutoff: 1000 });
   },
-  /* اقامتگاه: طبیعت کنار ساحل و آرامش؛ موج نرم، نسیم و چهچههٔ دور پرنده */
+  /* اقامتگاه: طبیعت کنار ساحل و آرامش؛ موج نرم، نسیم و چهچههٔ دور پرنده (~۷ ثانیه) */
   stay: (c, o) => {
-    hiss(c, o, { type: 'lowpass', f: 220, to: 650, q: 0.4, dur: 2.6, vol: 0.28, attack: 1.3 });
-    hiss(c, o, { type: 'bandpass', f: 700, to: 500, q: 0.8, dur: 2.4, vol: 0.04, attack: 1 });
-    tone(c, o, { f: 220, dur: 2.6, vol: 0.05, attack: 1.1 });
-    tone(c, o, { f: 330, at: 0.15, dur: 2.4, vol: 0.035, attack: 1.1 });
-    [0.7, 0.86, 1.02, 1.6, 1.74].forEach((at, i) => {
-      const f = 3000 + (i % 3) * 450;
-      tone(c, o, { f, to: f * 1.25, at, dur: 0.07, vol: 0.045, attack: 0.01 });
+    surfBed(c, o, 0, 8, 0.2);
+    wave(c, o, 0.2, 4.6, 0.22);
+    wave(c, o, 2.5, 4.6, 0.19);
+    hiss(c, o, { type: 'bandpass', f: 700, to: 450, q: 0.8, dur: 6.5, vol: 0.035, attack: 2 });
+    tone(c, o, { f: 220, dur: 6.5, vol: 0.04, attack: 2 });
+    tone(c, o, { f: 330, at: 0.3, dur: 6, vol: 0.028, attack: 2 });
+    [0.9, 1.05, 1.2, 2.4, 2.55, 3.9, 4.05, 4.2, 5.3].forEach((at, i) => {
+      const f = 2900 + (i % 4) * 420;
+      tone(c, o, { f, to: f * 1.25, at, dur: 0.07, vol: 0.04, attack: 0.01 });
     });
   },
-  /* جاذبه‌ها: موج دریا و مرغ دریایی */
+  /* جاذبه‌ها: موج دریا و مرغ دریایی (~۶ ثانیه) */
   attractions: (c, o) => {
-    hiss(c, o, { type: 'lowpass', f: 380, to: 1600, q: 0.4, dur: 1.9, vol: 0.42, attack: 0.9 });
-    hiss(c, o, { type: 'highpass', f: 3200, q: 0.3, at: 0.8, dur: 1.1, vol: 0.06, attack: 0.3 });
-    gull(c, o, 0.35, 1150, 0.07);
-    gull(c, o, 0.95, 1000, 0.06);
+    surfBed(c, o, 0, 7.2, 0.3);
+    wave(c, o, 0, 3.8, 0.38);
+    wave(c, o, 2.1, 4.0, 0.34);
+    wave(c, o, 4.2, 3.2, 0.28);
+    gull(c, o, 0.6, 1150, 0.07);
+    gull(c, o, 1.35, 1000, 0.055);
+    gull(c, o, 3.3, 1200, 0.065);
+    gull(c, o, 3.95, 1050, 0.05);
   },
   /* رستوران‌ها: روغن داغ و ماهی سرخ‌شونده */
   restaurants: (c, o) => sizzle(c, o),

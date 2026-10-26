@@ -157,7 +157,7 @@ export const en: Dict = {
     },
     events: {
       title: 'Helileh calendar',
-      lead: 'Sea winds and ancient Iranian festivals, month by month: handy for planning a trip, a fishing day or a visit to Helileh.',
+      lead: 'Ancient Iranian festivals, month by month: handy for planning a trip to Helileh on a special day.',
       sections: [],
     },
     shop: {

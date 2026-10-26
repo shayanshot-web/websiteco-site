@@ -1,5 +1,5 @@
 import type { Lang } from '@/content/types';
-import { calUi, entries, gregMonths, monthNames, windMeta, type CalEntry } from '@/content/calendar';
+import { calUi, entries, gregMonths, monthNames, sources, windMeta, type CalEntry } from '@/content/calendar';
 
 const MONTH_LEN = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
 
@@ -16,19 +16,31 @@ function greg(m: number, d: number): { day: number; mon: number } {
   return { day: dt.getUTCDate(), mon: dt.getUTCMonth() };
 }
 
+function endOf(e: CalEntry): [number, number] {
+  return e.end ?? [e.m, e.d2 ?? e.d1];
+}
+
+function dayOfYear(m: number, d: number): number {
+  let n = 0;
+  for (let i = 0; i < m - 1; i++) n += MONTH_LEN[i];
+  return n + d - 1;
+}
+
 function gregRange(e: CalEntry, lang: Lang): string {
   const a = greg(e.m, e.d1);
-  const b = e.d2 ? greg(e.m, e.d2) : a;
+  const [em, ed] = endOf(e);
+  const b = e.end || e.d2 ? greg(em, ed) : a;
   const mn = gregMonths[lang];
   const A = digits(a.day, lang);
   const B = digits(b.day, lang);
-  if (!e.d2) return `${A} ${mn[a.mon]}`;
+  if (!e.end && !e.d2) return `${A} ${mn[a.mon]}`;
+  if (e.end) return `${mn[a.mon]} – ${mn[b.mon]}`;
   return a.mon === b.mon ? `${A}–${B} ${mn[a.mon]}` : `${A} ${mn[a.mon]} – ${B} ${mn[b.mon]}`;
 }
 
 function dateLabel(e: CalEntry, lang: Lang): string {
   if (e.label) return e.label[lang];
-  return e.d2 ? `${digits(e.d1, lang)}–${digits(e.d2, lang)}` : digits(e.d1, lang);
+  return e.d2 && !e.end ? `${digits(e.d1, lang)}–${digits(e.d2, lang)}` : digits(e.d1, lang);
 }
 
 /* تصویر کوچک باد روی دریا؛ شدت بیشتر یعنی خط‌های بیشتر و قایق کج‌تر */
@@ -63,6 +75,81 @@ function WindArt({ strong }: { strong?: boolean }) {
   );
 }
 
+function Sources({ keys, lang, label }: { keys?: string[]; lang: Lang; label: string }) {
+  if (!keys || !keys.length) return null;
+  return (
+    <span className="src">
+      {label}:{' '}
+      {keys.map((k, i) => {
+        const x = sources[k];
+        return (
+          <span key={k}>
+            {i > 0 ? '؛ ' : ''}
+            {x.url ? (
+              <a href={x.url} target="_blank" rel="noopener noreferrer" dir="auto">
+                {x.name[lang]}
+              </a>
+            ) : (
+              x.name[lang]
+            )}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
+/* نمودار بازهٔ وزش بادها در طول سال (از نوروز تا اسفند) */
+function WindChart({ lang, winds, title, lead, seasons }: { lang: Lang; winds: CalEntry[]; title: string; lead: string; seasons: string[] }) {
+  const names = monthNames[lang];
+  const sorted = [...winds].sort((a, b) => dayOfYear(a.m, a.d1) - dayOfYear(b.m, b.d1));
+  // موقعیت بر پایهٔ ماه (دوازده ستون برابر) تا با خطوط شبکه هم‌خوان باشد
+  const pos = (m: number, d: number) => ((m - 1 + d / MONTH_LEN[m - 1]) / 12) * 100;
+  return (
+    <div className="wind-chart">
+      <h3>{title}</h3>
+      <p className="cal-lead">{lead}</p>
+      <div className="wc-grid" role="table" aria-label={title}>
+        <div className="wc-row wc-head" role="row" aria-hidden="true">
+          <span className="wc-name" />
+          <span className="wc-track">
+            {names.map((n, i) => (
+              <span key={n} className={`wc-m${i % 3 === 0 ? ' s' : ''}`}>
+                <em>{n}</em>
+                {i % 3 === 0 ? <b>{seasons[i / 3]}</b> : null}
+              </span>
+            ))}
+          </span>
+        </div>
+        {sorted.map((e) => {
+          const [em, ed] = endOf(e);
+          const a = pos(e.m, e.d1 - 1);
+          const b = pos(em, ed);
+          const segs: [number, number][] = b > a ? [[a, b]] : [[a, 100], [0, b]];
+          const strong = e.id === 'limehr';
+          return (
+            <div key={e.id} className="wc-row" role="row">
+              <span className="wc-name" role="rowheader">
+                {e.t[lang].title}
+              </span>
+              <span className="wc-track" role="cell">
+                {segs.map(([x, y], i) => (
+                  <span
+                    key={i}
+                    className={`wc-bar${strong ? ' strong' : ''}`}
+                    style={{ insetInlineStart: `${x}%`, width: `${Math.max(y - x, 1.6)}%` }}
+                    title={`${e.t[lang].title}: ${dateLabel(e, lang)} ${names[e.m - 1]}`}
+                  />
+                ))}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function CalendarView({ lang }: { lang: Lang }) {
   const u = calUi[lang];
   const names = monthNames[lang];
@@ -82,7 +169,7 @@ export default function CalendarView({ lang }: { lang: Lang }) {
       <h2 className="accent">{u.windsTitle}</h2>
       <p className="cal-lead">{u.windsLead}</p>
       <div className="wind-cards">
-        {winds.map((e) => {
+        {winds.filter((e) => e.id === 'lakizab' || e.id === 'limehr').map((e) => {
           const meta = windMeta[lang][e.id];
           const strong = e.id === 'limehr';
           return (
@@ -100,12 +187,16 @@ export default function CalendarView({ lang }: { lang: Lang }) {
                 </p>
                 <p>{e.t[lang].desc}</p>
                 <p className="wind-tip">{meta.tip}</p>
+                <p className="date-note">{meta.dateNote}</p>
+                <Sources keys={e.src} lang={lang} label={u.sourceLabel} />
                 <span className="wind-strength">{meta.strength}</span>
               </div>
             </article>
           );
         })}
       </div>
+
+      <WindChart lang={lang} winds={winds} title={u.chartTitle} lead={u.chartLead} seasons={u.seasonLabels} />
 
       <h2 className="accent">{u.tableTitle}</h2>
       <div className="cal-table-wrap">
@@ -136,7 +227,10 @@ export default function CalendarView({ lang }: { lang: Lang }) {
                     <strong>{e.t[lang].title}</strong>
                     <span className={`tag ${e.kind}`}>{kindLabel(e.kind)}</span>
                   </td>
-                  <td className="x">{e.t[lang].desc}</td>
+                  <td className="x">
+                    {e.t[lang].desc}
+                    <Sources keys={e.src} lang={lang} label={u.sourceLabel} />
+                  </td>
                 </tr>
               ))}
             </tbody>

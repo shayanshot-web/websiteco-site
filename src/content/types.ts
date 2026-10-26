@@ -84,6 +84,7 @@ export interface UiStrings {
   phoneLabel: string;
   addressLabel: string;
   managerLabel: string;
+  sound: { on: string; off: string; hint: string };
   search: {
     label: string;
     placeholder: string;

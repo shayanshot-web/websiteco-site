@@ -36,7 +36,7 @@ export default function Header(p: Props) {
   return (
     <header className="site-header">
       <div className="container header-row">
-        <Link href={p.homeHref} className="brand" onClick={() => setOpen(false)}>
+        <Link href={p.homeHref} className="brand" data-sound="sea" onClick={() => setOpen(false)}>
           <Logo />
           <span>{p.siteName}</span>
         </Link>
@@ -58,6 +58,7 @@ export default function Header(p: Props) {
               <li key={i.href}>
                 <Link
                   href={i.href}
+                  data-sound="tick"
                   aria-current={active(i.href) ? 'page' : undefined}
                   onClick={() => setOpen(false)}
                 >
@@ -90,6 +91,7 @@ export default function Header(p: Props) {
             {p.langs.map((l) => (
               <Link
                 key={l.code}
+                data-sound="tick"
                 href={l.href}
                 hrefLang={l.code}
                 lang={l.code}

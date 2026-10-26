@@ -302,6 +302,7 @@ export const en: Dict = {
     phoneLabel: 'Phone',
     addressLabel: 'Address',
     managerLabel: 'Management',
+    sound: { on: 'Sound on', off: 'Sound off', hint: 'Turn sound on to hear the sea and the site elements as you move the mouse' },
     search: {
       label: 'Search the site',
       placeholder: 'Search…',

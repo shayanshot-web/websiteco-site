@@ -314,6 +314,7 @@ export const fa: Dict = {
     phoneLabel: 'تلفن',
     addressLabel: 'نشانی',
     managerLabel: 'مدیریت',
+    sound: { on: 'صدا روشن', off: 'صدا خاموش', hint: 'با روشن‌کردن صدا، با حرکت موس صدای دریا و اجزای سایت پخش می‌شود' },
     search: {
       label: 'جستجو در سایت',
       placeholder: 'جستجو…',

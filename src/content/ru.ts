@@ -311,6 +311,7 @@ export const ru: Dict = {
     phoneLabel: 'Телефон',
     addressLabel: 'Адрес',
     managerLabel: 'Руководство',
+    sound: { on: 'Звук включён', off: 'Звук выключен', hint: 'Включите звук, чтобы слышать море и элементы сайта при наведении' },
     search: {
       label: 'Поиск по сайту',
       placeholder: 'Поиск…',

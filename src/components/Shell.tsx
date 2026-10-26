@@ -4,6 +4,7 @@ import type { PageId } from '@/content/types';
 import Header from './Header';
 import { WaveEdge } from './Art';
 import LangSync from './LangSync';
+import SoundFX from './SoundFX';
 import {
   altRoute,
   dicts,
@@ -46,6 +47,7 @@ export default function Shell({ route, children }: { route: Route; children: Rea
         searchPlaceholder={d.ui.search.placeholder}
       />
       <main id="main">{children}</main>
+      <SoundFX onLabel={d.ui.sound.on} offLabel={d.ui.sound.off} hint={d.ui.sound.hint} />
       <footer className="site-footer">
         <WaveEdge position="top" />
         <div className="container footer-grid">
@@ -57,7 +59,9 @@ export default function Shell({ route, children }: { route: Route; children: Rea
             <ul className="footer-links">
               {items.slice(1).map((i) => (
                 <li key={i.href}>
-                  <Link href={i.href}>{i.label}</Link>
+                  <Link href={i.href} data-sound="tick">
+                    {i.label}
+                  </Link>
                 </li>
               ))}
             </ul>

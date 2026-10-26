@@ -21,15 +21,19 @@ export type IconName =
   | 'culture'
   | 'phone'
   | 'user'
-  | 'pin';
+  | 'pin'
+  | 'search';
 
 /* هر آیکن روی شبکه ۴۸×۴۸ کشیده شده؛ کلاس f یعنی سطح پرشده با رنگ شنی */
 const icons: Record<IconName, ReactNode> = {
   /* بادگیر بوشهری */
   about: (
     <>
-      <path className="f" d="M17 41V19l7-10 7 10v22z" />
-      <path d="M12 41h24M24 9v-3M21 25v10M27 25v10M21 19h6" />
+      <g className="a-tower">
+        <path className="f" d="M17 41V19l7-10 7 10v22z" />
+        <path d="M24 9v-3M21 25v10M27 25v10M21 19h6" />
+      </g>
+      <path d="M12 41h24" />
     </>
   ),
   /* خانه با سقف شیروانی و در قوسی */
@@ -42,23 +46,30 @@ const icons: Record<IconName, ReactNode> = {
   /* غروب خورشید روی دریا */
   attractions: (
     <>
-      <path className="f" d="M13 29a11 11 0 0 1 22 0z" />
-      <path d="M24 10v4M10 16l3 3M38 16l-3 3M5 29h38M9 35c3-3 6-3 9 0s6 3 9 0 6-3 9 0M13 41c3-2 5-2 8 0s5 2 8 0 5-2 6 0" />
+      <g className="a-sun">
+        <path className="f" d="M13 29a11 11 0 0 1 22 0z" />
+        <path d="M24 10v4M10 16l3 3M38 16l-3 3" />
+      </g>
+      <path d="M5 29h38" />
+      <path className="a-wave" d="M9 35c3-3 6-3 9 0s6 3 9 0 6-3 9 0M13 41c3-2 5-2 8 0s5 2 8 0 5-2 6 0" />
     </>
   ),
   /* ماهی روی ظرف */
   restaurants: (
     <>
-      <path className="f" d="M8 25c5-8 15-11 22-5l9-5v18l-9-5c-7 6-17 3-22-3z" />
-      <circle cx="15" cy="23" r="1.4" fill="currentColor" stroke="none" />
-      <path d="M22 21c1.5 2 1.5 5 0 8M7 40h34" />
+      <g className="a-fish">
+        <path className="f" d="M8 25c5-8 15-11 22-5l9-5v18l-9-5c-7 6-17 3-22-3z" />
+        <circle cx="15" cy="23" r="1.4" fill="currentColor" stroke="none" />
+        <path d="M22 21c1.5 2 1.5 5 0 8" />
+      </g>
+      <path d="M7 40h34" />
     </>
   ),
   /* قطب‌نما */
   experiences: (
     <>
       <circle className="f" cx="24" cy="24" r="16" />
-      <path d="M30 18l-4 9-9 3 4-9z" />
+      <path className="a-needle" d="M30 18l-4 9-9 3 4-9z" />
       <circle cx="24" cy="24" r="1.6" fill="currentColor" stroke="none" />
     </>
   ),
@@ -66,8 +77,8 @@ const icons: Record<IconName, ReactNode> = {
   gallery: (
     <>
       <rect className="f" x="7" y="10" width="34" height="28" rx="4" />
-      <circle cx="31" cy="19" r="3.2" />
-      <path d="M7 32c4-4 7-4 11 0s7 4 11 0 8-3 12 0" />
+      <circle className="a-sun" cx="31" cy="19" r="3.2" />
+      <path className="a-wave" d="M7 32c4-4 7-4 11 0s7 4 11 0 8-3 12 0" />
     </>
   ),
   /* قلم و برگه */
@@ -99,15 +110,19 @@ const icons: Record<IconName, ReactNode> = {
   /* موج و بادبان */
   sea: (
     <>
-      <path className="f" d="M26 8v20h13z" />
-      <path d="M24 12 12 28h12M8 34c4-3 7-3 10 0s6 3 10 0 7-3 12 0M12 41c3-2 5-2 8 0s5 2 8 0 5-2 8 0" />
+      <g className="a-sail">
+        <path className="f" d="M26 8v20h13z" />
+        <path d="M24 12 12 28h12" />
+      </g>
+      <path className="a-wave" d="M8 34c4-3 7-3 10 0s6 3 10 0 7-3 12 0M12 41c3-2 5-2 8 0s5 2 8 0 5-2 8 0" />
     </>
   ),
   /* کاسه غذا با بخار */
   food: (
     <>
       <path className="f" d="M7 25h34a17 17 0 0 1-34 0z" />
-      <path d="M14 41h20M17 10c-2 3 2 5 0 8M24 8c-2 3 2 6 0 10M31 10c-2 3 2 5 0 8" />
+      <path d="M14 41h20" />
+      <path className="a-steam" d="M17 10c-2 3 2 5 0 8M24 8c-2 3 2 6 0 10M31 10c-2 3 2 5 0 8" />
     </>
   ),
   /* سفال */
@@ -135,6 +150,12 @@ const icons: Record<IconName, ReactNode> = {
       <path d="M8 40c1-9 8-13 16-13s15 4 16 13" />
     </>
   ),
+  search: (
+    <>
+      <circle className="f" cx="21" cy="21" r="12" />
+      <path d="M30 30l11 11" />
+    </>
+  ),
   pin: (
     <>
       <path className="f" d="M24 42S10 29 10 19a14 14 0 0 1 28 0c0 10-14 23-14 23z" />
@@ -155,6 +176,7 @@ export function Icon({ name, size = 48, className = '' }: { name: IconName; size
       strokeWidth="2.2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      data-icon={name}
       aria-hidden="true"
       focusable="false"
     >
@@ -186,11 +208,13 @@ function Palm({ x, y, s = 1, flip = false }: { x: number; y: number; s?: number;
   ];
   return (
     <g transform={`translate(${x} ${y}) scale(${flip ? -s : s} ${s})`} className="palm">
-      <path d="M0 0c5-30 3-62 12-96" fill="none" stroke="#06304f" strokeWidth="6" strokeLinecap="round" />
-      <g transform="translate(12 -96)" fill="none" stroke="#06304f" strokeWidth="4" strokeLinecap="round">
-        {fronds.map((d) => (
-          <path key={d} d={d} />
-        ))}
+      <g className="sway">
+        <path d="M0 0c5-30 3-62 12-96" fill="none" stroke="#06304f" strokeWidth="6" strokeLinecap="round" />
+        <g transform="translate(12 -96)" fill="none" stroke="#06304f" strokeWidth="4" strokeLinecap="round">
+          {fronds.map((d) => (
+            <path key={d} d={d} />
+          ))}
+        </g>
       </g>
     </g>
   );
@@ -241,8 +265,27 @@ export function HeroScene() {
       </defs>
 
       {/* هاله و خورشید */}
-      <circle cx="300" cy="196" r="190" fill="url(#hs-sun)" opacity=".55" />
-      <circle cx="300" cy="196" r="64" fill="#ffe2a3" />
+      <circle className="sun-halo" cx="300" cy="196" r="190" fill="url(#hs-sun)" opacity=".55" />
+      <circle className="sun-core" cx="300" cy="196" r="64" fill="#ffe2a3" />
+
+      {/* ابرهای رونده */}
+      <g className="cloud c1" fill="#fff" opacity=".55">
+        <path d="M0 70c0-12 10-20 22-18 6-14 30-14 36 2 14-2 22 8 20 16z" />
+      </g>
+      <g className="cloud c2" fill="#fff" opacity=".4">
+        <path d="M0 40c0-10 9-17 19-15 5-12 26-12 31 2 12-2 19 7 17 13z" />
+      </g>
+      <g className="cloud c3" fill="#ffe9c7" opacity=".5">
+        <path d="M0 100c0-9 8-15 17-13 4-11 23-11 27 2 11-2 17 6 15 11z" />
+      </g>
+
+      {/* مرغ‌های دریایی */}
+      <g className="bird b1" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+        <path className="wing" d="M0 0q9-9 18 0 9-9 18 0" />
+      </g>
+      <g className="bird b2" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path className="wing" d="M0 0q7-7 14 0 7-7 14 0" />
+      </g>
 
       {/* ساحل دور: تپه‌های شنی و نخل‌ها */}
       <g>
@@ -260,15 +303,17 @@ export function HeroScene() {
       <rect x="0" y="196" width="1440" height="224" fill="url(#hs-sea)" />
       {/* نور خورشید روی آب */}
       <g stroke="#ffe3b0" strokeLinecap="round" opacity=".7">
-        <path d="M250 212h100" strokeWidth="3" />
-        <path d="M268 224h64" strokeWidth="3" />
-        <path d="M232 238h136" strokeWidth="2.5" />
-        <path d="M262 252h76" strokeWidth="2" />
+        <path className="glint g1" d="M250 212h100" strokeWidth="3" />
+        <path className="glint g2" d="M268 224h64" strokeWidth="3" />
+        <path className="glint g3" d="M232 238h136" strokeWidth="2.5" />
+        <path className="glint g4" d="M262 252h76" strokeWidth="2" />
       </g>
 
       {/* لنج */}
       <g transform="translate(520 232)">
-        <Dhow />
+        <g className="dhow-drift">
+          <Dhow />
+        </g>
       </g>
 
       {/* موج‌ها از دور به نزدیک */}

@@ -19,12 +19,43 @@ const pageIcons: Record<InnerPageId, IconName> = {
   contact: 'contact',
 };
 
-function PageHero({ title, lead, meta, icon }: { title: string; lead?: string; meta?: string; icon?: IconName }) {
+function SearchBar({ lang, className = '' }: { lang: Lang; className?: string }) {
+  const u = dicts[lang].ui.search;
+  const id = `q-${className || 'page'}`;
+  return (
+    <form className={`hero-search ${className}`.trim()} action={searchPath(lang)} method="get" role="search">
+      <label className="sr-only" htmlFor={id}>
+        {u.label}
+      </label>
+      <input id={id} type="search" name="q" placeholder={u.placeholder} maxLength={100} autoComplete="off" />
+      <button type="submit" data-sound="pop">
+        <Icon name="search" size={22} />
+        <span>{u.button}</span>
+      </button>
+    </form>
+  );
+}
+
+function PageHero({
+  title,
+  lead,
+  meta,
+  icon,
+  lang,
+  search = true,
+}: {
+  title: string;
+  lead?: string;
+  meta?: string;
+  icon?: IconName;
+  lang: Lang;
+  search?: boolean;
+}) {
   return (
     <section className="page-hero">
       <div className="container page-hero-row">
         {icon ? (
-          <span className="hero-badge">
+          <span className="hero-badge" data-sound={icon}>
             <Icon name={icon} size={44} />
           </span>
         ) : null}
@@ -36,6 +67,7 @@ function PageHero({ title, lead, meta, icon }: { title: string; lead?: string; m
               <Rich text={lead} />
             </p>
           ) : null}
+          {search ? <SearchBar lang={lang} /> : null}
         </div>
       </div>
       <WaveEdge position="bottom" />
@@ -75,16 +107,17 @@ export function HomeView({ lang }: { lang: Lang }) {
   const doIcons: IconName[] = ['sea', 'food', 'craft', 'culture'];
   return (
     <>
-      <section className="hero">
+      <section className="hero" data-sound="sea">
         <div className="container hero-copy">
           <p className="eyebrow">{h.eyebrow}</p>
           <h1>{h.h1}</h1>
           <p className="hero-lead">{h.lead}</p>
+          <SearchBar lang={lang} className="on-hero" />
           <div className="btn-row">
-            <Link className="btn btn-sand" href={pagePath(lang, 'stay')}>
+            <Link data-sound="pop" className="btn btn-sand" href={pagePath(lang, 'stay')}>
               {h.ctaStay}
             </Link>
-            <Link className="btn btn-outline" href={pagePath(lang, 'events')}>
+            <Link data-sound="pop" className="btn btn-outline" href={pagePath(lang, 'events')}>
               {h.ctaEvents}
             </Link>
           </div>
@@ -98,7 +131,7 @@ export function HomeView({ lang }: { lang: Lang }) {
         <div className="container narrow">
           <h2 className="accent">{h.introTitle}</h2>
           <p>{h.introText}</p>
-          <Link className="btn btn-blue" href={pagePath(lang, 'about')}>
+          <Link data-sound="pop" className="btn btn-blue" href={pagePath(lang, 'about')}>
             {h.introCta}
           </Link>
         </div>
@@ -108,7 +141,7 @@ export function HomeView({ lang }: { lang: Lang }) {
         <ul className="tiles">
           {h.tiles.map((t, i) => (
             <li key={t.h}>
-              <Link href={pagePath(lang, tileLinks[i])} className="tile">
+              <Link href={pagePath(lang, tileLinks[i])} className="tile" data-sound={tileIcons[i]}>
                 <span className="tile-icon">
                   <Icon name={tileIcons[i]} size={52} />
                 </span>
@@ -125,7 +158,7 @@ export function HomeView({ lang }: { lang: Lang }) {
         <div className="container narrow">
           <h2>{h.stayTitle}</h2>
           <p>{h.stayText}</p>
-          <Link className="btn btn-blue" href={pagePath(lang, 'contact')}>
+          <Link data-sound="pop" className="btn btn-blue" href={pagePath(lang, 'contact')}>
             {h.stayCta}
           </Link>
         </div>
@@ -137,7 +170,7 @@ export function HomeView({ lang }: { lang: Lang }) {
           <h2 className="accent">{h.doTitle}</h2>
           <div className="cards four">
             {h.doItems.map((t, i) => (
-              <div key={t.h} className="card do-card">
+              <div key={t.h} className="card do-card" data-sound={doIcons[i]}>
                 <span className="do-icon">
                   <Icon name={doIcons[i]} size={40} />
                 </span>
@@ -156,7 +189,7 @@ export function HomeView({ lang }: { lang: Lang }) {
           <p>
             <Rich text={h.eventsText} />
           </p>
-          <Link className="btn btn-blue" href={pagePath(lang, 'events')}>
+          <Link data-sound="pop" className="btn btn-blue" href={pagePath(lang, 'events')}>
             {h.eventsCta}
           </Link>
         </div>
@@ -167,7 +200,7 @@ export function HomeView({ lang }: { lang: Lang }) {
         <div className="container narrow">
           <h2 className="accent">{h.shopTitle}</h2>
           <p>{h.shopText}</p>
-          <Link className="btn btn-navy" href={pagePath(lang, 'shop')}>
+          <Link data-sound="pop" className="btn btn-navy" href={pagePath(lang, 'shop')}>
             {h.shopCta}
           </Link>
         </div>
@@ -178,13 +211,13 @@ export function HomeView({ lang }: { lang: Lang }) {
         <div className="container narrow">
           <h2>{h.contactTitle}</h2>
           <ul className="contact-list on-dark">
-            <li>
+            <li data-sound="drop">
               <Icon name="user" size={26} />
               <span>
                 {d.ui.managerLabel}: {d.manager}
               </span>
             </li>
-            <li>
+            <li data-sound="contact">
               <Icon name="phone" size={26} />
               <span>
                 {d.ui.phoneLabel}:{' '}
@@ -193,7 +226,7 @@ export function HomeView({ lang }: { lang: Lang }) {
                 </a>
               </span>
             </li>
-            <li>
+            <li data-sound="drop">
               <Icon name="pin" size={26} />
               <span>
                 {d.ui.addressLabel}: {d.address}
@@ -211,7 +244,7 @@ export function PageView({ lang, id }: { lang: Lang; id: InnerPageId }) {
   const p = d.pages[id];
   return (
     <>
-      <PageHero title={p.title} lead={p.lead} icon={pageIcons[id]} />
+      <PageHero title={p.title} lead={p.lead} icon={pageIcons[id]} lang={lang} />
       <div className="container prose">
         {id === 'blog' ? (
           <BlogList lang={lang} />
@@ -220,19 +253,19 @@ export function PageView({ lang, id }: { lang: Lang; id: InnerPageId }) {
             {id === 'contact' ? (
               <>
                 <ul className="contact-list">
-                  <li>
+                  <li data-sound="drop">
                     <Icon name="user" size={30} />
                     <span>
                       {d.ui.managerLabel}: <strong>{d.manager}</strong>
                     </span>
                   </li>
-                  <li>
+                  <li data-sound="contact">
                     <Icon name="phone" size={30} />
                     <a href={`tel:${d.phone}`} dir="ltr">
                       {d.phoneDisplay}
                     </a>
                   </li>
-                  <li>
+                  <li data-sound="drop">
                     <Icon name="pin" size={30} />
                     <span>{d.address}</span>
                   </li>
@@ -243,7 +276,7 @@ export function PageView({ lang, id }: { lang: Lang; id: InnerPageId }) {
             {id === 'events' ? <p className="notice">{d.ui.noEvents}</p> : null}
             {id === 'stay' || id === 'shop' ? (
               <p>
-                <Link className="btn btn-blue" href={pagePath(lang, 'contact')}>
+                <Link data-sound="pop" className="btn btn-blue" href={pagePath(lang, 'contact')}>
                   {d.nav.contact}
                 </Link>
               </p>
@@ -264,7 +297,7 @@ export function PostView({ lang, post }: { lang: Lang; post: Post }) {
   const d = dicts[lang];
   return (
     <>
-      <PageHero title={post.title} icon="blog" meta={`${d.ui.publishedOn} ${formatDate(lang, post.date)}`} />
+      <PageHero lang={lang} title={post.title} icon="blog" meta={`${d.ui.publishedOn} ${formatDate(lang, post.date)}`} />
       <article className="container prose">
         <p className="lead">{post.lead}</p>
         <Sections sections={post.sections} />
@@ -282,7 +315,7 @@ export function SearchPageView({ lang }: { lang: Lang }) {
   const d = dicts[lang];
   return (
     <>
-      <PageHero title={d.ui.search.title} lead={d.ui.search.lead} icon="experiences" />
+      <PageHero title={d.ui.search.title} lead={d.ui.search.lead} icon="experiences" lang={lang} search={false} />
       <div className="container prose">
         <SearchView lang={lang} ui={d.ui.search} action={searchPath(lang)} />
       </div>

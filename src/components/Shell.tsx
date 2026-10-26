@@ -5,6 +5,7 @@ import Header from './Header';
 import { WaveEdge } from './Art';
 import LangSync from './LangSync';
 import SoundFX from './SoundFX';
+import HelilehMap from './HelilehMap';
 import {
   altRoute,
   dicts,
@@ -47,6 +48,7 @@ export default function Shell({ route, children }: { route: Route; children: Rea
         searchPlaceholder={d.ui.search.placeholder}
       />
       <main id="main">{children}</main>
+      <HelilehMap lang={lang} locale={d.locale} />
       <SoundFX onLabel={d.ui.sound.on} offLabel={d.ui.sound.off} hint={d.ui.sound.hint} />
       <footer className="site-footer">
         <WaveEdge position="top" />

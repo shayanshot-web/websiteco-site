@@ -314,6 +314,7 @@ export default function SoundFX({ onLabel, offLabel, hint }: { onLabel: string; 
   const ctxRef = useRef<Ctx | null>(null);
   const outRef = useRef<AudioNode | null>(null);
   const onRef = useRef(false);
+  const voiceRef = useRef<GainNode | null>(null);
   const lastRef = useRef<{ el: Element | null; t: number }>({ el: null, t: 0 });
 
   const ensure = useCallback((): Ctx | null => {
@@ -334,14 +335,39 @@ export default function SoundFX({ onLabel, offLabel, hint }: { onLabel: string; 
     return c;
   }, []);
 
+  /* قطع نرم صدای در حال پخش (وقتی موس از روی آیکن بیرون می‌رود) */
+  const stopVoice = useCallback(() => {
+    const c = ctxRef.current;
+    const v = voiceRef.current;
+    if (!c || !v) return;
+    voiceRef.current = null;
+    const t = c.currentTime;
+    v.gain.cancelScheduledValues(t);
+    v.gain.setValueAtTime(v.gain.value, t);
+    v.gain.linearRampToValueAtTime(0, t + 0.12);
+    window.setTimeout(() => {
+      try {
+        v.disconnect();
+      } catch {
+        /* ignore */
+      }
+    }, 300);
+  }, []);
+
   const play = useCallback(
     (name: string) => {
       if (!onRef.current) return;
       const c = ensure();
       const make = sounds[name] ?? sounds.drop;
-      if (c && outRef.current && c.state === 'running') make(c, outRef.current);
+      if (c && outRef.current && c.state === 'running') {
+        stopVoice();
+        const voice = c.createGain();
+        voice.connect(outRef.current);
+        voiceRef.current = voice;
+        make(c, voice);
+      }
     },
-    [ensure],
+    [ensure, stopVoice],
   );
 
   useEffect(() => {
@@ -367,6 +393,7 @@ export default function SoundFX({ onLabel, offLabel, hint }: { onLabel: string; 
       const el = target && target.closest ? target.closest('[data-sound]') : null;
       if (!el) {
         lastRef.current.el = null;
+        stopVoice();
         return;
       }
       if (el === lastRef.current.el) return;
@@ -376,20 +403,39 @@ export default function SoundFX({ onLabel, offLabel, hint }: { onLabel: string; 
       lastRef.current.t = now;
       play(el.getAttribute('data-sound') || 'drop');
     };
+    // خروج موس از روی آیکن (یا از پنجره): صدا قطع شود. روی لمس‌صفحه‌ها «هاور» نداریم، پس قطع نمی‌کنیم.
+    const out = (e: PointerEvent) => {
+      if (e.pointerType === 'touch') return;
+      const cur = lastRef.current.el;
+      if (!cur) return;
+      const to = e.relatedTarget as Node | null;
+      if (to && cur.contains(to)) return;
+      lastRef.current.el = null;
+      stopVoice();
+    };
+    const blur = () => {
+      lastRef.current.el = null;
+      stopVoice();
+    };
     document.addEventListener('pointerover', over, { passive: true });
+    document.addEventListener('pointerout', out, { passive: true });
     document.addEventListener('focusin', over);
+    document.addEventListener('focusout', blur);
     return () => {
       document.removeEventListener('pointerover', over);
+      document.removeEventListener('pointerout', out);
       document.removeEventListener('focusin', over);
+      document.removeEventListener('focusout', blur);
       window.removeEventListener('pointerdown', unlock);
       window.removeEventListener('keydown', unlock);
     };
-  }, [ensure, play]);
+  }, [ensure, play, stopVoice]);
 
   const toggle = () => {
     const next = !on;
     onRef.current = next;
     setOn(next);
+    if (!next) stopVoice();
     try {
       localStorage.setItem(KEY, next ? '1' : '0');
     } catch {

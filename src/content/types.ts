@@ -29,7 +29,7 @@ export interface PageContent {
   sections: Section[];
 }
 
-export type PostId = 'one-day' | 'souvenirs';
+export type PostId = 'one-day' | 'souvenirs' | 'ancient-cemetery';
 
 export interface Post {
   id: PostId;

@@ -42,6 +42,8 @@ export default function LeafletMap({ center, pins, dir, lang, ariaLabel, centerL
 
       const map = L.map(elRef.current, {
         zoomControl: true,
+        zoomSnap: 0.25,
+        zoomDelta: 0.5,
         scrollWheelZoom: false,
         dragging: !L.Browser.mobile,
         attributionControl: true,
@@ -53,6 +55,10 @@ export default function LeafletMap({ center, pins, dir, lang, ariaLabel, centerL
         attribution,
       }).addTo(map);
 
+      // روی صفحه‌های باریک نشانگرها کوچک‌ترند تا نقاط نزدیک (مثل پارک و ساحل) روی هم نیفتند
+      const narrow = window.innerWidth < 760;
+      const size = window.innerWidth < 360 ? 20 : narrow ? 24 : 28;
+      const csize = narrow ? 34 : 38;
       const local: [number, number][] = [[center.lat, center.lon]];
       const all: [number, number][] = [[center.lat, center.lon]];
       pins.forEach((p) => {
@@ -60,9 +66,9 @@ export default function LeafletMap({ center, pins, dir, lang, ariaLabel, centerL
         const icon = L.divIcon({
           className: 'hm-pin-wrap',
           html: `<span class="hm-pin hm-${p.kind}${isCenter ? ' hm-pin-center' : ''}"><b>${p.mark}</b></span>`,
-          iconSize: isCenter ? [38, 38] : [28, 28],
-          iconAnchor: isCenter ? [19, 19] : [14, 14],
-          popupAnchor: [0, isCenter ? -18 : -14],
+          iconSize: isCenter ? [csize, csize] : [size, size],
+          iconAnchor: isCenter ? [csize / 2, csize / 2] : [size / 2, size / 2],
+          popupAnchor: [0, isCenter ? -csize / 2 : -size / 2],
         });
         const m = L.marker([p.lat, p.lon], { icon, title: p.label, riseOnHover: true, zIndexOffset: isCenter ? 1000 : 0 }).addTo(map);
         m.bindPopup(`<div dir="${dir}" lang="${lang}" class="hm-popup">${p.popup}</div>`);
@@ -70,8 +76,8 @@ export default function LeafletMap({ center, pins, dir, lang, ariaLabel, centerL
         if (p.scope === 'local') local.push([p.lat, p.lon]);
       });
 
-      boundsRef.current = { village: L.latLngBounds(local).pad(0.18), region: L.latLngBounds(all).pad(0.1) };
-      map.fitBounds(boundsRef.current.village);
+      boundsRef.current = { village: L.latLngBounds(local), region: L.latLngBounds(all).pad(0.1) };
+      map.fitBounds(boundsRef.current.village, { maxZoom: 17, padding: [22, 22] });
     })();
 
     return () => {
@@ -84,7 +90,7 @@ export default function LeafletMap({ center, pins, dir, lang, ariaLabel, centerL
   const go = (v: 'village' | 'region') => {
     setView(v);
     const b = boundsRef.current;
-    if (mapRef.current && b) mapRef.current.fitBounds(b[v], { animate: true });
+    if (mapRef.current && b) mapRef.current.fitBounds(b[v], { animate: true, maxZoom: v === 'village' ? 17 : 15, padding: v === 'village' ? [22, 22] : [10, 10] });
   };
 
   return (

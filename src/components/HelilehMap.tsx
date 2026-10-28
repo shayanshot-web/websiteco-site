@@ -1,6 +1,10 @@
 import type { Lang } from '@/content/types';
+import Link from '@/components/A';
+import { dicts, postPath } from '@/lib/i18n';
 import { HELILEH, mapPoints, mapStrings } from '@/content/map';
 import LeafletMap, { type PinData } from './LeafletMap';
+
+const CORE_KM = 1.5;
 
 function distKm(aLat: number, aLon: number, bLat: number, bLon: number) {
   const R = 6371;
@@ -17,11 +21,15 @@ export default function HelilehMap({ lang, locale, dir }: { lang: Lang; locale: 
   const nf1 = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 });
   const km = (v: number) => (v < 10 ? nf1.format(Math.round(v * 10) / 10) : nf.format(Math.round(v)));
 
-  // محلی‌ها اول، سپس منطقه‌ای؛ داخل هر گروه از نزدیک به دور
+  // از نزدیک به دور؛ نقاط تا ۱٫۵ کیلومتر از مرکز «هستهٔ روستا» حساب می‌شوند و نمای روستا فقط آن‌ها را نشان می‌دهد
   const items = mapPoints
     .map((p) => ({ ...p, d: distKm(HELILEH.lat, HELILEH.lon, p.lat, p.lon) }))
-    .sort((a, b) => (a.scope === b.scope ? a.d - b.d : a.scope === 'local' ? -1 : 1))
-    .map((p, i) => ({ ...p, n: i + 1 }));
+    .sort((a, b) => a.d - b.d)
+    .map((p, i) => ({ ...p, n: i + 1 }))
+    .map((p) => {
+      const post = p.postId ? dicts[lang].posts.find((x) => x.id === p.postId) : undefined;
+      return { ...p, href: post ? postPath(lang, post) : undefined };
+    });
 
   const pins: PinData[] = [
     {
@@ -41,8 +49,8 @@ export default function HelilehMap({ lang, locale, dir }: { lang: Lang; locale: 
       lon: p.lon,
       label: p.name[lang],
       mark: nf.format(p.n),
-      popup: `<strong>${p.name[lang]}</strong><br>${km(p.d)} ${s.km} ${s.distanceFrom}`,
-      scope: p.scope,
+      popup: `<strong>${p.name[lang]}</strong><br>${km(p.d)} ${s.km} ${s.distanceFrom}${p.href ? `<br><a href="${p.href}">${s.readMore}</a>` : ''}`,
+      scope: (p.d <= CORE_KM ? 'local' : 'region') as 'local' | 'region',
     })),
   ];
 
@@ -90,7 +98,9 @@ export default function HelilehMap({ lang, locale, dir }: { lang: Lang; locale: 
                 <span className="hm-badge-html" aria-hidden="true">
                   {nf.format(p.n)}
                 </span>
-                <span className="hm-list-name">{p.name[lang]}</span>
+                <span className="hm-list-name">
+                  {p.href ? <Link href={p.href}>{p.name[lang]}</Link> : p.name[lang]}
+                </span>
                 <span className="hm-list-km">
                   {km(p.d)} {s.km}
                 </span>

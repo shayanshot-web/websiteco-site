@@ -218,6 +218,61 @@ export const en: Dict = {
   },
   posts: [
     {
+      id: 'ancient-cemetery',
+      slug: 'helileh-ancient-cemetery',
+      title: 'The ancient cemetery of Helileh: what the sources say',
+      excerpt:
+        'A sourced look at the Helileh cemetery and the ancient past of the area, from a Chalcolithic site near Helileh to the old cemeteries of the Bushehr peninsula.',
+      date: '2026-10-27',
+      lead: 'On this website map the present cemetery of Helileh is marked as the "Helileh ancient cemetery". This article gathers what the sources say about the history of Helileh and the old cemeteries around it, and keeps documented facts apart from local tradition.',
+      sections: [
+        {
+          h: 'Where is the cemetery?',
+          p: [
+            'Google Maps lists the present cemetery as "Heleileh cemetery", about 450 metres north-west of the village centre (<<see it on Google Maps|https://www.google.com/maps/search/?api=1&query=28.839093,50.8795601>>). Helileh is a village in Howmeh Rural District, Central District of Bushehr County, with a population of about 2,268 at the 2016 census (<<Wikipedia|https://en.wikipedia.org/wiki/Halileh>>).',
+          ],
+        },
+        {
+          h: 'Helileh in historical and archaeological sources',
+          p: [
+            'The Dehkhoda dictionary describes Helileh as a village of the Howmeh rural district of Bushehr, "16 km south-east of Bushehr" (<<entry on abadis.ir|https://abadis.ir/fatofa/%D9%87%D9%84%DB%8C%D9%84%D9%87/>>).',
+            'The Iranian-British archaeological survey of Bushehr Province (2004) quotes the report by Lorimer (1908): at Helileh, in the south of the Bushehr peninsula, sweet water was found and there was a good anchorage. The same report notes a Chalcolithic site, H200, whose surface pottery relates to the Ubaid tradition of southern Mesopotamia, found in the 1970s "at or near the village of Halileh". Its exact location has not been found again (<<full report|https://www.ancientportsantiques.com/wp-content/uploads/Documents/PLACES/IndOc-Gulf/Bushir-Carter2006.pdf>>).',
+            'Where the report mentions Helileh it names only this water, anchorage and the Chalcolithic site; it says nothing of a cemetery, jar burials, or Sasanian or Islamic remains at Helileh.',
+          ],
+        },
+        {
+          h: 'Local tradition: Hezar Mardan',
+          p: [
+            'Local texts mention "Hezar Mardan", an ancient land north of present-day Helileh whose name is still used by villagers. According to the same text, "hezar-mard" was a title Sasanian kings gave to commanders and city governors (<<abadis.ir|https://abadis.ir/fatofa/%D9%87%D9%84%DB%8C%D9%84%D9%87/>>). This should be treated as local tradition; proving it needs archaeological investigation.',
+          ],
+        },
+        {
+          h: 'Old cemeteries nearby',
+          p: [
+            'On the same peninsula, the ancient Shoghab cemetery lies about 10.7 km from the old bazaar of Bushehr. Large and small jars containing skeletons and signs of Parthian and Sasanian graves have been reported there (<<Shoghab cemetery on Kojaro|https://www.kojaro.com/attraction/7184-%DA%AF%D9%88%D8%B1%D8%B3%D8%AA%D8%A7%D9%86-%D8%B4%D8%BA%D8%A7%D8%A8/>>).',
+            'The article "A study of Sasanian burial customs on the Persian Gulf coasts" (Hossein Tofighian, Archaeological Studies, vol. 8, no. 2, 2016) counts Shoghab, together with Siraf and Bandar Rig, among examples of Sasanian burial on the Gulf shore. Helileh is not mentioned in it (<<article text|https://jarcs.ut.ac.ir/article_61723_2952c8d21e5b10cfe10ee28dac3214fe.pdf>>).',
+          ],
+        },
+        {
+          h: 'What does the name "Helileh ancient cemetery" mean?',
+          p: [
+            'On this website map, the present village cemetery is shown as the "Helileh ancient cemetery" to point to the old past of the area. In the sources reviewed for this article, no published excavation or archaeological survey report on the Helileh cemetery itself was found, so its exact age cannot be determined from them. [Confirm the age and name of the cemetery with the village office or the Cultural Heritage office: to be completed]',
+          ],
+        },
+        {
+          h: 'Sources',
+          p: [
+            'R. A. Carter, K. Challis, S. M. N. Priestman, H. Tofighian, "Results of the First Season of the Iranian-British Archaeological Survey of Bushehr Province, November-December 2004": <<full report|https://www.ancientportsantiques.com/wp-content/uploads/Documents/PLACES/IndOc-Gulf/Bushir-Carter2006.pdf>>',
+            'Dehkhoda dictionary, entry "Helileh", quoted on <<abadis.ir|https://abadis.ir/fatofa/%D9%87%D9%84%DB%8C%D9%84%D9%87/>>',
+            'Wikipedia, "Halileh": <<en.wikipedia.org|https://en.wikipedia.org/wiki/Halileh>>',
+            'Hossein Tofighian, "A study of Sasanian burial customs on the Persian Gulf coasts", Archaeological Studies 8(2), 2016: <<article text|https://jarcs.ut.ac.ir/article_61723_2952c8d21e5b10cfe10ee28dac3214fe.pdf>>',
+            'Kojaro, "Shoghab cemetery": <<kojaro.com|https://www.kojaro.com/attraction/7184-%DA%AF%D9%88%D8%B1%D8%B3%D8%AA%D8%A7%D9%86-%D8%B4%D8%BA%D8%A7%D8%A8/>>',
+            'Location of the Helileh cemetery: <<Google Maps|https://www.google.com/maps/search/?api=1&query=28.839093,50.8795601>>',
+          ],
+        },
+      ],
+    },
+    {
       id: 'one-day',
       slug: 'one-day-trip-helileh-3',
       title: 'One day in Helileh: a suggested plan',

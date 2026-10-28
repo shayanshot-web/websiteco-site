@@ -117,7 +117,10 @@ export function staticSlugs(): string[][] {
 
 /** متن بدون عبارت‌های [تکمیل شود] برای توضیحات متا */
 export function stripTodo(text: string): string {
-  return text.replace(/\s*\[[^\]]+\]/g, '').trim();
+  return text
+    .replace(/<<([^|>]+)\|https?:\/\/[^>]+>>/g, '$1')
+    .replace(/\s*\[[^\]]+\]/g, '')
+    .trim();
 }
 
 export function routeTitle(r: Route): string {

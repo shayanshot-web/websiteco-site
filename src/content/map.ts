@@ -1,4 +1,4 @@
-import type { Lang } from './types';
+import type { Lang, PostId } from './types';
 
 /** نوع نقطه روی نقشه */
 export type MapKind = 'village' | 'ancient' | 'fun' | 'culture' | 'hub';
@@ -10,6 +10,8 @@ export interface MapPoint {
   lon: number;
   /** نقطهٔ محلی (داخل و کنار روستا) یا نقطهٔ منطقه‌ای (بوشهر، بندر، نیروگاه، دلوار، ...) */
   scope: 'local' | 'region';
+  /** مطلب مرتبط سایت (در پنجرهٔ نشانگر و فهرست پیوند می‌شود) */
+  postId?: PostId;
   name: Record<Lang, string>;
 }
 
@@ -17,11 +19,12 @@ export interface MapPoint {
  * مرکز روستای هلیله (نقطهٔ ثبت‌شده در OpenStreetMap/ویکی‌پدیا).
  * اگر مرکز روستا جای دیگری است، فقط همین مختصات را عوض کنید؛ فاصله‌ها خودکار حساب می‌شوند.
  */
-export const HELILEH = { lat: 28.83472, lon: 50.87944 };
+export const HELILEH = { lat: 28.836227, lon: 50.882821 };
 
 export const mapPoints: MapPoint[] = [
   /* نقاط جذاب و گردشگری در خود هلیله */
-  { id: 'theater', kind: 'culture', scope: 'local', lat: 28.8404247, lon: 50.8724992, name: { fa: 'تئاتر ساحلی استاد صغیری', en: 'Ostad Soghayri beach theater', ru: 'Пляжный театр Остад Согейри' } },
+  { id: 'cemetery', kind: 'ancient', scope: 'local', lat: 28.839093, lon: 50.8795601, postId: 'ancient-cemetery', name: { fa: 'گورستان باستانی هلیله', en: 'Helileh ancient cemetery', ru: 'Древнее кладбище Хелиле' } },
+  { id: 'theater', kind: 'culture', scope: 'local', lat: 28.8404247, lon: 50.8724992, name: { fa: 'تئاتر ساحلی ایرج صغیری', en: 'Iraj Soghayri beach theater', ru: 'Пляжный театр Ираджа Согейри' } },
   { id: 'park', kind: 'fun', scope: 'local', lat: 28.838083, lon: 50.8746528, name: { fa: 'پارک هلیله', en: 'Helileh park', ru: 'Парк Хелиле' } },
   { id: 'beach', kind: 'fun', scope: 'local', lat: 28.8367361, lon: 50.8745014, name: { fa: 'ساحل هلیله', en: 'Helileh beach', ru: 'Пляж Хелиле' } },
   { id: 'garden', kind: 'fun', scope: 'local', lat: 28.8412819, lon: 50.8752786, name: { fa: 'باغ شمالی هلیله', en: 'Helileh north garden', ru: 'Северный сад Хелиле' } },
@@ -53,6 +56,7 @@ export interface MapStrings {
   viewRegion: string;
   distanceFrom: string;
   tilesNote: string;
+  readMore: string;
 }
 
 export const mapStrings: Record<Lang, MapStrings> = {
@@ -70,6 +74,7 @@ export const mapStrings: Record<Lang, MapStrings> = {
     viewRegion: 'نمای منطقه',
     distanceFrom: 'از مرکز هلیله',
     tilesNote: 'نقشه: © مشارکت‌کنندگان OpenStreetMap',
+    readMore: 'مطالعهٔ مطلب',
   },
   en: {
     title: 'Map of Helileh and its attractions',
@@ -85,6 +90,7 @@ export const mapStrings: Record<Lang, MapStrings> = {
     viewRegion: 'Region view',
     distanceFrom: 'from Helileh center',
     tilesNote: 'Map: © OpenStreetMap contributors',
+    readMore: 'Read the article',
   },
   ru: {
     title: 'Карта Хелиле и его достопримечательностей',
@@ -100,5 +106,6 @@ export const mapStrings: Record<Lang, MapStrings> = {
     viewRegion: 'Вид района',
     distanceFrom: 'от центра Хелиле',
     tilesNote: 'Карта: © участники OpenStreetMap',
+    readMore: 'Читать статью',
   },
 };

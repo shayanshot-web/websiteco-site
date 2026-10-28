@@ -2170,3 +2170,12 @@ a {
     columns: 1;
   }
 }
+
+/* موبایل بسیار کوچک: برند کوچک‌تر شود تا دکمهٔ منو از صفحه بیرون نزند */
+@media (max-width: 400px) {
+  .header-row { gap: 6px; }
+  .brand { flex-shrink: 1; min-width: 0; font-size: 0.92rem; gap: 6px; overflow: hidden; }
+  .brand > span:last-child, .brand .brand-text { overflow: hidden; text-overflow: ellipsis; }
+  .header-search-link { width: 40px; height: 40px; flex-shrink: 0; }
+  .nav-toggle { margin-inline-start: 4px; flex-shrink: 0; }
+}

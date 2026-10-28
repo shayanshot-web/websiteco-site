@@ -118,7 +118,7 @@ export function staticSlugs(): string[][] {
 /** متن بدون عبارت‌های [تکمیل شود] برای توضیحات متا */
 export function stripTodo(text: string): string {
   return text
-    .replace(/<<([^|>]+)\|https?:\/\/[^>]+>>/g, '$1')
+    .replace(/<<([^|>]+)\|(?:https?:\/\/|tel:|mailto:)[^>]+>>/g, '$1')
     .replace(/\s*\[[^\]]+\]/g, '')
     .trim();
 }

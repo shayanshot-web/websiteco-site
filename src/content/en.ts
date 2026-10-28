@@ -35,10 +35,10 @@ export const en: Dict = {
   },
   searchSlug: 'search',
   homeAliases: ['home-en'],
-  phone: '+989176443247',
-  phoneDisplay: '09176443247',
+  phone: '+989389367978',
+  phoneDisplay: '09389367978',
   manager: 'Vahid Hasan Ahmadi',
-  address: 'Bushehr – Helileh – Ancient Helileh',
+  address: 'Bushehr – Helileh – Helileh tourist village council',
   org: 'Ancient Helileh, Bushehr',
   home: {
     eyebrow: 'BUSHEHR · PERSIAN GULF',
@@ -84,6 +84,13 @@ export const en: Dict = {
       lead: 'Ancient Helileh is a coastal tourist destination in Bushehr Province. The sea, southern food and the handwork of local people all meet here.',
       sections: [
         {
+          h: 'Helileh at a glance',
+          p: [
+            'Province: Bushehr. Population: about 2,900. Elevation: 17 m above sea level.',
+            'Helileh tourist village council (dehyari), Bushehr – Helileh. Phone: <<09389367978|tel:+989389367978>> · WhatsApp: <<09176443247|tel:+989176443247>> · Email: <<info@heleyleh-bu.ir|mailto:info@heleyleh-bu.ir>>',
+          ],
+        },
+        {
           h: 'Where is Helileh?',
           p: [
             'Helileh lies near the city of Bushehr on the Persian Gulf coast. [Distance from Bushehr centre and directions: to be completed by the management]',
@@ -108,12 +115,10 @@ export const en: Dict = {
       lead: 'Staying in Helileh means starting the day in Helileh and ending it to the sound of the sea. Meet the places to stay in Helileh here.',
       sections: [
         {
-          h: 'Our accommodation',
-          p: ['[Accommodation list with name, capacity and photos to be provided by the management]'],
-        },
-        {
-          h: 'Facilities',
-          p: ['Each place lists its own facilities: [bathroom, breakfast, parking, air conditioning, etc.].'],
+          h: 'Places to stay',
+          p: [
+            'Gol Kaghazi house (eco-lodge) — host: Mahboobeh Khalifeh. 2 rooms, sleeps 8. Courtyard suite with air conditioning, fridge, toilet and shower. No meals provided. Check-in 14:00, check-out 12:00. Booking: <<09177783361|tel:+989177783361>>. Call for the nightly price.',
+          ],
         },
         {
           h: 'More information',
@@ -126,17 +131,38 @@ export const en: Dict = {
       lead: 'There are three ways to know Helileh: walk by the sea, sit at a local table and talk with the local artisans.',
       sections: [
         {
-          h: 'Sea and shoreline',
-          p: ['Walk the beach and watch the Persian Gulf sunset. [Beach names and safety notes: to be completed]'],
-        },
-        {
-          h: 'Local food',
-          p: ['Try southern dishes and the flavours of Bushehr. [Dish names and eateries: to be completed]'],
-        },
-        {
-          h: 'Handicrafts and culture',
+          h: 'Sea and beach',
           p: [
-            'See workshops, dress and local ceremonies up close and buy handmade work. [Crafts and artisans: to be completed]',
+            'Coastal boat ride — contact: Abdolhossein Barkh, <<09179294164|tel:+989179294164>>',
+            'Coastal boat ride (second operator) — contact: Ali Daryaeinejad, <<09176695283|tel:+989176695283>>',
+            'Fishing — contact: Hossein Hasanebrahimi, <<09177719411|tel:+989177719411>>',
+            'Fishing (second operator) — contact: Heydar Bimaki, <<09178737122|tel:+989178737122>>',
+            'Paddle boarding — contact: Sina Arash, <<09113814089|tel:+989113814089>>',
+            'Helileh beach park for a walk and the sunset.',
+          ],
+        },
+        {
+          h: 'Beach sports',
+          p: [
+            'Beach tennis — contact: Sina Arash, <<09113814089|tel:+989113814089>>',
+            'Beach volleyball — contact: Jafar Dorfeshan, <<09171710056|tel:+989171710056>>',
+            'Beach football — contact: Ali Khajeh, <<09171753730|tel:+989171753730>>',
+            'Clay-court tennis — contact: Amirreza Rahbar, <<09376037139|tel:+989376037139>>',
+          ],
+        },
+        {
+          h: 'Astronomy, history and culture',
+          p: [
+            'Museum of Astronomy and Seafaring — contact: Seyed Reza Mousavi, <<09176008569|tel:+989176008569>>',
+            'Old-quarter walk through Helileh\'s historic fabric — contact: Seyed Reza Mousavi, <<09176008569|tel:+989176008569>>',
+            'Astronomy tour — contact: Hossein Khezri',
+            'Visit to the Helileh sundials — contact: Hossein Khezri',
+          ],
+        },
+        {
+          h: 'Food and crafts',
+          p: [
+            'Cafés and takeaway food are on the Restaurants page, and the work of Helileh artisans is on the Handicrafts page.',
           ],
         },
       ],
@@ -158,16 +184,31 @@ export const en: Dict = {
     events: {
       title: 'Helileh calendar',
       lead: 'Ancient Iranian festivals, month by month: handy for planning a trip to Helileh on a special day.',
-      sections: [],
+      sections: [
+        {
+          h: 'Local Helileh events',
+          p: [
+            'Grigsho — 15 Ramadan, one day, at sunset, across the whole Helileh quarter. Free entry; organised by the community.',
+            'Domad Sar Rood — Bahman, one day, afternoon, Parizad square (an old wedding custom). Free entry; organised by the community.',
+            'Kolun — Azar, one day, morning to afternoon, in Helileh old quarter. Free entry; organised by the community.',
+            'Beach theater — 25 to 29 Bahman, afternoon, Iraj Soghayri beach theater. Free entry; organised by the community.',
+            'Nimeh Barat — 15 Sha\'ban, one day, afternoon, across the whole Helileh quarter. Free entry; organised by the community.',
+            'Ordibehesht sports event — 1 to 30 Ordibehesht, at sunset, beach grass pitch. Free entry; organised by the community.',
+          ],
+        },
+      ],
     },
     shop: {
       title: 'Handicrafts',
       lead: 'Get to know the handwork of Helileh artisans, crafts that have been passed down in this village for generations.',
       sections: [
         {
-          h: 'Our handicrafts',
+          h: 'Products',
           p: [
-            'Categories: pottery and vessels, woven goods and textiles, edible souvenirs, decor and gifts. [Introduce the real crafts and artisans of Helileh: to be completed]',
+            'Wooden lenj (dhow) models',
+            'Reed mats and kapoo',
+            'Seashell pictures',
+            'Call the management for prices, stock and orders: <<09389367978|tel:+989389367978>>',
           ],
         },
         {
@@ -181,16 +222,26 @@ export const en: Dict = {
       lead: 'The shore, the Persian Gulf sunset and the customs of Helileh people: sights worth seeing.',
       sections: [
         {
-          h: 'Sea and shoreline',
-          p: ['Walk the beach and watch the Persian Gulf sunset. [Beach names and safety notes: to be completed]'],
+          h: 'Sea and beach',
+          p: [
+            'The beach park, Helileh beach and the sunset over the Persian Gulf. See the Services and experiences page for sea activities and beach sports.',
+          ],
         },
         {
           h: 'Historic and cultural sights',
-          p: ['[List of Helileh’s historic and cultural sights with a short description: to be provided by the management]'],
+          p: [
+            'Helileh ancient cemetery — read about it on the blog.',
+            'Helileh old quarter — arrange a walk: Seyed Reza Mousavi, <<09176008569|tel:+989176008569>>',
+            'Museum of Astronomy and Seafaring.',
+            'Helileh sundials.',
+            'Iraj Soghayri beach theater, by the shore.',
+          ],
         },
         {
-          h: 'Traditions and culture',
-          p: ['Clothing, music and customs of Helileh people. [Dates and descriptions: to be completed]'],
+          h: 'Customs and culture',
+          p: [
+            'Local rituals such as Grigsho, Domad Sar Rood, Kolun and Nimeh Barat are held every year. Dates are on the Events page.',
+          ],
         },
       ],
     },
@@ -199,12 +250,16 @@ export const en: Dict = {
       lead: 'Get to know the local food of Helileh and Bushehr and find a good place to eat.',
       sections: [
         {
-          h: 'Local dishes',
-          p: ['Meet southern home cooking and the flavours of Bushehr. [Dish names: to be completed]'],
+          h: 'Cafés and takeaway',
+          p: [
+            'Mr. Coffee Café (café) — Helileh, takeaway available. Phone: <<09173743836|tel:+989173743836>>',
+            'Moshti Café (café) — Helileh, takeaway available. Phone: <<09178799089|tel:+989178799089>>',
+            'Takeaway food shop — Helileh, takeaway available. Phone: <<09179339203|tel:+989179339203>>',
+          ],
         },
         {
-          h: 'Restaurants and eateries',
-          p: ['[List of restaurants and eateries with address and phone: to be provided by the management]'],
+          h: 'Local dishes',
+          p: ['Meet southern home cooking and the flavours of Bushehr. [Dish names: to be completed]'],
         },
       ],
     },
@@ -212,7 +267,20 @@ export const en: Dict = {
       title: 'Contact us',
       lead: 'Get in touch with the Helileh management to arrange a visit, ask about accommodation and handicrafts, or with any question.',
       sections: [
-        { h: 'Reply hours', p: ['[Reply hours: to be completed]'] },
+        {
+          h: 'How to reach us',
+          p: [
+            'Phone: <<09389367978|tel:+989389367978>> · WhatsApp: <<09176443247|tel:+989176443247>> · Telegram and Eitaa/Rubika: <<09176443247|tel:+989176443247>>',
+            'Email: <<info@heleyleh-bu.ir|mailto:info@heleyleh-bu.ir>>',
+            'Police and emergency: Tangak police station no. 14 · emergency 115 at the nuclear power plant · Helileh comprehensive health centre · Shahed specialist clinic of the nuclear power plant',
+          ],
+        },
+        {
+          h: 'Reply hours',
+          p: [
+            '[Reply hours: to be completed]',
+          ],
+        },
       ],
     },
   },
@@ -341,7 +409,7 @@ export const en: Dict = {
     latestPosts: 'Latest posts',
     publishedOn: 'Published on',
     backToBlog: 'Back to the blog',
-    noEvents: 'No events have been announced yet. The programme will appear here soon.',
+    noEvents: 'For the exact dates each year, contact the village council.',
     rights: 'All rights reserved.',
     phoneLabel: 'Phone',
     addressLabel: 'Address',

@@ -6,14 +6,19 @@ import type { Section } from '@/content/types';
  * لینک داخل متن (برای منبع‌ها) به شکل <<متن لینک|https://آدرس>> نوشته می‌شود.
  */
 export function Rich({ text }: { text: string }) {
-  const parts = text.split(/(<<[^|>]+\|https?:\/\/[^>]+>>|\[[^\]]+\])/g).filter((s) => s !== '');
+  const parts = text.split(/(<<[^|>]+\|(?:https?:\/\/|tel:|mailto:)[^>]+>>|\[[^\]]+\])/g).filter((s) => s !== '');
   return (
     <>
       {parts.map((s, i) => {
-        const link = /^<<([^|>]+)\|(https?:\/\/[^>]+)>>$/.exec(s);
+        const link = /^<<([^|>]+)\|((?:https?:\/\/|tel:|mailto:)[^>]+)>>$/.exec(s);
         if (link) {
           return (
-            <a key={i} href={link[2]} target="_blank" rel="noopener noreferrer">
+            <a
+              key={i}
+              href={link[2]}
+              {...(/^https?:/.test(link[2]) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              dir={/^https?:/.test(link[2]) ? undefined : 'ltr'}
+            >
               {link[1]}
             </a>
           );

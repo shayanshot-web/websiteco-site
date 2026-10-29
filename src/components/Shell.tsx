@@ -6,6 +6,7 @@ import { WaveEdge, type IconName } from './Art';
 import LangSync from './LangSync';
 import SoundFX from './SoundFX';
 import Messengers from './Messengers';
+import Aquarium from './Aquarium';
 import { messengerUi } from '@/content/messengers';
 import HelilehMap from './HelilehMap';
 import {
@@ -79,6 +80,7 @@ export default function Shell({ route, children }: { route: Route; children: Rea
       <SoundFX onLabel={d.ui.sound.on} offLabel={d.ui.sound.off} hint={d.ui.sound.hint} />
       <footer className="site-footer">
         <WaveEdge position="top" />
+        <Aquarium />
         <div className="container footer-grid">
           <div>
             <p className="footer-title">{d.siteName}</p>

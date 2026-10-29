@@ -39,6 +39,20 @@ export default function LocalEvents({ lang }: { lang: Lang }) {
                     <span>
                       <Rich text={t.desc} />
                     </span>
+                    {e.full ? (
+                      <details className="ev-more">
+                        <summary>{u.more}</summary>
+                        {e.slogan ? <blockquote>{e.slogan[lang]}</blockquote> : null}
+                        {e.full[lang].map((para, k) => (
+                          <p key={k}>{para}</p>
+                        ))}
+                        {e.author ? (
+                          <small>
+                            {u.by}: {e.author[lang]}
+                          </small>
+                        ) : null}
+                      </details>
+                    ) : null}
                     <small>
                       {u.organizer}: {u.community}
                     </small>

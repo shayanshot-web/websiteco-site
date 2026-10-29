@@ -2486,3 +2486,7 @@ a {
   .nav-ico { width: 34px; height: 34px; }
 }
 @media (prefers-reduced-motion: reduce) { .site-nav a:hover * { animation: none !important; } }
+.ev-more summary { cursor: pointer; color: var(--c); font-weight: 700; margin-top: 4px; }
+.ev-more blockquote { margin: 10px 0; padding: 6px 14px; border-inline-start: 4px solid var(--c); font-weight: 700; color: var(--navy); background: rgba(255, 255, 255, .6); border-radius: 8px; }
+.ev-more p { margin: 8px 0; font-size: .95rem; line-height: 1.9; }
+@media (min-width: 801px) { .ev-table td.ev-main, .ev-table thead th:first-child { width: 56%; } }

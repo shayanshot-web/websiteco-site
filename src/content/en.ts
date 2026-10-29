@@ -12,13 +12,13 @@ export const en: Dict = {
     home: 'Home',
     about: 'About',
     stay: 'Stay',
-    experiences: 'Experiences',
+    experiences: 'Experiences & people',
     gallery: 'Gallery',
     blog: 'Blog',
     events: 'Events',
     shop: 'Handicrafts',
     attractions: 'Attractions',
-    restaurants: 'Restaurants',
+    restaurants: 'Food',
     contact: 'Contact us',
   },
   slugs: {
@@ -55,7 +55,7 @@ export const en: Dict = {
       { h: 'About', p: 'History and culture of Helileh' },
       { h: 'Stay', p: 'Eco-lodges and local homes' },
       { h: 'Attractions', p: 'Shore, table and traditions' },
-      { h: 'Restaurants', p: 'Taste local cooking' },
+      { h: 'Food', p: 'Taste local cooking' },
     ],
     stayTitle: 'Stay in the heart of Helileh',
     stayText:
@@ -127,52 +127,21 @@ export const en: Dict = {
       ],
     },
     experiences: {
-      title: 'Experiences',
-      lead: 'There are three ways to know Helileh: walk by the sea, sit at a local table and talk with the local artisans.',
+      title: 'Experiences and their people',
+      lead: 'Every experience in Helileh has a person who arranges it for you: boatman, angler, astronomy guide, beach-sports host. Pick an experience and talk to them directly.',
       sections: [
-        {
-          h: 'Sea and beach',
-          p: [
-            'Coastal boat ride — contact: Abdolhossein Barkh, <<09179294164|tel:+989179294164>>',
-            'Coastal boat ride (second operator) — contact: Ali Daryaeinejad, <<09176695283|tel:+989176695283>>',
-            'Fishing — contact: Hossein Hasanebrahimi, <<09177719411|tel:+989177719411>>',
-            'Fishing (second operator) — contact: Heydar Bimaki, <<09178737122|tel:+989178737122>>',
-            'Paddle boarding — contact: Sina Arash, <<09113814089|tel:+989113814089>>',
-            'Helileh beach park for a walk and the sunset.',
-          ],
-        },
-        {
-          h: 'Beach sports',
-          p: [
-            'Beach tennis — contact: Sina Arash, <<09113814089|tel:+989113814089>>',
-            'Beach volleyball — contact: Jafar Dorfeshan, <<09171710056|tel:+989171710056>>',
-            'Beach football — contact: Ali Khajeh, <<09171753730|tel:+989171753730>>',
-            'Clay-court tennis — contact: Amirreza Rahbar, <<09376037139|tel:+989376037139>>',
-          ],
-        },
-        {
-          h: 'Astronomy, history and culture',
-          p: [
-            'Museum of Astronomy and Seafaring — contact: Seyed Reza Mousavi, <<09176008569|tel:+989176008569>>',
-            'Old-quarter walk through Helileh\'s historic fabric — contact: Seyed Reza Mousavi, <<09176008569|tel:+989176008569>>',
-            'Astronomy tour — contact: Hossein Khezri',
-            'Visit to the Helileh sundials — contact: Hossein Khezri',
-          ],
-        },
         {
           h: 'Food and crafts',
           p: [
-            'Cafés and takeaway food are on the Restaurants page, and the work of Helileh artisans is on the Handicrafts page.',
+            'Cafés and takeaway food are on the Food page, and the work of Helileh artisans is on the Handicrafts page.',
           ],
         },
       ],
     },
     gallery: {
       title: 'Gallery',
-      lead: 'See Helileh before you travel. Photos and videos are grouped by subject.',
+      lead: 'See Helileh before you travel. Photos are grouped by subject.',
       sections: [
-        { h: 'Photos', p: ['Filter by beach, people, food and handicrafts. Every photo has a caption.'] },
-        { h: 'Videos', p: ['Short videos of Helileh and its events. [Video links: to be added]'] },
         { h: 'Using the images', p: ['Please contact us before using images in media.'] },
       ],
     },
@@ -184,33 +153,12 @@ export const en: Dict = {
     events: {
       title: 'Helileh calendar',
       lead: 'Ancient Iranian festivals, month by month: handy for planning a trip to Helileh on a special day.',
-      sections: [
-        {
-          h: 'Local Helileh events',
-          p: [
-            'Grigsho — 15 Ramadan, one day, at sunset, across the whole Helileh quarter. Free entry; organised by the community.',
-            'Domad Sar Rood — Bahman, one day, afternoon, Parizad square (an old wedding custom). Free entry; organised by the community.',
-            'Kolun — Azar, one day, morning to afternoon, in Helileh old quarter. Free entry; organised by the community.',
-            'Beach theater — 25 to 29 Bahman, afternoon, Iraj Soghayri beach theater. Free entry; organised by the community.',
-            'Nimeh Barat — 15 Sha\'ban, one day, afternoon, across the whole Helileh quarter. Free entry; organised by the community.',
-            'Ordibehesht sports event — 1 to 30 Ordibehesht, at sunset, beach grass pitch. Free entry; organised by the community.',
-          ],
-        },
-      ],
+      sections: [],
     },
     shop: {
       title: 'Handicrafts',
       lead: 'Get to know the handwork of Helileh artisans, crafts that have been passed down in this village for generations.',
       sections: [
-        {
-          h: 'Products',
-          p: [
-            'Wooden lenj (dhow) models',
-            'Reed mats and kapoo',
-            'Seashell pictures',
-            'Call the management for prices, stock and orders: <<09389367978|tel:+989389367978>>',
-          ],
-        },
         {
           h: 'Meet the artisans',
           p: ['To see the workshops and arrange a visit, call the management.'],
@@ -246,7 +194,7 @@ export const en: Dict = {
       ],
     },
     restaurants: {
-      title: 'Restaurants',
+      title: 'Food',
       lead: 'Get to know the local food of Helileh and Bushehr and find a good place to eat.',
       sections: [
         {

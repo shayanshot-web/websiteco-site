@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { altRoute, dicts, routeDescription, routePath, routeTitle, type Route } from './i18n';
+import { MAINTENANCE, altRoute, dicts, routeDescription, routePath, routeTitle, type Route } from './i18n';
 
 export function metaFor(route: Route): Metadata {
   const d = dicts[route.lang];
@@ -10,7 +10,9 @@ export function metaFor(route: Route): Metadata {
     title,
     description,
     // صفحه نتایج جستجو نباید در گوگل ایندکس شود
-    ...(route.kind === 'search' ? { robots: { index: false, follow: true } } : {}),
+    ...(route.kind === 'search' || (MAINTENANCE && route.kind === 'home' && route.lang === 'fa')
+      ? { robots: { index: false, follow: true } }
+      : {}),
     alternates: {
       canonical: path,
       languages: {

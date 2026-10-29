@@ -4,6 +4,10 @@ import ContactForm from './ContactForm';
 import { Rich, Sections } from './Rich';
 import SearchView from './SearchView';
 import CalendarView from './Calendar';
+import GalleryView from './GalleryView';
+import LocalEvents from './LocalEvents';
+import ShopProducts from './ShopProducts';
+import { ExperiencesGrid, ExperiencesTeaser } from './ExperiencesView';
 import { TileArt, type TileArtName } from './TileArt';
 import { HeroScene, Icon, WaveEdge, type IconName } from './Art';
 import { dicts, formatDate, pagePath, postPath, searchPath, type Route } from '@/lib/i18n';
@@ -148,6 +152,8 @@ export function HomeView({ lang }: { lang: Lang }) {
         <WaveEdge position="bottom" />
       </section>
 
+      <ExperiencesTeaser lang={lang} />
+
       <section className="section">
         <div className="container">
           <h2 className="accent">{h.doTitle}</h2>
@@ -255,8 +261,13 @@ export function PageView({ lang, id }: { lang: Lang; id: InnerPageId }) {
                 </ul>
               </>
             ) : null}
-            {id === 'events' ? <CalendarView lang={lang} /> : null}
-            <Sections sections={p.sections} />
+            {id === 'events' ? (
+              <>
+                <LocalEvents lang={lang} />
+                <CalendarView lang={lang} />
+              </>
+            ) : null}
+            {id === 'experiences' ? null : <Sections sections={p.sections} />}
             {id === 'events' ? <p className="notice">{d.ui.noEvents}</p> : null}
             {id === 'stay' || id === 'shop' ? (
               <p>
@@ -273,6 +284,24 @@ export function PageView({ lang, id }: { lang: Lang; id: InnerPageId }) {
           </>
         )}
       </div>
+      {id === 'experiences' ? (
+        <div className="container xp-page">
+          <ExperiencesGrid lang={lang} />
+          <div className="prose" style={{ paddingBlock: '24px 0' }}>
+            <Sections sections={p.sections} />
+          </div>
+        </div>
+      ) : null}
+      {id === 'gallery' ? (
+        <div className="container">
+          <GalleryView lang={lang} />
+        </div>
+      ) : null}
+      {id === 'shop' ? (
+        <div className="container">
+          <ShopProducts lang={lang} phone={d.phone} />
+        </div>
+      ) : null}
     </>
   );
 }

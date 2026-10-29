@@ -4,6 +4,11 @@ import { ru } from '@/content/ru';
 import type { Dict, InnerPageId, Lang, PageId, Post } from '@/content/types';
 
 export const SITE_URL = 'https://websiteco.ir';
+/**
+ * حالت «در حال به‌روزرسانی»: وقتی true است آدرس websiteco.ir صفحهٔ به‌روزرسانی را نشان می‌دهد
+ * و خانهٔ سایت اصلی روی websiteco.ir/test است. برای انتشار نهایی فقط false کنید.
+ */
+export const MAINTENANCE = true;
 export const langs: Lang[] = ['fa', 'en', 'ru'];
 export const dicts: Record<Lang, Dict> = { fa, en, ru };
 export const innerIds: InnerPageId[] = [
@@ -28,7 +33,7 @@ export type Route =
 const prefix = (l: Lang) => (l === 'fa' ? '' : `/${l}`);
 
 export function pagePath(l: Lang, id: PageId): string {
-  if (id === 'home') return l === 'fa' ? '/' : `/${l}/`;
+  if (id === 'home') return l === 'fa' ? (MAINTENANCE ? '/test/' : '/') : `/${l}/`;
   return `${prefix(l)}/${dicts[l].slugs[id]}/`;
 }
 

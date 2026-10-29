@@ -7,6 +7,7 @@ import CalendarView from './Calendar';
 import GalleryView from './GalleryView';
 import LocalEvents from './LocalEvents';
 import Messengers from './Messengers';
+import Comments from './Comments';
 import ShopProducts from './ShopProducts';
 import { ExperiencesGrid, ExperiencesTeaser } from './ExperiencesView';
 import { TileArt, type TileArtName } from './TileArt';
@@ -259,6 +260,7 @@ export function PageView({ lang, id }: { lang: Lang; id: InnerPageId }) {
       {id === 'experiences' ? (
         <div className="container xp-page">
           <ExperiencesGrid lang={lang} />
+          <Comments lang={lang} />
           <div className="prose" style={{ paddingBlock: '24px 0' }}>
             <Sections sections={p.sections} />
           </div>

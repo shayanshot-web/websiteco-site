@@ -22,6 +22,8 @@ function layout_start(string $title, string $active, array $user): void {
     foreach (TYPES as $k => $t) $nav[] = ['list-' . $k, '/admin/?a=list&type=' . $k, $t['icon'], $t['label'], can($k)];
     $nav[] = ['media', '/admin/?a=media', '▤', 'کتابخانه رسانه', can('media')];
     $nav[] = ['messages', '/admin/?a=messages', '✉', 'پیام‌ها' . ($unread ? " ($unread)" : ''), can('messages')];
+    $pc = can('messages') ? (int)db()->query("SELECT COUNT(*) FROM comments WHERE status='pending'")->fetchColumn() : 0;
+    $nav[] = ['comments', '/admin/?a=comments', '❝', 'نظرها' . ($pc ? " ($pc)" : ''), can('messages')];
     $nav[] = ['users', '/admin/?a=users', '☺', 'کاربران', $user['role'] === 'admin'];
     $nav[] = ['settings', '/admin/?a=settings', '⚙', 'تنظیمات', $user['role'] === 'admin'];
     $nav[] = ['profile', '/admin/?a=profile', '☰', 'پروفایل من', true];
@@ -40,6 +42,7 @@ function render_page(string $a, array $user, string $type): void {
         case 'edit': page_edit($user, $type); break;
         case 'media': page_media($user); break;
         case 'messages': page_messages($user); break;
+        case 'comments': page_comments($user); break;
         case 'users': page_users($user); break;
         case 'profile': page_profile($user); break;
         case 'settings': page_settings($user); break;
@@ -170,6 +173,18 @@ function page_messages(array $user): void {
     if (!$rows) echo '<p class="muted">هنوز پیامی نرسیده است.</p>';
     foreach ($rows as $m) {
         echo '<article class="msg ' . ($m['status'] === 'new' ? 'new' : '') . '"><header><b>' . e($m['name']) . '</b> <span class="muted" dir="ltr">' . e($m['phone']) . ($m['email'] ? ' · ' . e($m['email']) : '') . '</span><span class="muted"> · ' . e($m['subject']) . ($m['ref'] ? ' · مرجع: ' . e($m['ref']) : '') . ' · ' . e(format_date((int)$m['created'])) . ' · ' . strtoupper(e($m['lang'])) . '</span></header><p>' . nl2br(e($m['message'])) . '</p><form method="post" action="/admin/?a=msg_action"><input type="hidden" name="_csrf" value="' . e(csrf()) . '"><input type="hidden" name="id" value="' . $m['id'] . '"><button class="link" name="do" value="' . ($m['status'] === 'new' ? 'read' : 'unread') . '">' . ($m['status'] === 'new' ? 'علامت‌گذاری به‌عنوان خوانده‌شده' : 'علامت‌گذاری به‌عنوان جدید') . '</button> <button class="link danger" name="do" value="delete" data-confirm="پیام حذف شود؟">حذف</button></form></article>';
+    }
+    layout_end();
+}
+
+function page_comments(array $user): void {
+    if (!can('messages')) { http_response_code(403); exit('دسترسی ندارید'); }
+    layout_start('نظرهای بازدیدکنندگان', 'comments', $user);
+    $rows = db()->query("SELECT * FROM comments ORDER BY (status='pending') DESC, id DESC LIMIT 300")->fetchAll();
+    if (!$rows) echo '<p class="muted">هنوز نظری ثبت نشده است.</p>';
+    foreach ($rows as $c) {
+        $ok = $c['status'] === 'approved';
+        echo '<article class="msg ' . ($ok ? '' : 'new') . '"><header><b>' . e($c['name']) . '</b> <span class="muted"> · ' . ($c['rating'] ? str_repeat('★', (int)$c['rating']) . ' · ' : '') . e(format_date((int)$c['created'])) . ' · ' . strtoupper(e($c['lang'])) . ' · ' . ($ok ? 'منتشرشده' : 'در انتظار تأیید') . '</span></header><p>' . nl2br(e($c['text'])) . '</p><form method="post" action="/admin/?a=cm_action"><input type="hidden" name="_csrf" value="' . e(csrf()) . '"><input type="hidden" name="id" value="' . $c['id'] . '"><button class="link" name="do" value="' . ($ok ? 'hide' : 'approve') . '">' . ($ok ? 'برداشتن از سایت' : 'تأیید و نمایش در سایت') . '</button> <button class="link danger" name="do" value="delete" data-confirm="نظر حذف شود؟">حذف</button></form></article>';
     }
     layout_end();
 }

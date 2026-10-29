@@ -2524,3 +2524,21 @@ a {
 .credit a:hover { text-decoration: underline; }
 .msg-btn, .msg-btn .msg-name { color: #fff !important; }
 .credit { padding-bottom: 76px; }
+
+/* ---------- نظرها ---------- */
+.cm { margin: 32px 0 8px; text-align: center; }
+.cm-toggle { display: inline-flex; align-items: center; gap: 10px; font-size: 1.05rem; }
+.cm-count { background: #fff; color: var(--navy); border-radius: 999px; min-width: 26px; padding: 0 8px; font-weight: 800; font-size: .85rem; line-height: 26px; }
+.cm-panel { text-align: start; margin-top: 20px; background: #fff; border-radius: 20px; padding: 22px; box-shadow: 0 10px 30px rgba(10, 42, 68, .12); }
+.cm-panel h3 { margin: 0 0 14px; color: var(--navy); }
+.cm-rate { display: flex; align-items: center; gap: 4px; margin: 6px 0 12px; }
+.cm-rate span { margin-inline-end: 8px; font-weight: 700; }
+.cm-rate button { background: none; border: 0; cursor: pointer; font-size: 1.7rem; line-height: 1; color: #cfd8e0; padding: 2px; }
+.cm-rate button.on { color: #f2a900; }
+.cm-list { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 12px; }
+.cm-item { background: #f4f8fb; border-radius: 14px; padding: 14px 16px; }
+.cm-item header { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.cm-item header small { color: var(--muted); margin-inline-start: auto; }
+.cm-item p { margin: 6px 0 0; white-space: pre-line; overflow-wrap: anywhere; }
+.cm-stars { color: #f2a900; letter-spacing: 1px; }
+.cm-stars i { color: #cfd8e0; font-style: normal; }

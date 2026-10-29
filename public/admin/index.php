@@ -145,6 +145,15 @@ if ($a === 'msg_action' && $post) {
     redirect('/admin/?a=messages');
 }
 
+/* ---- نظرها ---- */
+if ($a === 'cm_action' && $post) {
+    if (!can('messages')) { http_response_code(403); exit; }
+    $id = (int)$_POST['id']; $do = $_POST['do'] ?? '';
+    if ($do === 'delete') db()->prepare('DELETE FROM comments WHERE id=?')->execute([$id]);
+    else db()->prepare('UPDATE comments SET status=? WHERE id=?')->execute([$do === 'approve' ? 'approved' : 'pending', $id]);
+    redirect('/admin/?a=comments');
+}
+
 /* ---- کاربران / پروفایل / تنظیمات ---- */
 if ($a === 'user_save' && $post) {
     if ($user['role'] !== 'admin') { http_response_code(403); exit; }

@@ -49,6 +49,7 @@ function migrate(PDO $p): void {
     CREATE INDEX IF NOT EXISTS idx_tr_slug ON item_tr(lang, slug);
     CREATE TABLE IF NOT EXISTS media(id INTEGER PRIMARY KEY, file TEXT NOT NULL, thumb TEXT, mime TEXT, size INTEGER, w INTEGER, h INTEGER, alt_fa TEXT DEFAULT '', alt_en TEXT DEFAULT '', alt_ru TEXT DEFAULT '', uploaded_by INTEGER, created INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS messages(id INTEGER PRIMARY KEY, name TEXT, phone TEXT, email TEXT, subject TEXT, message TEXT, lang TEXT, ref TEXT, status TEXT NOT NULL DEFAULT 'new', created INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS comments(id INTEGER PRIMARY KEY, name TEXT NOT NULL, text TEXT NOT NULL, rating INTEGER NOT NULL DEFAULT 0, lang TEXT NOT NULL DEFAULT 'fa', status TEXT NOT NULL DEFAULT 'pending', ip TEXT, created INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS settings(k TEXT PRIMARY KEY, v TEXT);
     CREATE TABLE IF NOT EXISTS sessions(token TEXT PRIMARY KEY, data TEXT NOT NULL DEFAULT '{}', expires INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS attempts(ip TEXT NOT NULL, ts INTEGER NOT NULL);

@@ -81,7 +81,7 @@ export default function GalleryView({ lang }: { lang: Lang }) {
             <button type="button" className="gl-btn" onClick={() => setOpen(i)} aria-label={`${u.open}: ${g.title[lang]}`} data-sound="pop">
               <span className="gl-mat">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/gallery/${g.file}`} alt={g.alt?.[lang] ?? g.title[lang]} loading="lazy" style={{ aspectRatio: g.ratio ?? '4/3' }} />
+                <img src={`/gallery/${g.thumb}`} alt={g.alt?.[lang] ?? g.title[lang]} loading="lazy" decoding="async" width={g.w} height={g.h} />
               </span>
               <span className="gl-cap">
                 <strong>{g.title[lang]}</strong>

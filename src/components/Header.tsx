@@ -3,11 +3,12 @@
 import Link from '@/components/A';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Logo } from '@/components/Art';
+import { Icon, Logo, type IconName } from '@/components/Art';
 
 export interface NavItem {
   label: string;
   href: string;
+  icon: IconName;
 }
 export interface LangItem {
   code: string;
@@ -69,7 +70,10 @@ export default function Header(p: Props) {
                   aria-current={active(i.href) ? 'page' : undefined}
                   onClick={() => setOpen(false)}
                 >
-                  {i.label}
+                  <span className="nav-ico">
+                    <Icon name={i.icon} size={26} className="nav-icon" />
+                  </span>
+                  <span className="nav-label">{i.label}</span>
                 </Link>
               </li>
             ))}

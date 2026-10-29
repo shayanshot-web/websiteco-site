@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
    ===================================================================== */
 
 export type IconName =
+  | 'home'
   | 'about'
   | 'stay'
   | 'attractions'
@@ -26,6 +27,16 @@ export type IconName =
 
 /* هر آیکن روی شبکه ۴۸×۴۸ کشیده شده؛ کلاس f یعنی سطح پرشده با رنگ شنی */
 const icons: Record<IconName, ReactNode> = {
+  /* لنگر: خانه و بندر */
+  home: (
+    <>
+      <g className="a-sail">
+        <circle cx="24" cy="11" r="4" />
+        <path d="M24 15v25M17 22h14" />
+        <path className="f" d="M9 31c1 6 7 10 15 10s14-4 15-10l-5 3M9 31l5 3" />
+      </g>
+    </>
+  ),
   /* بادگیر بوشهری */
   about: (
     <>

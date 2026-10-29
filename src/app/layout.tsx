@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import '@fontsource-variable/vazirmatn';
+import '@fontsource/lalezar';
 import './globals.css';
 import { SITE_URL } from '@/lib/i18n';
 

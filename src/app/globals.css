@@ -2393,3 +2393,96 @@ a {
   .ev-text { padding: 12px 14px 4px; }
 }
 @media (prefers-reduced-motion: reduce) { .ea * { animation: none !important; } }
+
+/* ---------- منوی بالای سایت: آیکن اختصاصی + فونت ضخیم ---------- */
+.site-header {
+  background: linear-gradient(180deg, #fff 0%, #fbf6ea 100%);
+  border-bottom: 3px solid var(--sand);
+  box-shadow: 0 6px 20px rgba(10, 42, 68, 0.1);
+}
+.header-row { min-height: 78px; gap: 10px; flex-wrap: nowrap; }
+.brand {
+  order: 1;
+  font-family: 'Lalezar', 'Vazirmatn Variable', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.45rem;
+  letter-spacing: 0;
+}
+.lang-ru .brand { font-family: 'Vazirmatn Variable', system-ui, sans-serif; font-weight: 800; font-size: 1.1rem; }
+.header-row .site-nav { order: 2; flex: 1; justify-content: center; min-width: 0; }
+.header-row .site-nav ul { flex: 1; justify-content: center; gap: 2px; }
+.header-search-link { order: 3; display: inline-flex; margin-inline-start: 0; flex-shrink: 0; }
+.site-nav .header-search { display: none; }
+.site-nav ul a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 58px;
+  max-width: 88px;
+  white-space: normal;
+  padding: 6px 5px 5px;
+  border-radius: 18px;
+  color: var(--navy);
+  font-family: 'Lalezar', 'Vazirmatn Variable', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.02rem;
+  line-height: 1.25;
+  text-align: center;
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+.lang-ru .site-nav ul a { font-family: 'Vazirmatn Variable', system-ui, sans-serif; font-weight: 800; font-size: 0.74rem; line-height: 1.2; }
+.header-row .site-nav ul { align-items: flex-start; }
+.header-row .lang-switch { align-self: center; }
+.lang-en .site-nav ul a { font-size: 0.92rem; }
+.nav-ico {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 30% 25%, #fff 0%, #e8f1f8 75%);
+  border: 1.5px solid var(--line);
+  box-shadow: 0 3px 8px rgba(10, 42, 68, 0.1);
+  transition: transform 0.22s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.nav-icon { width: 25px; height: 25px; color: var(--navy); }
+.site-nav ul a:hover { background: #fff; transform: translateY(-2px); }
+.site-nav ul a:hover .nav-ico { transform: rotate(-8deg) scale(1.08); background: radial-gradient(circle at 30% 25%, #fff 0%, #f3e6c8 80%); border-color: var(--sand); }
+.site-nav ul a:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.site-nav ul a[aria-current='page'] { background: var(--navy); color: #fff; box-shadow: 0 6px 14px rgba(10, 62, 102, 0.3); }
+.site-nav ul a[aria-current='page'] .nav-ico { background: var(--sand); border-color: #fff; }
+/* حرکت آیکن هنگام رفتن موس */
+.site-nav a:hover .a-needle { animation: needle 3s ease-in-out infinite; }
+.site-nav a:hover .a-steam { animation: steam 2.2s ease-in infinite; }
+.site-nav a:hover .a-sun { animation: sun-icon 3s ease-in-out infinite; }
+.site-nav a:hover .a-wave { animation: wave-icon 2.2s ease-in-out infinite; }
+.site-nav a:hover .a-fish { animation: fish 2.4s ease-in-out infinite; }
+.site-nav a:hover .a-sail, .site-nav a:hover .a-tower { transform-origin: 50% 100%; animation: sail 3s ease-in-out infinite; }
+@media (max-width: 1340px) {
+  .header-search-link { margin-inline-start: auto; }
+  .header-row .site-nav { flex: none; justify-content: stretch; }
+  .header-row .site-nav ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .site-nav ul a {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+    min-width: 0;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #fff;
+    font-size: 1.12rem;
+    text-align: start;
+  }
+  .lang-ru .site-nav ul a { font-size: 0.9rem; }
+  .site-nav ul a { max-width: none; }
+  .header-row .site-nav ul { align-items: stretch; }
+  .nav-ico { width: 38px; height: 38px; flex: 0 0 auto; }
+}
+@media (max-width: 400px) {
+  .brand { font-size: 1.2rem; }
+  .site-nav ul a { padding: 6px 8px; gap: 6px; font-size: 1rem; }
+  .nav-ico { width: 34px; height: 34px; }
+}
+@media (prefers-reduced-motion: reduce) { .site-nav a:hover * { animation: none !important; } }

@@ -2,7 +2,7 @@ import Link from '@/components/A';
 import type { ReactNode } from 'react';
 import type { PageId } from '@/content/types';
 import Header from './Header';
-import { WaveEdge } from './Art';
+import { WaveEdge, type IconName } from './Art';
 import LangSync from './LangSync';
 import SoundFX from './SoundFX';
 import HelilehMap from './HelilehMap';
@@ -17,12 +17,37 @@ import {
   type Route,
 } from '@/lib/i18n';
 
-const navOrder: PageId[] = ['home', 'about', 'stay', 'experiences', 'gallery', 'blog', 'events', 'shop', 'contact'];
+const navOrder: PageId[] = [
+  'home',
+  'about',
+  'experiences',
+  'attractions',
+  'stay',
+  'restaurants',
+  'gallery',
+  'events',
+  'shop',
+  'blog',
+  'contact',
+];
+const navIcons: Record<PageId, IconName> = {
+  home: 'home',
+  about: 'about',
+  experiences: 'experiences',
+  attractions: 'attractions',
+  stay: 'stay',
+  restaurants: 'restaurants',
+  gallery: 'gallery',
+  events: 'events',
+  shop: 'shop',
+  blog: 'blog',
+  contact: 'contact',
+};
 
 export default function Shell({ route, children }: { route: Route; children: ReactNode }) {
   const lang = route.lang;
   const d = dicts[lang];
-  const items = navOrder.map((id) => ({ label: d.nav[id], href: pagePath(lang, id) }));
+  const items = navOrder.map((id) => ({ label: d.nav[id], href: pagePath(lang, id), icon: navIcons[id] }));
   const switcher = langs.map((l) => ({
     code: l,
     name: dicts[l].langName,

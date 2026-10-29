@@ -5,6 +5,8 @@ import Header from './Header';
 import { WaveEdge, type IconName } from './Art';
 import LangSync from './LangSync';
 import SoundFX from './SoundFX';
+import Messengers from './Messengers';
+import { messengerUi } from '@/content/messengers';
 import HelilehMap from './HelilehMap';
 import {
   altRoute,
@@ -106,10 +108,17 @@ export default function Shell({ route, children }: { route: Route; children: Rea
             <p>
               {d.ui.addressLabel}: {d.address}
             </p>
+            <Messengers lang={lang} variant="dark" />
           </div>
         </div>
         <p className="copyright">
           © {formatYear(lang)} {d.org}. {d.ui.rights}
+        </p>
+        <p className="credit">
+          {messengerUi[lang].credit}{' '}
+          <a href="https://websiteco.ir" target="_blank" rel="noopener" dir="ltr">
+            WebSiteCo.ir
+          </a>
         </p>
       </footer>
     </div>

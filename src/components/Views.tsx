@@ -6,6 +6,7 @@ import SearchView from './SearchView';
 import CalendarView from './Calendar';
 import GalleryView from './GalleryView';
 import LocalEvents from './LocalEvents';
+import Messengers from './Messengers';
 import ShopProducts from './ShopProducts';
 import { ExperiencesGrid, ExperiencesTeaser } from './ExperiencesView';
 import { TileArt, type TileArtName } from './TileArt';
@@ -222,6 +223,7 @@ export function HomeView({ lang }: { lang: Lang }) {
               </span>
             </li>
           </ul>
+          <Messengers lang={lang} variant="dark" />
         </div>
       </section>
     </>
@@ -259,6 +261,7 @@ export function PageView({ lang, id }: { lang: Lang; id: InnerPageId }) {
                     <span>{d.address}</span>
                   </li>
                 </ul>
+                <Messengers lang={lang} />
               </>
             ) : null}
             {id === 'events' ? (

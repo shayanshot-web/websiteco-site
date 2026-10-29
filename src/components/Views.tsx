@@ -234,7 +234,7 @@ export function PageView({ lang, id }: { lang: Lang; id: InnerPageId }) {
   return (
     <>
       <PageHero title={p.title} lead={p.lead} icon={pageIcons[id]} lang={lang} />
-      <div className="container prose">
+      <div className={id === 'events' ? 'container prose prose-wide' : 'container prose'}>
         {id === 'blog' ? (
           <BlogList lang={lang} />
         ) : (

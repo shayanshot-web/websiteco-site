@@ -26,6 +26,7 @@ export default function LocalEvents({ lang }: { lang: Lang }) {
             return (
               <tr key={e.id} className={`ev-row c${i % 6}`} data-sound="events">
                 <td className="ev-main">
+                  <div className="ev-cell">
                   <span className="ev-pic">
                     {e.photo ? (
                       // eslint-disable-next-line @next/next/no-img-element
@@ -57,6 +58,7 @@ export default function LocalEvents({ lang }: { lang: Lang }) {
                       {u.organizer}: {u.community}
                     </small>
                   </span>
+                  </div>
                 </td>
                 <td data-label={u.cols.date}>
                   <span className="ev-date">{t.date}</span>

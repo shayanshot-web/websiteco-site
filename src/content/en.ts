@@ -35,8 +35,8 @@ export const en: Dict = {
   },
   searchSlug: 'search',
   homeAliases: ['home-en'],
-  phone: '+989389367978',
-  phoneDisplay: '09389367978',
+  phone: '+989176443247',
+  phoneDisplay: '09176443247',
   manager: 'Vahid Hasan Ahmadi',
   address: 'Bushehr – Helileh – Helileh tourist village council',
   org: 'Ancient Helileh, Bushehr',
@@ -87,7 +87,7 @@ export const en: Dict = {
           h: 'Helileh at a glance',
           p: [
             'Province: Bushehr. Population: about 2,900. Elevation: 17 m above sea level.',
-            'Helileh tourist village council (dehyari), Bushehr – Helileh. Phone: <<09389367978|tel:+989389367978>> · WhatsApp: <<09176443247|tel:+989176443247>> · Email: <<info@heleyleh-bu.ir|mailto:info@heleyleh-bu.ir>>',
+            'Helileh tourist village council (dehyari), Bushehr – Helileh. Phone / WhatsApp: <<09176443247|tel:+989176443247>> · Email: <<info@heleyleh-bu.ir|mailto:info@heleyleh-bu.ir>>',
           ],
         },
         {
@@ -218,7 +218,7 @@ export const en: Dict = {
         {
           h: 'How to reach us',
           p: [
-            'Phone: <<09389367978|tel:+989389367978>> · WhatsApp: <<09176443247|tel:+989176443247>> · Telegram and Eitaa/Rubika: <<09176443247|tel:+989176443247>>',
+            'Phone / WhatsApp: <<09176443247|tel:+989176443247>> · Telegram and Eitaa/Rubika: <<09176443247|tel:+989176443247>>',
             'Email: <<info@heleyleh-bu.ir|mailto:info@heleyleh-bu.ir>>',
             'Police and emergency: Tangak police station no. 14 · emergency 115 at the nuclear power plant · Helileh comprehensive health centre · Shahed specialist clinic of the nuclear power plant',
           ],

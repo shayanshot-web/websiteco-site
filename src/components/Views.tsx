@@ -195,37 +195,6 @@ export function HomeView({ lang }: { lang: Lang }) {
           </Link>
         </div>
       </section>
-
-      <section className="contact-band">
-        <WaveEdge position="top" />
-        <div className="container narrow">
-          <h2>{h.contactTitle}</h2>
-          <ul className="contact-list on-dark">
-            <li data-sound="drop">
-              <Icon name="user" size={26} />
-              <span>
-                {d.ui.managerLabel}: {d.manager}
-              </span>
-            </li>
-            <li data-sound="contact">
-              <Icon name="phone" size={26} />
-              <span>
-                {d.ui.phoneLabel}:{' '}
-                <a href={`tel:${d.phone}`} dir="ltr">
-                  {d.phoneDisplay}
-                </a>
-              </span>
-            </li>
-            <li data-sound="drop">
-              <Icon name="pin" size={26} />
-              <span>
-                {d.ui.addressLabel}: {d.address}
-              </span>
-            </li>
-          </ul>
-          <Messengers lang={lang} variant="dark" />
-        </div>
-      </section>
     </>
   );
 }

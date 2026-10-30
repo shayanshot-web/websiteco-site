@@ -70,7 +70,7 @@ export const en: Dict = {
     ],
     eventsTitle: 'Upcoming events',
     eventsText:
-      'See what is on, register or buy tickets. [Sample: the management will add event dates and names]',
+      'See what is on, register or buy tickets.',
     eventsCta: 'See all events',
     shopTitle: 'Crafts and souvenirs from Helileh',
     shopText:
@@ -95,13 +95,13 @@ export const en: Dict = {
         {
           h: 'Where is Helileh?',
           p: [
-            'Helileh lies near the city of Bushehr on the Persian Gulf coast. [Distance from Bushehr centre and directions: to be completed by the management]',
+            'Helileh lies near the city of Bushehr on the Persian Gulf coast.',
           ],
         },
         {
           h: 'People and culture',
           p: [
-            'The people of Helileh are welcoming and keep the customs of Iran’s south. [History, ceremonies and local dress: to be completed]',
+            'The people of Helileh are welcoming and keep the customs of Iran’s south.',
           ],
         },
         {
@@ -209,7 +209,7 @@ export const en: Dict = {
         },
         {
           h: 'Local dishes',
-          p: ['Meet southern home cooking and the flavours of Bushehr. [Dish names: to be completed]'],
+          p: ['Meet southern home cooking and the flavours of Bushehr.'],
         },
       ],
     },
@@ -223,12 +223,6 @@ export const en: Dict = {
             'Phone / WhatsApp: <<09176443247|tel:+989176443247>> · Telegram and Eitaa/Rubika: <<09176443247|tel:+989176443247>>',
             'Email: <<info@heleyleh-bu.ir|mailto:info@heleyleh-bu.ir>>',
             'Police and emergency: Tangak police station no. 14 · emergency 115 at the nuclear power plant · Helileh comprehensive health centre · Shahed specialist clinic of the nuclear power plant',
-          ],
-        },
-        {
-          h: 'Reply hours',
-          p: [
-            '[Reply hours: to be completed]',
           ],
         },
       ],
@@ -274,7 +268,7 @@ export const en: Dict = {
         {
           h: 'What does the name "Helileh ancient cemetery" mean?',
           p: [
-            'On this website map, the present village cemetery is shown as the "Helileh ancient cemetery" to point to the old past of the area. In the sources reviewed for this article, no published excavation or archaeological survey report on the Helileh cemetery itself was found, so its exact age cannot be determined from them. [Confirm the age and name of the cemetery with the village office or the Cultural Heritage office: to be completed]',
+            'On this website map, the present village cemetery is shown as the "Helileh ancient cemetery" to point to the old past of the area. In the sources reviewed for this article, no published excavation or archaeological survey report on the Helileh cemetery itself was found, so its exact age cannot be determined from them.',
           ],
         },
         {
@@ -312,7 +306,7 @@ export const en: Dict = {
         },
         {
           h: 'Midday: a local meal',
-          p: ['Try a local dish for lunch. [Name of the restaurant or lodge serving meals: to be completed]'],
+          p: ['Try a local dish for lunch.'],
         },
         {
           h: 'Afternoon: crafts and sunset',
@@ -334,7 +328,7 @@ export const en: Dict = {
         {
           h: 'Product categories',
           p: [
-            'Pottery and vessels, woven goods and textiles, edible souvenirs and decor. [Introduce Helileh’s real crafts: to be completed]',
+            'Pottery and vessels, woven goods and textiles, edible souvenirs and decor.',
           ],
         },
         {

@@ -36,9 +36,9 @@ export const localEvents: LocalEvent[] = [
     art: 'sport',
     span: true,
     t: {
-      fa: { title: 'رویداد ورزشی اردیبهشت', desc: 'برنامهٔ ورزشی یک‌ماهه در زمین چمن ساحلی هلیله؛ غروب‌ها به ساحل بیایید. [شرح رشته‌ها و برنامه: از مدیریت تکمیل شود]', date: '۱ تا ۳۰ اردیبهشت', time: 'غروب', place: 'زمین چمن ساحلی' },
-      en: { title: 'Ordibehesht sports event', desc: 'A month of sport on Helileh\'s beach grass pitch; come to the shore at sunset. [Disciplines and schedule: to be completed]', date: '1–30 Ordibehesht', time: 'Sunset', place: 'Beach grass pitch' },
-      ru: { title: 'Спортивное событие ордибехешта', desc: 'Месяц спорта на пляжном травяном поле Хелиле; приходите на берег на закате. [Виды спорта и программа: дополнить]', date: '1–30 ордибехешта', time: 'Закат', place: 'Пляжное травяное поле' },
+      fa: { title: 'رویداد ورزشی اردیبهشت', desc: 'برنامهٔ ورزشی یک‌ماهه در زمین چمن ساحلی هلیله؛ غروب‌ها به ساحل بیایید.', date: '۱ تا ۳۰ اردیبهشت', time: 'غروب', place: 'زمین چمن ساحلی' },
+      en: { title: 'Ordibehesht sports event', desc: 'A month of sport on Helileh\'s beach grass pitch; come to the shore at sunset.', date: '1–30 Ordibehesht', time: 'Sunset', place: 'Beach grass pitch' },
+      ru: { title: 'Спортивное событие ордибехешта', desc: 'Месяц спорта на пляжном травяном поле Хелиле; приходите на берег на закате.', date: '1–30 ордибехешта', time: 'Закат', place: 'Пляжное травяное поле' },
     },
   },
   {
@@ -75,9 +75,9 @@ export const localEvents: LocalEvent[] = [
     art: 'barat',
     lunar: true,
     t: {
-      fa: { title: 'نیمه برات', desc: 'نیمهٔ شعبان، شب برات و سالروز ولادت امام زمان (عج) نزد شیعیان؛ عصر ۱۵ شعبان در سراسر محلهٔ هلیله. [شرح برنامهٔ محلی: تکمیل شود]', date: '۱۵ شعبان', time: 'عصر', place: 'کل محله هلیله' },
-      en: { title: 'Nimeh Barat', desc: 'Mid-Sha\'ban, the Night of Bara\'at and, for Shia Muslims, the birth anniversary of the 12th Imam; in the afternoon of 15 Sha\'ban across the Helileh quarter. [Local programme: to be completed]', date: '15 Sha\'ban', time: 'Afternoon', place: 'Whole Helileh quarter' },
-      ru: { title: 'Ниме-барат', desc: 'Середина шабана — Ночь Бараат и день рождения двенадцатого имама у шиитов; после полудня 15 шабана во всём квартале Хелиле. [Местная программа: дополнить]', date: '15 шабана', time: 'После полудня', place: 'Весь квартал Хелиле' },
+      fa: { title: 'نیمه برات', desc: 'نیمهٔ شعبان، شب برات و سالروز ولادت امام زمان (عج) نزد شیعیان؛ عصر ۱۵ شعبان در سراسر محلهٔ هلیله.', date: '۱۵ شعبان', time: 'عصر', place: 'کل محله هلیله' },
+      en: { title: 'Nimeh Barat', desc: 'Mid-Sha\'ban, the Night of Bara\'at and, for Shia Muslims, the birth anniversary of the 12th Imam; in the afternoon of 15 Sha\'ban across the Helileh quarter.', date: '15 Sha\'ban', time: 'Afternoon', place: 'Whole Helileh quarter' },
+      ru: { title: 'Ниме-барат', desc: 'Середина шабана — Ночь Бараат и день рождения двенадцатого имама у шиитов; после полудня 15 шабана во всём квартале Хелиле.', date: '15 шабана', time: 'После полудня', place: 'Весь квартал Хелиле' },
     },
   },
   {
@@ -109,9 +109,9 @@ export const localEvents: LocalEvent[] = [
     id: 'domad',
     art: 'domad',
     t: {
-      fa: { title: 'دوماد سر رود', desc: 'عروسی قدیمی هلیله، عصر یک روز از بهمن‌ماه در میدان پریزاد. [شرح مراسم: از بزرگان روستا تکمیل شود]', date: 'بهمن‌ماه', time: 'عصر', place: 'میدان پریزاد هلیله' },
-      en: { title: 'Domad Sar Rood', desc: 'An old Helileh wedding, held on an afternoon in Bahman at Parizad square. [About the ceremony: to be added by village elders]', date: 'Bahman', time: 'Afternoon', place: 'Parizad square, Helileh' },
-      ru: { title: 'Домад-сар-руд', desc: 'Старинная свадьба Хелиле, проходит в один из дней бахмана после полудня на площади Паризад. [О церемонии: дополнят старейшины деревни]', date: 'месяц бахман', time: 'После полудня', place: 'Площадь Паризад, Хелиле' },
+      fa: { title: 'دوماد سر رود', desc: 'عروسی قدیمی هلیله، عصر یک روز از بهمن‌ماه در میدان پریزاد.', date: 'بهمن‌ماه', time: 'عصر', place: 'میدان پریزاد هلیله' },
+      en: { title: 'Domad Sar Rood', desc: 'An old Helileh wedding, held on an afternoon in Bahman at Parizad square.', date: 'Bahman', time: 'Afternoon', place: 'Parizad square, Helileh' },
+      ru: { title: 'Домад-сар-руд', desc: 'Старинная свадьба Хелиле, проходит в один из дней бахмана после полудня на площади Паризад.', date: 'месяц бахман', time: 'После полудня', place: 'Площадь Паризад, Хелиле' },
     },
   },
   {

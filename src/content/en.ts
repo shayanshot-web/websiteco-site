@@ -105,9 +105,9 @@ export const en: Dict = {
           ],
         },
         {
-          h: 'Before you go',
+          h: 'Before you travel: what to know',
           p: [
-            'Autumn to spring is more comfortable for sightseeing than the hot, humid Bushehr summer. Contact us to arrange your visit.',
+            'Autumn to spring is more comfortable for sightseeing, but summer, despite the heat and humidity, has its own charms and experiences that can only be enjoyed then: tropical and subtropical fruits that ripen only in summer (jambu, lowz, sepestan, kharak, rutab, dates) or a night swim in the sea, and more. To learn more, explore the rest of the site.',
           ],
         },
       ],

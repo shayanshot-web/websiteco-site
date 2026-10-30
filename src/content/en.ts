@@ -38,7 +38,7 @@ export const en: Dict = {
   phone: '+989176443247',
   phoneDisplay: '09176443247',
   manager: 'Vahid Hasan Ahmadi',
-  address: 'Bushehr – Helileh – Helileh tourist village council',
+  address: 'Bushehr – Helileh – Helileh tourist village',
   org: 'Ancient Helileh, Bushehr',
   home: {
     eyebrow: 'BUSHEHR · PERSIAN GULF',
@@ -89,7 +89,7 @@ export const en: Dict = {
           h: 'Helileh at a glance',
           p: [
             'Province: Bushehr. Population: about 2,900 (updated Aban 1405, i.e. Oct-Nov 2026). Elevation: 17 m above sea level.',
-            'Helileh tourist village council (dehyari), Bushehr – Helileh. Phone / WhatsApp: <<09176443247|tel:+989176443247>> · Email: <<info@heleyleh-bu.ir|mailto:info@heleyleh-bu.ir>>',
+            'Helileh tourist village, Bushehr – Helileh. Phone / WhatsApp: <<09176443247|tel:+989176443247>> · Email: <<info@heleyleh-bu.ir|mailto:info@heleyleh-bu.ir>>',
           ],
         },
         {
@@ -359,7 +359,7 @@ export const en: Dict = {
     latestPosts: 'Latest posts',
     publishedOn: 'Published on',
     backToBlog: 'Back to the blog',
-    noEvents: 'For the exact dates each year, contact the village council.',
+    noEvents: 'For the exact dates each year, contact us.',
     rights: 'All rights reserved.',
     phoneLabel: 'Phone',
     addressLabel: 'Address',

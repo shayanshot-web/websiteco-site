@@ -259,8 +259,8 @@ export function PageView({ lang, id }: { lang: Lang; id: InnerPageId }) {
       </div>
       {id === 'experiences' ? (
         <div className="container xp-page">
-          <ExperiencesGrid lang={lang} />
           <Comments lang={lang} />
+          <ExperiencesGrid lang={lang} />
           <div className="prose" style={{ paddingBlock: '24px 0' }}>
             <Sections sections={p.sections} />
           </div>

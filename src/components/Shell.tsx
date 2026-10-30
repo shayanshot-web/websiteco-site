@@ -2,7 +2,7 @@ import Link from '@/components/A';
 import type { ReactNode } from 'react';
 import type { PageId } from '@/content/types';
 import Header from './Header';
-import { WaveEdge, type IconName } from './Art';
+import { Icon, WaveEdge, type IconName } from './Art';
 import LangSync from './LangSync';
 import SoundFX from './SoundFX';
 import Messengers from './Messengers';
@@ -81,47 +81,54 @@ export default function Shell({ route, children }: { route: Route; children: Rea
       <footer className="site-footer">
         <WaveEdge position="top" />
         <Aquarium />
-        <div className="container footer-grid">
-          <div>
-            <p className="footer-title">{d.siteName}</p>
-            <p>{d.tagline}</p>
+        <div className="container ft">
+          <div className="ft-brand">
+            <p className="ft-title">{d.siteName}</p>
+            <p className="ft-tag">{d.tagline}</p>
+            <ul className="ft-contact">
+              <li>
+                <Icon name="user" size={20} />
+                <span>{d.manager}</span>
+              </li>
+              <li>
+                <Icon name="phone" size={20} />
+                <a href={`tel:${d.phone}`} dir="ltr">
+                  {d.phoneDisplay}
+                </a>
+              </li>
+              <li>
+                <Icon name="pin" size={20} />
+                <span>{d.address}</span>
+              </li>
+            </ul>
+            <Messengers lang={lang} variant="compact" />
           </div>
-          <nav aria-label={d.ui.menu}>
-            <ul className="footer-links">
+          <nav aria-label={d.ui.menu} className="ft-nav">
+            <ul>
               {items.slice(1).map((i) => (
                 <li key={i.href}>
                   <Link href={i.href} data-sound="tick">
+                    <span className="ft-ico">
+                      <Icon name={i.icon} size={18} />
+                    </span>
                     {i.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
-          <div>
-            <p>
-              {d.ui.managerLabel}: {d.manager}
-            </p>
-            <p>
-              {d.ui.phoneLabel}:{' '}
-              <a href={`tel:${d.phone}`} dir="ltr">
-                {d.phoneDisplay}
-              </a>
-            </p>
-            <p>
-              {d.ui.addressLabel}: {d.address}
-            </p>
-            <Messengers lang={lang} variant="dark" />
-          </div>
         </div>
-        <p className="copyright">
-          © {formatYear(lang)} {d.org}. {d.ui.rights}
-        </p>
-        <p className="credit">
-          {messengerUi[lang].credit}{' '}
-          <a href="https://websiteco.ir" target="_blank" rel="noopener" dir="ltr">
-            WebSiteCo.ir
-          </a>
-        </p>
+        <div className="ft-bottom">
+          <span>
+            © {formatYear(lang)} {d.org}. {d.ui.rights}
+          </span>
+          <span className="ft-credit">
+            {messengerUi[lang].credit}{' '}
+            <a href="https://websiteco.ir" target="_blank" rel="noopener" dir="ltr">
+              WebSiteCo.ir
+            </a>
+          </span>
+        </div>
       </footer>
     </div>
   );

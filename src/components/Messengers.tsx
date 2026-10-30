@@ -36,8 +36,23 @@ function Glyph({ id }: { id: MessengerId }) {
   }
 }
 
-export default function Messengers({ lang, variant = 'light' }: { lang: Lang; variant?: 'light' | 'dark' }) {
+export default function Messengers({ lang, variant = 'light' }: { lang: Lang; variant?: 'light' | 'dark' | 'compact' }) {
   const u = messengerUi[lang];
+  if (variant === 'compact') {
+    return (
+      <ul className="msg-compact" aria-label={u.title}>
+        {messengers.map((m) => (
+          <li key={m.id}>
+            <a className={`msg-btn msg-${m.id}`} href={m.href} target="_blank" rel="noopener noreferrer" aria-label={`${m.label[lang]}: ${MESSENGER_NUMBER}`} title={m.label[lang]} data-sound="pop">
+              <span className="msg-ico">
+                <Glyph id={m.id} />
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    );
+  }
   return (
     <div className={`msg msg-${variant}`}>
       <p className="msg-title">

@@ -204,7 +204,22 @@ function page_users(array $user): void {
     echo '</tbody></table><div class="box"><h3>کاربر جدید</h3><form method="post" action="/admin/?a=user_save" class="urow"><input type="hidden" name="_csrf" value="' . e(csrf()) . '"><input type="hidden" name="id" value="0"><input name="name" placeholder="نام" required><input name="username" placeholder="نام کاربری" dir="ltr" required><input name="email" placeholder="ایمیل" dir="ltr"><select name="role">';
     foreach (ROLES as $k => $v) echo '<option value="' . $k . '"' . ($k === 'author' ? ' selected' : '') . '>' . e($v) . '</option>';
     echo '</select><input name="password" type="password" placeholder="رمز (حداقل ۱۰ نویسه)" dir="ltr" required autocomplete="new-password"><button class="btn primary small">افزودن</button></form>';
-    echo '<ul class="muted small"><li><b>مدیر کل</b>: همه‌چیز، کاربران و تنظیمات</li><li><b>ویراستار</b>: همه محتوا، رسانه و پیام‌ها؛ انتشار</li><li><b>مدیر فروشگاه و اقامت</b>: محصولات، رویدادها، اقامتگاه‌ها، گالری، رسانه، پیام‌ها</li><li><b>نویسنده</b>: فقط نوشته‌های خودش؛ برای انتشار نیاز به تأیید ویراستار</li></ul></div>';
+    $rows = [
+        ['نوشته‌ها (بلاگ)', '✔', '✔', '', '✔'],
+        ['صفحات (درباره، تجربه‌ها و …)', '✔', '✔', '', ''],
+        ['محصولات / صنایع دستی', '✔', '✔', '✔', ''],
+        ['رویدادها', '✔', '✔', '✔', ''],
+        ['اقامتگاه‌ها', '✔', '✔', '✔', ''],
+        ['گالری', '✔', '✔', '✔', ''],
+        ['کتابخانهٔ رسانه (آپلود عکس)', '✔', '✔', '✔', '✔'],
+        ['پیام‌ها و نظرهای بازدیدکنندگان', '✔', '✔', '✔', ''],
+        ['انتشار مستقیم', '✔', '✔', '✔', '— (نیاز به تأیید)'],
+        ['ویرایش و حذف مطالب دیگران', '✔', '✔', '✔', ''],
+        ['کاربران و تنظیمات', '✔', '', '', ''],
+    ];
+    echo '<h3>سطح دسترسی هر نقش</h3><table class="tbl"><thead><tr><th>امکان</th><th>مدیر کل</th><th>ویراستار</th><th>مدیر فروشگاه و اقامت</th><th>نویسنده</th></tr></thead><tbody>';
+    foreach ($rows as $r) { echo '<tr>'; foreach ($r as $i => $c) echo '<td' . ($i ? ' style="text-align:center"' : '') . '>' . e($c) . '</td>'; echo '</tr>'; }
+    echo '</tbody></table><p class="muted small">مدیر کل می‌تواند کاربر بسازد، نقش بدهد، رمز را تغییر دهد یا کاربر را حذف کند. نقش خودش قابل کاهش نیست.</p></div>';
     layout_end();
 }
 
